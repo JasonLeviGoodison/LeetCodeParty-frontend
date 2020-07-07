@@ -1,0 +1,102 @@
+html {
+    margin: 0;
+    padding: 0;
+    background-color: #222222;
+    padding-left: 10px;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    width: 332px;
+    font-family: sans-serif;
+    font-size: 0.9em;
+    color: #D9D9D9;
+  }
+  
+  label {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  
+  input[type="text"] {
+    display: block;
+    box-sizing: border-box;
+    width: 300px;
+    border: 2px solid #ddd;
+    border-radius: 2px;
+    outline-style: none;
+    line-height: 20px;
+    font-size: 1.2em;
+    color: black;
+  }
+  
+  input[type="text"]:focus {
+    border-color: white;
+  }
+  
+  input[type="text"], p, h2, h3 {
+    display: block;
+  }
+  
+  h2 {
+    font-size: 1.2em;
+  }
+  
+  h3 {
+    font-size: 1em;
+  }
+  
+  .error {
+    color: #c00;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  button {
+    line-height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 0.9em;
+    border-radius: 19px;
+    cursor: pointer;
+    background-color: #FBBF36;
+    color: white;
+    margin-top: 10px;
+    padding: 10px;
+  }
+  
+  button:focus {
+    background-color: rgb(247, 219, 156);
+    color: white;
+    outline-style: none;
+  }
+  
+  button:hover {
+    background-color: rgb(247, 219, 156);
+    color: white;
+  }
+  
+  button:active {
+    background-color: rgb(247, 219, 156);
+    color: white;
+  }
+  
+  button:disabled {
+    cursor: default;
+    background-color: #6ca7bd;
+    border-bottom: 3px solid #548294;
+    color: #f7f7f7;
+  }
+  
+  .spinner {
+    margin-left: 8px;
+  }
+  
+  .copy-val {
+    margin-top: -12px;
+  }
