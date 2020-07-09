@@ -58,7 +58,8 @@ chrome.runtime.onMessage.addListener(
 
       if (request.type === 'createRoom') {
         socket.emit('createRoom', {
-          problemId: request.data.problemId
+          problemId: request.data.problemId,
+          userId: curRoom.userId
         }, function(data) {
         //   initChat();
         //   setChatVisible(true);
@@ -77,8 +78,8 @@ chrome.runtime.onMessage.addListener(
         return true;
       }
 
-      if (request.type === 'joinSession') {
-        socket.emit('joinSession', request.data.sessionId, function(data) {
+      if (request.type === 'joinRoom') {
+        socket.emit('joinRoom', {roomId: request.data.roomId, userId: curRoom.userId}, function(data) {
           if (data.errorMessage) {
             sendResponse({
               errorMessage: data.errorMessage
@@ -86,7 +87,7 @@ chrome.runtime.onMessage.addListener(
             return;
           }
 
-          if (data.videoId !== request.data.videoId) {
+          if (data.problemId !== request.data.problemId) {
             socket.emit('leaveSession', null, function(data) {
               sendResponse({
                 errorMessage: 'That session is for a different video.'
@@ -108,7 +109,7 @@ chrome.runtime.onMessage.addListener(
         //   state = data.state;
         //   videoId = request.data.videoId;
         //   pushTask(receive(data));
-          sendResponse({});
+          sendResponse("https://testlink.com");
         });
         return true;
       }
