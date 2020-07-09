@@ -14,12 +14,26 @@ var curRoom = {
 
 console.log("Socket,", socket)
 
-socket.on('userId', function(data) {
-    if (curRoom.userId === "") {
-        console.log(data)
-        curRoom.userId = data;
+chrome.storage.sync.get('userid', function(items) {
+    console.log("here", items)
+    var userid = items.userid;
+    if (userid) {
+        console.log("reusing id")
+        useToken(userid);
+    } else {
+        socket.emit("getNewUserId");
+        socket.on("userId", (userid) => {
+            chrome.storage.sync.set({userid: userid}, function() {
+                console.log("got a new id", userid)
+                useToken(userid);
+            });
+        });
+    }
+    function useToken(userid) {
+        curRoom.userId = userid;
     }
 });
+
 
 function myMain (evt) {
     let submitButton = $("[data-cy=\"run-code-btn\"]");
