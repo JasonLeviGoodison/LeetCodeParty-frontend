@@ -1,12 +1,5 @@
 $(function() {
-  let createParty = $('#create-session');
   let joinParty = $('#join-session');
-  const ENDPOINT = "http://127.0.0.1:4001";
-  var userId = ''
-
-  console.log(createParty)
-
-  // check if there is something in the URL to join us into a session
 
   function handleRemoveNameError(partyName, errorText) {
     console.log(partyName, errorText)
@@ -21,23 +14,83 @@ $(function() {
     }
   }
 
-  createParty.click(function() {
-    let errorText = $("#errorCreateInput");
-    var socket = io.connect(ENDPOINT);
-    socket.on('userId', function (userId, fn) {
-      userId = userId;
-      socket.emit("createRoom", {playerId: userId, problemId: "test"})
-    });
-    //connect and create a new party, get the id and then set that in the 
-  });
   joinParty.click(function() {
     let errorText = $("#errorJoinInput");
     let partyName = $("#session-input-join").val();
     handleRemoveNameError(partyName, errorText)
-    // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    //   chrome.tabs.executeScript(
-    //       tabs[0].id,
-    //       {code: 'document.body.style.backgroundColor = "' + color + '";'});
-    // });
+  });
+
+  // get the current tab
+  chrome.tabs.query({
+    active: true,
+    currentWindow: true
+  }, function(tabs) {
+
+    // send a message to the content script
+    var sendMessageToContentScript = function(type, data, callback) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: type,
+          data: data
+        }, function(response) {
+          console.log("response", response)
+          if (response.errorMessage) {
+            showError(response.errorMessage);
+            return;
+          }
+          if (callback) {
+            callback(response);
+          }
+        });
+    };
+
+    sendMessageToContentScript('getInitData', {}, function(initData) {
+        var problemId = tabs[0].url.split("/problems/")[1].split("/")[0];
+
+        if (problemId === undefined || problemId == "") {
+          showError("Please select a problem before starting the party");
+        }
+
+        // initial state
+        if (initData.errorMessage) {
+          showError(initData.errorMessage);
+          return;
+        }
+        if (initData.roomId === null) {
+          var roomIdFromUrl = getURLParameter(tabs[0].url, 'leetCodePartyRoomId');
+          if (roomIdFromUrl) {
+            sendMessageToContentScript('joinSession', {
+              roomId: roomIdFromUrl.replace(/^\s+|\s+$/g, '').toLowerCase(),
+              problemId: problemId
+            }, function(response) {
+              showConnected(roomIdFromUrl);
+            });
+          }
+        } else {
+          showConnected(initData.roomId);
+        }
+      });
+
+      $('#create-session').click(function() {
+        sendMessageToContentScript('createRoom', {
+          problemId
+        }, function(response) {
+          showConnected(response.problemId);
+        });
+      });
+
+      // connected/disconnected state
+      var showConnected = function(sessionId) {
+        var urlWithSessionId = tabs[0].url.split('?')[0] + '?npSessionId=' + encodeURIComponent(sessionId);
+        $('.disconnected').addClass('hidden');
+        $('.connected').removeClass('hidden');
+        $('#show-chat').prop('checked', true);
+        $('#share-url').val(urlWithSessionId).focus().select();
+      };
+
+      var showDisconnected = function() {
+        $('.disconnected').removeClass('hidden');
+        $('.connected').addClass('hidden');
+        $('#control-lock').prop('checked', false);
+      };
   });
 });
