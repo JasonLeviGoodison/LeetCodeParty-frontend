@@ -14,23 +14,24 @@ var curRoom = {
 
 console.log("Socket,", socket)
 
-chrome.storage.sync.get('userid', function(items) {
+chrome.storage.sync.get('userId', function(items) {
     console.log("here", items)
-    var userid = items.userid;
-    if (userid) {
+    var userId = items.userId;
+    if (userId) {
         console.log("reusing id")
-        useToken(userid);
+        socket.emit("newSocket", { userId });
+        useToken(userId);
     } else {
         socket.emit("getNewUserId");
-        socket.on("userId", (userid) => {
-            chrome.storage.sync.set({userid: userid}, function() {
-                console.log("got a new id", userid)
-                useToken(userid);
+        socket.on("userId", (userId) => {
+            chrome.storage.sync.set({userId}, function() {
+                console.log("got a new id", userId)
+                useToken(userId);
             });
         });
     }
     function useToken(userid) {
-        curRoom.userId = userid;
+        curRoom.userId = userId;
     }
 });
 
