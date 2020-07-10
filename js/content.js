@@ -61,6 +61,8 @@ chrome.runtime.onMessage.addListener(
           problemId: request.data.problemId,
           userId: curRoom.userId
         }, function(data) {
+            curRoom.roomId = data.roomId;
+            curRoom.problemId = data.problemId
         //   initChat();
         //   setChatVisible(true);
         //   lastKnownTime = data.lastKnownTime;

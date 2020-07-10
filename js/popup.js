@@ -1,5 +1,6 @@
 $(function() {
   let joinParty = $('#join-session');
+  let problemId = '';
 
   function handleRemoveNameError(partyName, errorText) {
     console.log(partyName, errorText)
@@ -34,7 +35,6 @@ $(function() {
         }, function(response) {
           console.log("response", response)
           if (response.errorMessage) {
-            console.log("error:", response.errorMessage)
             showError(response.errorMessage);
             return;
           }
@@ -45,7 +45,7 @@ $(function() {
     };
 
     sendMessageToContentScript('getInitData', {}, function(initData) {
-        var problemId = tabs[0].url.split("/problems/")[1].split("/")[0];
+        problemId = tabs[0].url.split("/problems/")[1].split("/")[0];
 
         if (problemId === undefined || problemId == "") {
           showError("Please select a problem before starting the party");
@@ -77,9 +77,9 @@ $(function() {
 
       $('#create-session').click(function() {
         sendMessageToContentScript('createRoom', {
-          problemId
+          problemId: problemId
         }, function(response) {
-          showConnected(response.problemId);
+          showConnected(response.roomId);
         });
       });
 
@@ -90,6 +90,14 @@ $(function() {
         $('.connected').removeClass('hidden');
         $('#show-chat').prop('checked', true);
         $('#share-url').val(urlWithSessionId).focus().select();
+      };
+
+      // connected/disconnected state
+      var showError = function(errorMessage) {
+        $('.connected').addClass('hidden');
+        $('.disconnected').addClass('hidden');
+        $('.some-error').removeClass('hidden');
+        $("#error-msg").text(errorMessage);
       };
 
       var showDisconnected = function() {
