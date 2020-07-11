@@ -45,10 +45,11 @@ $(function() {
     };
 
     sendMessageToContentScript('getInitData', {}, function(initData) {
-        var problemId = tabs[0].url.split("/problems/")[1].split("/")[0];
+        var problemId = getProblemID(tabs);
 
-        if (problemId === undefined || problemId == "") {
+        if (!problemId) {
           showError("Please select a problem before starting the party");
+          return;
         }
 
         // initial state
@@ -76,9 +77,7 @@ $(function() {
       });
 
       $('#create-session').click(function() {
-        sendMessageToContentScript('createRoom', {
-          problemId
-        }, function(response) {
+        sendMessageToContentScript('createRoom', getProblemID(tabs), function(response) {
           showConnected(response.problemId);
         });
       });

@@ -10,3 +10,19 @@ var getParams = function (url) {
 	}
 	return params;
 };
+
+var getProblemID = function(tabs) {
+	if (tabs.length <= 0) {
+		return null;
+	}
+	var urlSplit = tabs[0].url.split("/problems/")
+	if (urlSplit.length <= 1) {
+		return null;
+	}
+	var problemSplit = urlSplit.split("/")
+	if (problemSplit.length <= 0) {
+		return null;
+	}
+
+	return problemSplit[0];
+}
