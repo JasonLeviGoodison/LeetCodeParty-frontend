@@ -1,5 +1,6 @@
 $(function() {
   let joinParty = $('#join-session');
+  let problemId = '';
 
   function handleRemoveNameError(partyName, errorText) {
     console.log(partyName, errorText)
@@ -34,7 +35,6 @@ $(function() {
         }, function(response) {
           console.log("response", response)
           if (response.errorMessage) {
-            console.log("error:", response.errorMessage)
             showError(response.errorMessage);
             return;
           }
@@ -89,6 +89,14 @@ $(function() {
         $('.connected').removeClass('hidden');
         $('#show-chat').prop('checked', true);
         $('#share-url').val(urlWithSessionId).focus().select();
+      };
+
+      // connected/disconnected state
+      var showError = function(errorMessage) {
+        $('.connected').addClass('hidden');
+        $('.disconnected').addClass('hidden');
+        $('.some-error').removeClass('hidden');
+        $("#error-msg").text(errorMessage);
       };
 
       var showDisconnected = function() {
