@@ -34,7 +34,7 @@ $(function() {
           data: data
         }, function(response) {
           console.log("response", response)
-          if (response.errorMessage) {
+          if (response && response.errorMessage) {
             showError(response.errorMessage);
             return;
           }
@@ -53,7 +53,8 @@ $(function() {
         }
 
         // initial state
-        if (initData.errorMessage) {
+        console.log("InitData: ", initData);
+        if (initData && initData.errorMessage) {
           showError(initData.errorMessage);
           return;
         }

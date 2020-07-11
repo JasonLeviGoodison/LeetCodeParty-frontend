@@ -19,7 +19,7 @@ var getProblemID = function(tabs) {
 	if (urlSplit.length <= 1) {
 		return null;
 	}
-	var problemSplit = urlSplit.split("/")
+	var problemSplit = urlSplit[1].split("/")
 	if (problemSplit.length <= 0) {
 		return null;
 	}
