@@ -77,7 +77,9 @@ $(function() {
       });
 
       $('#create-session').click(function() {
-        sendMessageToContentScript('createRoom', getProblemID(tabs), function(response) {
+        sendMessageToContentScript('createRoom', {
+            problemId: getProblemID(tabs)
+        }, function(response) {
           showConnected(response.problemId);
         });
       });
