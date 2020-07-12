@@ -58,8 +58,7 @@ $(function() {
           showError(initData.errorMessage);
           return;
         }
-        console.log("init data says im in ", initData.roomId, " room")
-        if (initData.roomId === "") {
+        if (!initData || initData.roomId === "") {
           var urlParams = getParams(tabs[0].url);
           console.log(urlParams);
           let roomIdFromUrl = urlParams['roomId'];
@@ -81,13 +80,13 @@ $(function() {
         sendMessageToContentScript('createRoom', {
             problemId: getProblemID(tabs)
         }, function(response) {
-          showConnected(response.problemId);
+          showConnected(response.roomId);
         });
       });
 
       // connected/disconnected state
-      var showConnected = function(sessionId) {
-        var urlWithSessionId = tabs[0].url.split('?')[0] + '?roomId=' + encodeURIComponent(sessionId);
+      var showConnected = function(roomId) {
+        var urlWithSessionId = tabs[0].url.split('?')[0] + '?roomId=' + encodeURIComponent(roomId);
         $('.disconnected').addClass('hidden');
         $('.connected').removeClass('hidden');
         $('#show-chat').prop('checked', true);
