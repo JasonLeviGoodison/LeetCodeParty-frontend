@@ -1,5 +1,6 @@
 $(function() {
   let joinParty = $('#join-session');
+  let problemId = '';
 
   function handleRemoveNameError(partyName, errorText) {
     console.log(partyName, errorText)
@@ -33,7 +34,7 @@ $(function() {
           data: data
         }, function(response) {
           console.log("response", response)
-          if (response.errorMessage) {
+          if (response && response.errorMessage) {
             showError(response.errorMessage);
             return;
           }
@@ -44,22 +45,27 @@ $(function() {
     };
 
     sendMessageToContentScript('getInitData', {}, function(initData) {
-        var problemId = tabs[0].url.split("/problems/")[1].split("/")[0];
+        var problemId = getProblemID(tabs);
 
-        if (problemId === undefined || problemId == "") {
+        if (!problemId) {
           showError("Please select a problem before starting the party");
+          return;
         }
 
         // initial state
-        if (initData.errorMessage) {
+        console.log("InitData: ", initData);
+        if (initData && initData.errorMessage) {
           showError(initData.errorMessage);
           return;
         }
-        if (initData.roomId === null) {
-          var roomIdFromUrl = getURLParameter(tabs[0].url, 'leetCodePartyRoomId');
+        if (!initData || initData.roomId === "") {
+          var urlParams = getParams(tabs[0].url);
+          console.log(urlParams);
+          let roomIdFromUrl = urlParams['roomId'];
           if (roomIdFromUrl) {
-            sendMessageToContentScript('joinSession', {
-              roomId: roomIdFromUrl.replace(/^\s+|\s+$/g, '').toLowerCase(),
+            console.log("room id rom url", roomIdFromUrl)
+            sendMessageToContentScript('joinRoom', {
+              roomId: roomIdFromUrl.toLowerCase(),
               problemId: problemId
             }, function(response) {
               showConnected(roomIdFromUrl);
@@ -72,19 +78,27 @@ $(function() {
 
       $('#create-session').click(function() {
         sendMessageToContentScript('createRoom', {
-          problemId
+            problemId: getProblemID(tabs)
         }, function(response) {
-          showConnected(response.problemId);
+          showConnected(response.roomId);
         });
       });
 
       // connected/disconnected state
-      var showConnected = function(sessionId) {
-        var urlWithSessionId = tabs[0].url.split('?')[0] + '?npSessionId=' + encodeURIComponent(sessionId);
+      var showConnected = function(roomId) {
+        var urlWithSessionId = tabs[0].url.split('?')[0] + '?roomId=' + encodeURIComponent(roomId);
         $('.disconnected').addClass('hidden');
         $('.connected').removeClass('hidden');
         $('#show-chat').prop('checked', true);
         $('#share-url').val(urlWithSessionId).focus().select();
+      };
+
+      // connected/disconnected state
+      var showError = function(errorMessage) {
+        $('.connected').addClass('hidden');
+        $('.disconnected').addClass('hidden');
+        $('.some-error').removeClass('hidden');
+        $("#error-msg").text(errorMessage);
       };
 
       var showDisconnected = function() {
