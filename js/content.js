@@ -1,3 +1,4 @@
+const newUserEveryConnection = false;
 
 window.addEventListener ("load", myMain, false);
 
@@ -17,7 +18,7 @@ console.log("Socket,", socket)
 chrome.storage.sync.get('userId', function(items) {
     console.log("here", items)
     var userId = items.userId;
-    if (userId) {
+    if (userId && !newUserEveryConnection) {
         console.log("reusing id")
         socket.emit("newSocket", { userId });
         useToken(userId);
@@ -35,6 +36,10 @@ chrome.storage.sync.get('userId', function(items) {
     }
 });
 
+console.log("Starting NewMember connection!");
+socket.on("newMember", (memberId) => {
+    console.log("New Member has joined the room: ", memberId);
+});
 
 function myMain (evt) {
     let submitButton = $("[data-cy=\"run-code-btn\"]");
