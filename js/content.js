@@ -62,17 +62,7 @@ chrome.runtime.onMessage.addListener(
           userId: curRoom.userId
         }, function(data) {
             curRoom.roomId = data.roomId;
-            curRoom.problemId = data.problemId
-        //   initChat();
-        //   setChatVisible(true);
-        //   lastKnownTime = data.lastKnownTime;
-        //   lastKnownTimeUpdatedAt = new Date(data.lastKnownTimeUpdatedAt);
-        //   messages = [];
-        //   sessionId = data.sessionId;
-        //   ownerId = request.data.controlLock ? userId : null;
-        //   state = data.state;
-        //   videoId = request.data.videoId;
-        //   pushTask(broadcast(false));
+            curRoom.problemId = data.problemId;
           sendResponse({
             roomId: curRoom.roomId
           });
@@ -90,36 +80,20 @@ chrome.runtime.onMessage.addListener(
           }
 
           if (data.problemId !== request.data.problemId) {
-            socket.emit('leaveSession', null, function(data) {
+            socket.emit('leaveRoom', null, function(data) {
               sendResponse({
                 errorMessage: 'That session is for a different video.'
               });
             });
             return;
           }
-
-        //   initChat();
-        //   setChatVisible(true);
-        //   sessionId = request.data.sessionId;
-        //   lastKnownTime = data.lastKnownTime;
-        //   lastKnownTimeUpdatedAt = new Date(data.lastKnownTimeUpdatedAt);
-        //   messages = [];
-        //   for (var i = 0; i < data.messages.length; i += 1) {
-        //     addMessage(data.messages[i]);
-        //   }
-        //   ownerId = data.ownerId;
-        //   state = data.state;
-        //   videoId = request.data.videoId;
-        //   pushTask(receive(data));
-          sendResponse("https://testlink.com");
         });
         return true;
       }
 
-      if (request.type === 'leaveSession') {
-        socket.emit('leaveSession', null, function(_) {
-          sessionId = null;
-          setChatVisible(false);
+      if (request.type === 'leaveRoom') {
+        socket.emit('leaveRoom', { userId: curRoom.userId, roomId: curRoom.roomId }, function(_) {
+          curRoom.roomId = "";
           sendResponse({});
         });
         return true;
