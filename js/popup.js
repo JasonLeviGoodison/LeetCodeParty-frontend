@@ -84,6 +84,12 @@ $(function() {
         });
       });
 
+      $('#leave-room').click(function() {
+        sendMessageToContentScript('leaveRoom', {}, function(response) {
+          showDisconnected();
+        });
+      });
+
       // connected/disconnected state
       var showConnected = function(roomId) {
         var urlWithSessionId = tabs[0].url.split('?')[0] + '?roomId=' + encodeURIComponent(roomId);
