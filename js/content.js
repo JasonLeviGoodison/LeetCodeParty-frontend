@@ -10,7 +10,8 @@ var curRoom = {
     userId: "",
     roomId: "",
     problemId: "",
-    socket: ""
+    socket: "",
+    members: []
 }
 
 console.log("Socket,", socket)
@@ -36,9 +37,8 @@ chrome.storage.sync.get('userId', function(items) {
     }
 });
 
-console.log("Starting NewMember connection!");
 socket.on("newMember", (memberId) => {
-    console.log("New Member has joined the room: ", memberId);
+    addNewMember(memberId);
 });
 
 function myMain (evt) {
@@ -50,12 +50,22 @@ function myMain (evt) {
     });
 }
 
+function addNewMember(userUUID) {
+    var memberNumber = curRoom.members.length;
+
+    curRoom.members.push({
+       userUUID: userUUID,
+       dom: "<li>User " + memberNumber + " (" + userUUID + ")</li>"
+    });
+}
+
 // interaction with the popup
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       if (request.type === 'getInitData') {
         sendResponse({
-          roomId: curRoom.roomId,
+            roomId: curRoom.roomId,
+            members: curRoom.members,
           //chatVisible: getChatVisible()
         });
         return;
@@ -68,8 +78,10 @@ chrome.runtime.onMessage.addListener(
         }, function(data) {
             curRoom.roomId = data.roomId;
             curRoom.problemId = data.problemId;
+            addNewMember("Me!");
           sendResponse({
-            roomId: curRoom.roomId
+              roomId: curRoom.roomId,
+              members: curRoom.members,
           });
         });
         return true;
