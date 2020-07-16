@@ -14,7 +14,7 @@ function createRoom(request, sendResponse, curRoom) {
     socket.emit('createRoom', payload, function(data) {
         curRoom.roomId = data.roomId;
         curRoom.problemId = data.problemId;
-        curRoom.members.push(buildNewMemberInRoom(curRoom.members.length, curRoom.userId,"Me!"));
+        curRoom.members.push(buildNewMemberInRoom(curRoom.members.length, curRoom.userId, "Me!"));
         sendResponse({
             roomId: curRoom.roomId,
             members: curRoom.members
