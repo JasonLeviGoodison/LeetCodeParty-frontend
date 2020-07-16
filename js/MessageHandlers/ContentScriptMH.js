@@ -1,5 +1,8 @@
 function getInitData(sendResponse, curRoom) {
-    sendResponse({ roomId: curRoom.roomId });
+    sendResponse({
+        roomId: curRoom.roomId,
+        members: curRoom.members
+    });
     return;
 }
 
@@ -11,8 +14,10 @@ function createRoom(request, sendResponse, curRoom) {
     socket.emit('createRoom', payload, function(data) {
         curRoom.roomId = data.roomId;
         curRoom.problemId = data.problemId;
+        curRoom.members.push(buildNewMemberInRoom(curRoom.members.length, curRoom.userId,"Me!"));
         sendResponse({
-            roomId: curRoom.roomId
+            roomId: curRoom.roomId,
+            members: curRoom.members
         });
     });
     return true;
