@@ -1,6 +1,7 @@
 $(function() {
   let joinParty = $('#join-session');
   let problemId = '';
+  let roomId = '';
 
   function handleRemoveNameError(partyName, errorText) {
     console.log(partyName, errorText)
@@ -80,7 +81,10 @@ $(function() {
         sendMessageToContentScript('createRoom', {
             problemId: getProblemID(tabs)
         }, function(response) {
-          showConnected(response.roomId);
+          console.log("got the response from create session", response)
+          if (response.roomId) {
+            showConnected(response.roomId);
+          }
         });
       });
 

@@ -18,10 +18,18 @@
   },
   "content_scripts": [{
     "matches": [ "*://leetcode.com/*" ],
-    "js": [ "js/jquery-3.5.1.min.js", "js/socket.io.js", "js/content.js"],
+    "js": [
+      "js/jquery-3.5.1.min.js",
+      "js/constants.js",
+      "js/MessageHandlers/ContentScriptMH.js",
+      "js/socket.io.js",
+      "js/content.js"
+    ],
     "web_accessible_resources": [
        "js/socket.io.js",
-       "js/utils.js"
+       "js/utils.js",
+       "js/MessageHandlers/ContentScriptMH.js",
+       "js/contants.js"
     ],
     "css": [ "css/base.css" ],
     "run_at": "document_idle"
