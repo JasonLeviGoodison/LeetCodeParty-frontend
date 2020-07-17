@@ -1,3 +1,5 @@
+var sideBar = new SideBar();
+
 function getInitData(sendResponse, curRoom) {
     sendResponse({ roomId: curRoom.roomId });
     return;
@@ -61,6 +63,8 @@ function ContentScriptMH(request, sender, sendResponse, curRoom) {
             return joinRoom(request, sendResponse, curRoom);
         case "leaveRoom":
             return leaveRoom(sendResponse, curRoom);
+        case "toggleSideBar":
+            return sideBar.toggleSidebar()
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;

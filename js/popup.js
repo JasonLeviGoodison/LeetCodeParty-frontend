@@ -83,6 +83,7 @@ $(function() {
         }, function(response) {
           console.log("got the response from create session", response)
           if (response.roomId) {
+            sendMessageToContentScript('toggleSideBar');
             showConnected(response.roomId);
           }
         });
