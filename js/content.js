@@ -8,14 +8,15 @@ var curRoom = {
     userId: "",
     roomId: "",
     problemId: "",
-    socket: ""
+    socket: "",
+    members: []
 }
 
 function getStoredInfo() {
     chrome.storage.sync.get(INFO_STORE_KEY, function(items) {
         var { userId } = items;
     
-        if (userId) {
+        if (userId && !newUserEveryConnection) {
             socket.emit("newSocket", { userId });
             useToken(userId);
         } else {
@@ -51,3 +52,6 @@ function main(evt) {
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => ContentScriptMH(request, sender, sendResponse, curRoom)
   );
+
+// socket listeners (data flowing from the server)
+SocketListen(socket, curRoom);

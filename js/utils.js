@@ -26,3 +26,20 @@ var getProblemID = function(tabs) {
 
 	return problemSplit[0];
 }
+
+function userAlreadyInRoom(curRoom, userUUID) {
+	for (var i = 0; i < curRoom.members.length; i++) {
+		if (curRoom.members[i].userUUID === userUUID) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function buildNewMemberInRoom(memNumber, userUUID, userName) {
+	return {
+		userUUID: userUUID,
+		dom: "<li>User " + memNumber + " (" + userName + ")</li>"
+	};
+}
