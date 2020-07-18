@@ -1,7 +1,45 @@
 class SideBar {
     constructor() {
         this.sidebarOpen = false;
-        this.messages = ["Message 1", "Message2"];
+        this.events = 
+        [
+            {
+                text: "Message 1",
+                eventType: "Message"
+            },
+            {
+                text: "Message 2",
+                eventType: "UserInfo"
+            }
+        ]
+    }
+
+    enqueue(text, eventType) {
+        let event = {
+            text,
+            eventType
+        }
+        this.events.push(event);
+        this.showList();
+        console.log(this.events)
+    }
+
+    showList() {
+        let listElems = $(".listElem")
+        if (listElems) listElems.remove();
+
+        let list = ""
+        for (let index in this.events) {
+            let color = 'white'
+            let text = this.events[index].text;
+            if (this.events[index].eventType == "error") {
+                color = 'red';
+                text = "Error: " + text;
+            }
+
+            list += "<li class=\"listElem\" style=\"color:" + color +"\">" + text + "</li>";
+        }
+        $("#list").append(list);
     }
 
     toggleSidebar() {
@@ -12,16 +50,11 @@ class SideBar {
         }
         else {
             var sidebar = document.createElement('div');
-            let list = ""
-            for (let index in this.messages) {
-                console.log("hererere")
-                list += "<li>" + this.messages[index] + "</li>";
-            }
-            console.log(list)
+
             sidebar.id = "mySidebar";
             sidebar.innerHTML = "\
-                <h1>Hello</h1>\
-                World!\
+                <h2 style=\"color:white\">LeetCode Party</h2>\
+                <h5 style=\"color:white\">Here you can see information about how your competitors are doing</h5>\
                 <ul id=\"list\"></ul>\
             ";
             sidebar.style.cssText = "\
@@ -30,11 +63,11 @@ class SideBar {
                 right:0px;\
                 width:30%;\
                 height:100%;\
-                background:white;\
-                box-shadow:inset 0 0 1em black;\
+                background:#222222;\
+                border-style: solid;\
             ";
             $("div[data-cy=\"code-area\"]").append(sidebar);
-            $("#list").append(list);
+            this.showList();
             this.sidebarOpen = true;
         }
     }

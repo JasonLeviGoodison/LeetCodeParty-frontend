@@ -65,6 +65,8 @@ function ContentScriptMH(request, sender, sendResponse, curRoom) {
             return leaveRoom(sendResponse, curRoom);
         case "toggleSideBar":
             return sideBar.toggleSidebar()
+        case "test":
+            return sideBar.enqueue("Test", "error")
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;
