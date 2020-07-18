@@ -72,7 +72,8 @@ $(function() {
               roomId: roomIdFromUrl.toLowerCase(),
               problemId: problemId
             }, function(response) {
-              showConnected(roomIdFromUrl);
+              showConnected(response.roomId);
+              updateUsersInRoom(response.members);
             });
           }
         } else {
