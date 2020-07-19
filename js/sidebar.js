@@ -37,7 +37,7 @@ class SideBar {
                 text = "Error: " + text;
             }
 
-            list += "<li class=\"listElem\" style=\"color:" + color +"\">" + text + "</li>";
+            list += "<div class=\"listElem\" style=\"color:" + color +"\">" + text + "</div>";
         }
         $("#list").append(list);
     }
@@ -46,6 +46,7 @@ class SideBar {
         if(this.sidebarOpen) {
             var el = document.getElementById('mySidebar');
             el.parentNode.removeChild(el);
+            $("#app").css("width", "100%");
             this.sidebarOpen = false;
         }
         else {
@@ -53,9 +54,9 @@ class SideBar {
 
             sidebar.id = "mySidebar";
             sidebar.innerHTML = "\
-                <h2 style=\"color:white\">LeetCode Party</h2>\
-                <h5 style=\"color:white\">Here you can see information about how your competitors are doing</h5>\
-                <ul id=\"list\"></ul>\
+                <h2 style=\"color:white;text-align: center;\">LeetCode Party</h2>\
+                <h5 style=\"color:white;margin: 10px;\">Here you can see information about how your competitors are doing</h5>\
+                <div id=\"list\"></div>\
             ";
             sidebar.style.cssText = "\
                 position:fixed;\
@@ -65,8 +66,11 @@ class SideBar {
                 height:100%;\
                 background:#222222;\
                 border-style: solid;\
+                display: flex;\
+                flex-direction: column;\
             ";
-            $("div[data-cy=\"code-area\"]").append(sidebar);
+            $("body").append(sidebar);
+            $("#app").css("width", "70%");
             this.showList();
             this.sidebarOpen = true;
         }
