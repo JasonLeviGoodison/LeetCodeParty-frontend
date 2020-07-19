@@ -21,6 +21,7 @@
     "js": [
       "js/jquery-3.5.1.min.js",
       "js/constants.js",
+      "js/sidebar.js",
       "js/utils.js",
       "js/MessageHandlers/ContentScriptMH.js",
       "js/SocketListeners/Listeners.js",
@@ -30,6 +31,7 @@
     "web_accessible_resources": [
        "js/socket.io.js",
        "js/utils.js",
+       "js/sidebar.js",
        "js/MessageHandlers/ContentScriptMH.js",
        "js/SocketListeners/Listeners.js",
        "js/constants.js"
