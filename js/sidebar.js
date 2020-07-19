@@ -66,8 +66,6 @@ class SideBar {
                 height:100%;\
                 background:#222222;\
                 border-style: solid;\
-                display: flex;\
-                flex-direction: column;\
             ";
             $("body").append(sidebar);
             $("#app").css("width", "70%");
