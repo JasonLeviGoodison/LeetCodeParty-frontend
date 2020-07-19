@@ -6,6 +6,8 @@ function SocketListen(socket, curRoom) {
 
 function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
     if (!userAlreadyInRoom(curRoom, memberId)) {
-        curRoom.members.push(buildNewMemberInRoom(curRoom.members.length, memberId, false, nicknameInfo));
+        let newUser = buildNewMemberInRoom(curRoom.members.length, memberId, false, nicknameInfo);
+        curRoom.members.push(newUser);
+        sideBar.enqueue(newUser.dom, 'newuser');
     }
 }

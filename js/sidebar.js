@@ -1,17 +1,7 @@
 class SideBar {
     constructor() {
         this.sidebarOpen = false;
-        this.events = 
-        [
-            {
-                text: "Message 1",
-                eventType: "Message"
-            },
-            {
-                text: "Message 2",
-                eventType: "UserInfo"
-            }
-        ]
+        this.events = [];
     }
 
     enqueue(text, eventType) {
@@ -20,21 +10,23 @@ class SideBar {
             eventType
         }
         this.events.push(event);
+        console.log("events", this.events)
         this.showList();
-        console.log(this.events)
     }
 
     showList() {
-        let listElems = $(".listElem")
-        if (listElems) listElems.remove();
+        document.querySelectorAll(".listElem").forEach((elem) => elem.remove());
 
         let list = ""
         for (let index in this.events) {
             let color = 'white'
             let text = this.events[index].text;
-            if (this.events[index].eventType == "error") {
-                color = 'red';
-                text = "Error: " + text;
+            switch (this.events[index].eventType) {
+                case "error":
+                    color = 'red';
+                    text = "Error: " + text;
+                default:
+                    break;
             }
 
             list += "<div class=\"listElem\" style=\"color:" + color +"\">" + text + "</div>";
@@ -66,6 +58,7 @@ class SideBar {
                 height:100%;\
                 background:#222222;\
                 border-style: solid;\
+                overflow-y: scroll;\
             ";
             $("body").append(sidebar);
             $("#app").css("width", "70%");

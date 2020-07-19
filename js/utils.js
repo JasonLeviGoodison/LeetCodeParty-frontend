@@ -38,14 +38,14 @@ function userAlreadyInRoom(curRoom, userUUID) {
 }
 
 function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
-	var userIndex = "User " + memNumber;
+	var userIndex = "";
 	if (isMe) {
-		userIndex = "Me"
+		userIndex = " (Me)"
 	}
 
 	return {
 		userUUID: userUUID,
-		dom: "<li style='weight:bold;'>" + userIndex + " (<span style='color:" + nicknameInfo.nickname_color + ";'>" + nicknameInfo.nickname + "</span>)</li>",
+		dom: "<p style='weight:bold;'> <span style='color:" + nicknameInfo.nickname_color + ";'>" + nicknameInfo.nickname + "</span>" + userIndex + " joined</p>",
 		nicknameInfo: nicknameInfo
 	};
 }
