@@ -1,3 +1,5 @@
+var sideBar = new SideBar();
+
 function getInitData(sendResponse, curRoom) {
     sendResponse({
         roomId: curRoom.roomId,
@@ -45,6 +47,32 @@ function joinRoom(request, sendResponse, curRoom) {
             });
             return false;
         }
+
+        // Set the current room ID
+        curRoom.roomId = request.data.roomId;
+
+        // Since we are joining the room, this user is the first member of the room (to them)
+        curRoom.members.push(buildNewMemberInRoom(0, curRoom.userId, true, data.nicknameInfo))
+
+        for (var i = 0; i < data.members.length; i++) {
+            var currMember = data.members[i]
+            var currMemberObj = buildNewMemberInRoom(
+                curRoom.members.length,
+                currMember.participant_user_uuid,
+                false,
+                {
+                    nickname: currMember.nickname,
+                    nickname_color: currMember.nickname_color
+                }
+            )
+
+            curRoom.members.push(currMemberObj)
+        }
+
+        sendResponse({
+            roomId: curRoom.roomId,
+            members: curRoom.members
+        });
     });
     return true;
 }
@@ -67,6 +95,10 @@ function ContentScriptMH(request, sender, sendResponse, curRoom) {
             return joinRoom(request, sendResponse, curRoom);
         case "leaveRoom":
             return leaveRoom(sendResponse, curRoom);
+        case "toggleSideBar":
+            return sideBar.toggleSidebar()
+        case "test":
+            return sideBar.enqueue("Test", "error")
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;

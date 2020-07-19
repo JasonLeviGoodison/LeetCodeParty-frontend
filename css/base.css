@@ -70,21 +70,12 @@ html {
     padding: 10px;
   }
   
-  button:focus {
-    background-color: rgb(247, 219, 156);
-    color: white;
-    outline-style: none;
-  }
   
   button:hover {
     background-color: rgb(247, 219, 156);
     color: white;
   }
   
-  button:active {
-    background-color: rgb(247, 219, 156);
-    color: white;
-  }
   
   button:disabled {
     cursor: default;

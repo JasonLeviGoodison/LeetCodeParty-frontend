@@ -72,7 +72,8 @@ $(function() {
               roomId: roomIdFromUrl.toLowerCase(),
               problemId: problemId
             }, function(response) {
-              showConnected(roomIdFromUrl);
+              showConnected(response.roomId);
+              updateUsersInRoom(response.members);
             });
           }
         } else {
@@ -92,6 +93,10 @@ $(function() {
         });
       });
 
+      $("#toggle-sidebar").click(() => {
+        sendMessageToContentScript('toggleSideBar');
+      })
+
       $('#leave-room').click(function() {
         sendMessageToContentScript('leaveRoom', {}, function(response) {
           showDisconnected();
@@ -103,7 +108,6 @@ $(function() {
         var urlWithSessionId = tabs[0].url.split('?')[0] + '?roomId=' + encodeURIComponent(roomId);
         $('.disconnected').addClass('hidden');
         $('.connected').removeClass('hidden');
-        $('#show-chat').prop('checked', true);
         $('#share-url').val(urlWithSessionId).focus().select();
       };
 
