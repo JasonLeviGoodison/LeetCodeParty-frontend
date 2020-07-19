@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="../css/base.css">
     <script src="../js/sidebar.js"></script>
     <script src="../js/MessageHandlers/ContentScriptMH.js"></script>
+    <script src="../js/SocketListeners/Listeners.js"></script>
     <script src="../js/constants.js"></script>
     <script src="../js/utils.js"></script>
     <script src="../js/jquery-3.5.1.min.js"></script>
@@ -19,6 +20,11 @@
           <button id="create-session" type="button">Start party</button>
       </div>
       <div class="connected hidden">
+        <div class="members-in-room-container">
+          <p>Users in room:</p>
+          <ul class="members-in-room-list">
+          </ul>
+        </div>
         <p>Steps:</p>
         <ul>
           <li>Share link below with friends</li>

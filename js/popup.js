@@ -59,6 +59,9 @@ $(function() {
           showError(initData.errorMessage);
           return;
         }
+        if (initData.members) {
+          updateUsersInRoom(initData.members);
+        }
         if (!initData || initData.roomId === "") {
           var urlParams = getParams(tabs[0].url);
           console.log(urlParams);
@@ -69,7 +72,8 @@ $(function() {
               roomId: roomIdFromUrl.toLowerCase(),
               problemId: problemId
             }, function(response) {
-              showConnected(roomIdFromUrl);
+              showConnected(response.roomId);
+              updateUsersInRoom(response.members);
             });
           }
         } else {
@@ -87,6 +91,7 @@ $(function() {
             sendMessageToContentScript('test');
             sendMessageToContentScript('test');
             showConnected(response.roomId);
+            updateUsersInRoom(response.members);
           }
         });
       });
@@ -105,6 +110,15 @@ $(function() {
         $('#show-chat').prop('checked', true);
         $('#share-url').val(urlWithSessionId).focus().select();
       };
+
+      // updates users in room list
+      var updateUsersInRoom = function(members) {
+        if (!members) return;
+
+        for (var i = 0; i < members.length; i++) {
+          $('ul.members-in-room-list').append(members[i].dom);
+        }
+      }
 
       // connected/disconnected state
       var showError = function(errorMessage) {
