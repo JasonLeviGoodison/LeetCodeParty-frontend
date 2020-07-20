@@ -30,12 +30,20 @@
           <li>Share link below with friends</li>
           <li>Have them click the link, then click the LeetCode Party icon to join</li>
           <li>Enjoy!</li>
+        </ul>
         <input id="share-url" type="text" readonly="true" autocomplete="off" autofocus />
         <p class="copy-val">
           <small><a href="#" id="copy-btn">Copy URL</a></small>
         </p>
-          <button id="toggle-sidebar"> Toggle Chat</button>
           <button id="leave-room" type="button">Disconnect</button>
+          <div>
+          <!-- Rounded switch -->
+            <p>Toggle Sidebar</p>
+            <label class="switch">
+              <input type="checkbox">
+              <span id="toggle-sidebar" class="slider round"></span>
+            </label>
+          </div>
       </div>
     </div>
     <div class="some-error hidden">
