@@ -1,4 +1,4 @@
-const newUserEveryConnection = false;
+const newUserEveryConnection = true;
 
 window.addEventListener ("load", main, false);
 
