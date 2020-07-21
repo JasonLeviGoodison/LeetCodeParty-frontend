@@ -78,7 +78,7 @@ function joinRoom(request, sendResponse, curRoom) {
 
 function leaveRoom(sendResponse, curRoom) {
     socket.emit('leaveRoom', { userId: curRoom.userId, roomId: curRoom.roomId }, function(_) {
-        curRoom.roomId = "";
+        handleRoomClosing(curRoom);
         sendResponse({});
     });
     return true;
