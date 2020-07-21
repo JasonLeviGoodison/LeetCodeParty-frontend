@@ -85,6 +85,12 @@ function leaveRoom(sendResponse, curRoom) {
     return true;
 }
 
+function readyUp(sendResponse, curRoom) {
+    socket.emit('readyUp', { userId: curRoom.userId, roomId: curRoom.roomId }, function(data) {
+       sendResponse(data);
+    });
+}
+
 function ContentScriptMH(request, sender, sendResponse, curRoom) {
     switch(request.type) {
         case "getInitData":
@@ -97,6 +103,8 @@ function ContentScriptMH(request, sender, sendResponse, curRoom) {
             return leaveRoom(sendResponse, curRoom);
         case "sidebar-toggle":
             return sideBar.toggleSidebar()
+        case "readyUp":
+            return readyUp(sendResponse, curRoom);
         case "sidebar-enqueue":
             console.log(request)
             const { text, eventType } = request.data;

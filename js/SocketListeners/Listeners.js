@@ -8,6 +8,12 @@ function SocketListen(socket, curRoom) {
     socket.on("userLeftRoom", (data) => {
         handleUserLeftRoom(curRoom, data.userId);
     });
+    socket.on("userReadyUp", (data) => {
+        console.log("User readied up !", data);
+    })
+    socket.on("roomReady", (data) => {
+        console.log("Room Ready: ", data);
+    })
 }
 
 function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {

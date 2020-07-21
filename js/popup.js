@@ -94,6 +94,12 @@ $(function() {
         });
       });
 
+      $('#ready-up').click(function() {
+        sendMessageToContentScript('readyUp', {}, function(response) {
+          console.log("got the response from ready up", response);
+        });
+      });
+
       $("#toggle-sidebar").click(() => {
         sendMessageToContentScript('sidebar-toggle');
       })
