@@ -1,4 +1,4 @@
-const newUserEveryConnection = false;
+const newUserEveryConnection = true;
 
 window.addEventListener ("load", main, false);
 
@@ -10,7 +10,7 @@ var curRoom = {
     problemId: "",
     socket: "",
     members: []
-}
+};
 
 function getStoredInfo() {
     chrome.storage.sync.get(INFO_STORE_KEY, function(items) {

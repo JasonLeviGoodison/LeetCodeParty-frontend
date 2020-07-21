@@ -60,7 +60,7 @@ $(function() {
           return;
         }
         if (initData.members) {
-          updateUsersInRoom(initData.members);
+          //updateUsersInRoom(initData.members);
         }
         if (!initData || initData.roomId === "") {
           var urlParams = getParams(tabs[0].url);
@@ -89,12 +89,13 @@ $(function() {
           if (response.roomId) {
             showConnected(response.roomId);
             updateUsersInRoom(response.members);
+            sendMessageToContentScript('sidebar-toggle');
           }
         });
       });
 
       $("#toggle-sidebar").click(() => {
-        sendMessageToContentScript('toggleSideBar');
+        sendMessageToContentScript('sidebar-toggle');
       })
 
       $('#leave-room').click(function() {
@@ -116,6 +117,7 @@ $(function() {
         if (!members) return;
 
         for (var i = 0; i < members.length; i++) {
+          sendMessageToContentScript('sidebar-enqueue', {text: members[i].dom, eventType: 'newuser'});
           $('ul.members-in-room-list').append(members[i].dom);
         }
       }

@@ -79,7 +79,7 @@ function joinRoom(request, sendResponse, curRoom) {
 
 function leaveRoom(sendResponse, curRoom) {
     socket.emit('leaveRoom', { userId: curRoom.userId, roomId: curRoom.roomId }, function(_) {
-        curRoom.roomId = "";
+        handleRoomClosing(curRoom);
         sendResponse({});
     });
     return true;
@@ -95,10 +95,12 @@ function ContentScriptMH(request, sender, sendResponse, curRoom) {
             return joinRoom(request, sendResponse, curRoom);
         case "leaveRoom":
             return leaveRoom(sendResponse, curRoom);
-        case "toggleSideBar":
+        case "sidebar-toggle":
             return sideBar.toggleSidebar()
-        case "test":
-            return sideBar.enqueue("Test", "error")
+        case "sidebar-enqueue":
+            console.log(request)
+            const { text, eventType } = request.data;
+            return sideBar.enqueue(text, eventType);
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;
