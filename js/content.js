@@ -50,7 +50,7 @@ function main(evt) {
 
 // interaction with the popup
 chrome.runtime.onMessage.addListener(
-    (request, sender, sendResponse) => ContentScriptMH(request, sender, sendResponse, curRoom)
+    (request, sender, sendResponse) => ContentScriptHandlers(request, sender, sendResponse, curRoom)
   );
 
 // socket listeners (data flowing from the server)
