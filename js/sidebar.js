@@ -1,6 +1,7 @@
 class SideBar {
     constructor() {
-        this.sidebarOpen = false;
+        this.sidebarOpen = true;
+        this.created = false;
         this.events = [];
     }
 
@@ -35,7 +36,7 @@ class SideBar {
     }
 
     toggleSidebar() {
-        if(this.sidebarOpen) {
+        if(this.created && this.sidebarOpen) {
             var el = document.getElementById('mySidebar');
             el.parentNode.removeChild(el);
             $("#app").css("width", "100%");
@@ -64,6 +65,7 @@ class SideBar {
             $("#app").css("width", "70%");
             this.showList();
             this.sidebarOpen = true;
+            this.created = true;
         }
     }
 

@@ -4,7 +4,9 @@
     <title>LeetCode Party</title>
     <link rel="stylesheet" href="../css/base.css">
     <script src="../js/sidebar.js"></script>
-    <script src="../js/MessageHandlers/ContentScriptMH.js"></script>
+    <script src="../js/DomManipulations.js"></script>
+    <script src="../js/MessageHandlers/ContentScriptHandlers.js"></script>
+    <script src="../js/MessageHandlers/PopupButtonHandlers.js"></script>
     <script src="../js/SocketListeners/Listeners.js"></script>
     <script src="../js/constants.js"></script>
     <script src="../js/utils.js"></script>
@@ -12,7 +14,7 @@
     <script src="../js/popup.js"></script>
 
   </head>
-  <body>
+  <body id="body">
     <div class="no-error">
       <h1>LeetCode Party</h1>
       <div class="disconnected">
@@ -20,30 +22,33 @@
           <button id="create-session" type="button">Start party</button>
       </div>
       <div class="connected hidden">
-        <div class="members-in-room-container">
-          <p>Users in room:</p>
-          <ul class="members-in-room-list">
-          </ul>
+        <div class="your-room">
+          <div style="font-size: 21px">Your Room</div>
+          <div class="members-in-room-container">
+              <div class="members-in-room-list">
+              </div>
+          </div>
+          <button id="leave-room" type="button">Leave</button>
         </div>
-        <p>Steps:</p>
-        <ul>
-          <li>Share link below with friends</li>
-          <li>Have them click the link, then click the LeetCode Party icon to join</li>
-          <li>Enjoy!</li>
-        </ul>
-        <input id="share-url" type="text" readonly="true" autocomplete="off" autofocus />
-        <p class="copy-val">
-          <small><a href="#" id="copy-btn">Copy URL</a></small>
-        </p>
-          <button id="leave-room" type="button">Disconnect</button>
-          <div>
-          <!-- Rounded switch -->
-            <p>Toggle Sidebar</p>
-            <label class="switch">
-              <input type="checkbox">
+        <div class="share-section">
+          <h3>Share with friends</h3>
+          <div style="display:flex;justify-content: center;">
+            <input id="share-url" type="text" readonly="true" autocomplete="off" autofocus />
+            <div class="tooltip">
+              <span class="tooltiptext" id="tool-tip">Copy to clipboard</span>
+              <input id="copy-button" type="image" src="../images/copy.png" style="width: 25px;height: 25px;"/>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;justify-content: center;flex-direction: column;padding-top:45px;">
+          <div>Toggle Sidebar</div>
+          <div style="padding: 10px;">
+            <label style="" class="switch">
+              <input id="slider-input" type="checkbox">
               <span id="toggle-sidebar" class="slider round"></span>
             </label>
           </div>
+        </div>
       </div>
     </div>
     <div class="some-error hidden">

@@ -3,7 +3,8 @@ var sideBar = new SideBar();
 function getInitData(sendResponse, curRoom) {
     sendResponse({
         roomId: curRoom.roomId,
-        members: curRoom.members
+        members: curRoom.members,
+        sideBarOpen: sideBar.sidebarOpen
     });
     return;
 }
@@ -85,7 +86,7 @@ function leaveRoom(sendResponse, curRoom) {
     return true;
 }
 
-function ContentScriptMH(request, sender, sendResponse, curRoom) {
+function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
     switch(request.type) {
         case "getInitData":
             return getInitData(sendResponse, curRoom);
