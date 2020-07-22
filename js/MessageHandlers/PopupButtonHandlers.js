@@ -32,6 +32,7 @@ function PopupButtonHandlers(send, tabs) {
     $('#leave-room').click(function() {
         send('leaveRoom', {}, function(response) {
             showDisconnected();
+            resetHTML();
         });
     });
 
