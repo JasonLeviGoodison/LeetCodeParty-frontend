@@ -9,8 +9,12 @@ var showConnected = function(roomId, tabs) {
 // updates users in room list
 var updateUsersInRoom = function(members) {
     if (!members) return;
+    $('.members-in-room-list').empty();
     for (var i = 0; i < members.length; i++) {
-        $('.members-in-room-list').append(members[i].dom);
+        var currMem = members[i];
+
+        var domElement = "<p style='font-weight:bold;'> " + currMem.domName + " " + currMem.domIsMe + " " + currMem.domReady;
+        $('.members-in-room-list').append(domElement);
     }
 }
 
@@ -27,3 +31,23 @@ var showDisconnected = function() {
     $('.connected').addClass('hidden');
     $('#control-lock').prop('checked', false);
 };
+
+var updateHostLeaveButton = function() {
+    $('#leave-room').text('Close Room');
+}
+
+var updateReadyUpButton = function(state) {
+    if (state) {
+        $('#ready-up').text('Un Ready');
+    } else {
+        $('#ready-up').text('Ready up');
+    }
+}
+
+var showStartRoomButton = function(show) {
+    if (show) {
+        $('#start-room').show();
+    } else {
+        $('#start-room').hide();
+    }
+}

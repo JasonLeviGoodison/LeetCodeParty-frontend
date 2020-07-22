@@ -9,6 +9,9 @@ var curRoom = {
     roomId: "",
     problemId: "",
     socket: "",
+    amReady: false,
+    roomReady: false,
+    amHost: false,
     members: []
 };
 
