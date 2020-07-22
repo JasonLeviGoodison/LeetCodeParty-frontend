@@ -3,7 +3,8 @@ var sideBar = new SideBar();
 function getInitData(sendResponse, curRoom) {
     sendResponse({
         roomId: curRoom.roomId,
-        members: curRoom.members
+        members: curRoom.members,
+        sideBarOpen: sideBar.sidebarOpen
     });
     return;
 }
