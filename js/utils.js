@@ -45,7 +45,7 @@ function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
 
 	return {
 		userUUID: userUUID,
-		dom: "<p style='weight:bold;'> <span style='color:" + nicknameInfo.nickname_color + ";'>" + nicknameInfo.nickname + "</span>" + userIndex + " joined</p>",
+		dom: "<p style='weight:bold;'> <span style='color:" + nicknameInfo.nickname_color + ";'>" + nicknameInfo.nickname + "</span>" + userIndex + "</p>",
 		nicknameInfo: nicknameInfo
 	};
 }

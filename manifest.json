@@ -23,7 +23,9 @@
       "js/constants.js",
       "js/sidebar.js",
       "js/utils.js",
-      "js/MessageHandlers/ContentScriptMH.js",
+      "js/DomManipulations.js",
+      "js/MessageHandlers/ContentScriptHandlers.js",
+      "js/MessageHandlers/PopupButtonHandlers.js",
       "js/SocketListeners/Listeners.js",
       "js/socket.io.js",
       "js/content.js"
@@ -31,8 +33,10 @@
     "web_accessible_resources": [
        "js/socket.io.js",
        "js/utils.js",
+       "js/DomManipulations.js",
        "js/sidebar.js",
-       "js/MessageHandlers/ContentScriptMH.js",
+       "js/MessageHandlers/ContentScriptHandlers.js",
+       "js/MessageHandlers/PopupButtonHandlers.js",
        "js/SocketListeners/Listeners.js",
        "js/constants.js"
     ],
