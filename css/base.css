@@ -192,3 +192,12 @@ input:checked + .slider:before {
   visibility: visible;
   opacity: 1;
 }
+
+.letter-spacing-2px {
+  letter-spacing: 2px;
+}
+
+.inline-img {
+  display: inline-block;
+  vertical-align: middle;
+}

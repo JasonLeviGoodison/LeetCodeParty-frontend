@@ -4,7 +4,10 @@ function getInitData(sendResponse, curRoom) {
     sendResponse({
         roomId: curRoom.roomId,
         members: curRoom.members,
-        sideBarOpen: sideBar.sidebarOpen
+        sideBarOpen: sideBar.sidebarOpen,
+        amReady: curRoom.amReady,
+        roomReady: curRoom.roomReady,
+        amHost: curRoom.amHost
     });
     return;
 }
@@ -17,10 +20,11 @@ function createRoom(request, sendResponse, curRoom) {
     socket.emit('createRoom', payload, function(data) {
         curRoom.roomId = data.roomId;
         curRoom.problemId = data.problemId;
+        curRoom.amHost = true;
         curRoom.members.push(buildNewMemberInRoom(curRoom.members.length, curRoom.userId, true, data.nicknameInfo));
         sendResponse({
             roomId: curRoom.roomId,
-            members: curRoom.members
+            members: curRoom.members,
         });
     });
     return true;
@@ -66,6 +70,9 @@ function joinRoom(request, sendResponse, curRoom) {
                 }
             )
 
+            // Set if this user is ready or not
+            setMemberReadyState(currMemberObj, currMember.ready);
+
             curRoom.members.push(currMemberObj)
         }
 
@@ -85,6 +92,23 @@ function leaveRoom(sendResponse, curRoom) {
     return true;
 }
 
+function readyUp(sendResponse, curRoom) {
+    socket.emit('readyUp', { userId: curRoom.userId, roomId: curRoom.roomId, newState: !curRoom.amReady }, function(data) {
+        searchAndSetMemberReadyState(curRoom, curRoom.userId, !curRoom.amReady, function() {
+            curRoom.amReady = !curRoom.amReady;
+            curRoom.roomReady = allUsersReady(curRoom);
+            var obj = {
+                members: curRoom.members,
+                readyState: curRoom.amReady,
+                allUsersReady: curRoom.roomReady,
+                amHost: curRoom.amHost
+            };
+            sendResponse(obj);
+        });
+    });
+    return true;
+}
+
 function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
     switch(request.type) {
         case "getInitData":
@@ -95,6 +119,8 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
             return joinRoom(request, sendResponse, curRoom);
         case "leaveRoom":
             return leaveRoom(sendResponse, curRoom);
+        case "readyUp":
+            return readyUp(sendResponse, curRoom);
         case "sidebar-toggle":
             return sideBar.toggleSidebar()
         case "sidebar-enqueue":

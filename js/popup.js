@@ -43,6 +43,12 @@ $(function() {
           updateUsersInRoom(initData.members);
         }
 
+        if (initData.amReady === true || initData.amReady === false) {
+          updateReadyUpButton(initData.amReady);
+        }
+
+        showStartRoomButton(initData.roomReady && initData.amHost);
+
         if (!initData || initData.roomId === "") {
 
           var urlParams = getParams(tabs[0].url);

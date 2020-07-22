@@ -19,6 +19,7 @@ function PopupButtonHandlers(send, tabs) {
             if (response.roomId) {
                 showConnected(response.roomId, tabs);
                 updateUsersInRoom(response.members);
+                updateHostLeaveButton();
                 send('sidebar-toggle');
             }
         });
@@ -31,6 +32,14 @@ function PopupButtonHandlers(send, tabs) {
     $('#leave-room').click(function() {
         send('leaveRoom', {}, function(response) {
             showDisconnected();
+        });
+    });
+
+    $('#ready-up').click(function() {
+        send('readyUp', {}, function(response) {
+            updateUsersInRoom(response.members);
+            updateReadyUpButton(response.readyState);
+            showStartRoomButton(response.allUsersReady && response.amHost);
         });
     });
 }

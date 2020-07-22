@@ -8,6 +8,12 @@ function SocketListen(socket, curRoom) {
     socket.on("userLeftRoom", (data) => {
         handleUserLeftRoom(curRoom, data.userId);
     });
+    socket.on("userReadyUp", (data) => {
+        handleUserReadyUp(curRoom, data.userId, data.readyState);
+    });
+    socket.on("roomReady", (data) => {
+        handleRoomReady(curRoom, data.allUsersReady);
+    });
 }
 
 function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
@@ -15,6 +21,8 @@ function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
         let newUser = buildNewMemberInRoom(curRoom.members.length, memberId, false, nicknameInfo);
         curRoom.members.push(newUser);
         sideBar.enqueue(newUser.dom, 'newuser');
+
+        curRoom.roomReady = allUsersReady(curRoom);
     }
 }
 
@@ -26,4 +34,15 @@ function handleUserLeftRoom(curRoom, userId) {
             break;
         }
     }
+}
+
+function handleUserReadyUp(curRoom, userId, readyState) {
+    searchAndSetMemberReadyState(curRoom, userId, readyState, function() {
+        curRoom.roomReady = allUsersReady(curRoom);
+    });
+}
+
+function handleRoomReady(curRoom, roomReady) {
+    console.log("Handling Room Ready: ", roomReady);
+    curRoom.roomReady = roomReady;
 }
