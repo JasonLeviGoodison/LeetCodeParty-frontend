@@ -29,6 +29,8 @@ function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
 function searchAndSetMemberReadyState(curRoom, memberUUID, readyState, callback) {
     for (var i = 0; i < curRoom.members.length; i++) {
         if (curRoom.members[i].userUUID === memberUUID) {
+            let readyStateName = readyState === true ? "ready" : "not ready";
+            sideBar.enqueue(curRoom.members[i].domName + " is " + readyStateName, 'info');
             setMemberReadyState(curRoom.members[i], readyState);
             break;
         }

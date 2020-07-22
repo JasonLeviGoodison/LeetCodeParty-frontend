@@ -31,7 +31,7 @@ $(function() {
           showError("Please select a problem before starting the party");
           return;
         }
-        console.log(initData)
+        
         $( "#slider-input" ).prop( "checked", initData.sideBarOpen );
 
         if (initData && initData.errorMessage) {
