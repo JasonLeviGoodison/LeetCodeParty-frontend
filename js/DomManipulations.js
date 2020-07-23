@@ -51,3 +51,9 @@ var showStartRoomButton = function(show) {
         $('#start-room').hide();
     }
 }
+
+// resets all html to its original state
+var resetHTML = function() {
+    showStartRoomButton(false);
+    updateReadyUpButton(false);
+}
