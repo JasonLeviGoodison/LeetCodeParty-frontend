@@ -31,7 +31,7 @@ function PopupButtonHandlers(send, tabs) {
         send('leaveRoom', {}, function(response) {
             console.log("Showing disconnected!")
             showDisconnected();
-            //resetHTML();
+            resetHTML();
         });
     });
 
