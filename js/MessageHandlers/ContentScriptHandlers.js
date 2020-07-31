@@ -1,14 +1,18 @@
 var sideBar = new SideBar();
 
-function getInitData(sendResponse, curRoom) {
-    sendResponse({
+function buildInitData(curRoom) {
+    return {
         roomId: curRoom.roomId,
         members: curRoom.members,
         sideBarOpen: sideBar.sidebarOpen,
         amReady: curRoom.amReady,
         roomReady: curRoom.roomReady,
         amHost: curRoom.amHost
-    });
+    };
+}
+
+function getInitData(sendResponse, curRoom) {
+    sendResponse(buildInitData(curRoom));
     return;
 }
 
@@ -21,10 +25,13 @@ function createRoom(request, sendResponse, curRoom) {
         curRoom.roomId = data.roomId;
         curRoom.problemId = data.problemId;
         curRoom.amHost = true;
-        curRoom.members.push(buildNewMemberInRoom(curRoom.members.length, curRoom.userId, true, data.nicknameInfo));
-        sendResponse({
-            roomId: curRoom.roomId,
-            members: curRoom.members,
+        addNewMembersToRoom(curRoom, [
+            buildNewMemberInRoom(curRoom.members.length, curRoom.userId, true, data.nicknameInfo)
+        ], function () {
+            sendResponse({
+                roomId: curRoom.roomId,
+                members: curRoom.members,
+            });
         });
     });
     return true;
@@ -56,7 +63,8 @@ function joinRoom(request, sendResponse, curRoom) {
         curRoom.roomId = request.data.roomId;
 
         // Since we are joining the room, this user is the first member of the room (to them)
-        curRoom.members.push(buildNewMemberInRoom(0, curRoom.userId, true, data.nicknameInfo))
+        var newMembers = [];
+        newMembers.push(buildNewMemberInRoom(0, curRoom.userId, true, data.nicknameInfo))
 
         for (var i = 0; i < data.members.length; i++) {
             var currMember = data.members[i]
@@ -73,12 +81,14 @@ function joinRoom(request, sendResponse, curRoom) {
             // Set if this user is ready or not
             setMemberReadyState(currMemberObj, currMember.ready);
 
-            curRoom.members.push(currMemberObj)
+            newMembers.push(currMemberObj)
         }
 
-        sendResponse({
-            roomId: curRoom.roomId,
-            members: curRoom.members
+        addNewMembersToRoom(curRoom, newMembers, function () {
+            sendResponse({
+                roomId: curRoom.roomId,
+                members: curRoom.members
+            });
         });
     });
     return true;
