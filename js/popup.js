@@ -48,6 +48,7 @@ $(function() {
     active: true,
     currentWindow: true
   }, function(tabs) {
+    var tabID = tabs[0].id;
 
     var send = function(type, data, callback) {
         chrome.tabs.sendMessage(tabs[0].id, {
@@ -69,11 +70,18 @@ $(function() {
 
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         PopupMessageHandlers(message, sendResponse, function(initData) {
+            if (message.forTabId != tabID) {
+                console.log("Caught message for different tabID");
+                return;
+            }
+
             refreshDom(send, tabs, initData);
         })
     });
 
-    send('getInitData', {}, function(initData) {
+    send('getInitData', {
+        tabId: tabID
+    }, function(initData) {
         refreshDom(send, tabs, initData);
     });
 

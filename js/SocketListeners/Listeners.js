@@ -39,9 +39,7 @@ function handleUserLeftRoom(curRoom, userId) {
 
             curRoom.members.splice(i, 1);
 
-            if (curRoom.userId != curRoom.members[i].userUUID) {
-                SendMessageToPopup(USER_LEFT_MESSAGE, curRoom, function(response) {});
-            }
+            SendMessageToPopup(USER_LEFT_MESSAGE, curRoom, function(response) {});
             break;
         }
 

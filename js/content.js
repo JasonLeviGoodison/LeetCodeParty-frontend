@@ -5,6 +5,7 @@ window.addEventListener ("load", main, false);
 var socket = io(ENDPOINT);
 
 var curRoom = {
+    tabId: "",
     userId: "",
     roomId: "",
     problemId: "",

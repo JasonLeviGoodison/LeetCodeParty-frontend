@@ -122,6 +122,10 @@ function readyUp(sendResponse, curRoom) {
 function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
     switch(request.type) {
         case "getInitData":
+            if (request.data.tabId) {
+                curRoom.tabId = request.data.tabId;
+            }
+
             return getInitData(sendResponse, curRoom);
         case "createRoom":
             return createRoom(request, sendResponse, curRoom);
