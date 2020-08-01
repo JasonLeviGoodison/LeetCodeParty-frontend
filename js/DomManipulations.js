@@ -26,6 +26,13 @@ var showError = function(errorMessage) {
     $("#error-msg").text(errorMessage);
 };
 
+var unshowError = function() {
+    $('.connected').addClass('hidden');
+    $('.disconnected').removeClass('hidden');
+    $('.some-error').addClass('hidden');
+    $("#error-msg").text("");
+}
+
 var showDisconnected = function() {
     $('.disconnected').removeClass('hidden');
     $('.connected').addClass('hidden');
