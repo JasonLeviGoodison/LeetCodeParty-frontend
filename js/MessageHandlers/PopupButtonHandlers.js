@@ -1,5 +1,3 @@
-
-
 function PopupButtonHandlers(send, tabs) {
     $("#copy-button").click( () => {
         var copyText = document.getElementById("share-url");
@@ -31,6 +29,7 @@ function PopupButtonHandlers(send, tabs) {
     
     $('#leave-room').click(function() {
         send('leaveRoom', {}, function(response) {
+            console.log("Showing disconnected!")
             showDisconnected();
             resetHTML();
         });

@@ -8,6 +8,20 @@ function userAlreadyInRoom(curRoom, userUUID) {
     return false;
 }
 
+function addNewMembersToRoom(curRoom, newMembers, cb) {
+    for (var i = 0; i < newMembers.length; i++) {
+        curRoom.members.push(newMembers[i]);
+    }
+
+    function compare(a, b) {
+        return a.nicknameInfo.nickname.localeCompare(b.nicknameInfo.nickname);
+    }
+
+    curRoom.members.sort(compare);
+
+    return cb();
+}
+
 function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
     var domIsMe = "";
     if (isMe) {
