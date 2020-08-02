@@ -102,6 +102,10 @@ function leaveRoom(sendResponse, curRoom) {
     return true;
 }
 
+function resetRoom(curRoom) {
+    handleRoomClosing(curRoom);
+}
+
 function readyUp(sendResponse, curRoom) {
     socket.emit('readyUp', { userId: curRoom.userId, roomId: curRoom.roomId, newState: !curRoom.amReady }, function(data) {
         searchAndSetMemberReadyState(curRoom, curRoom.userId, !curRoom.amReady, function() {
@@ -121,26 +125,28 @@ function readyUp(sendResponse, curRoom) {
 
 function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
     switch(request.type) {
-        case "getInitData":
+        case GET_INIT_DATA_MESSAGE:
             if (request.data.tabId) {
                 curRoom.tabId = request.data.tabId;
             }
 
             return getInitData(sendResponse, curRoom);
-        case "createRoom":
+        case CREATE_ROOM_MESSAGE:
             return createRoom(request, sendResponse, curRoom);
-        case "joinRoom":
+        case JOIN_ROOM_MESSAGE:
             return joinRoom(request, sendResponse, curRoom);
-        case "leaveRoom":
+        case LEAVE_ROOM_MESSAGE:
             return leaveRoom(sendResponse, curRoom);
-        case "readyUp":
+        case READY_UP_MESSAGE:
             return readyUp(sendResponse, curRoom);
-        case "sidebar-toggle":
+        case TOGGLE_SIDEBAR_MESSAGE:
             return sideBar.toggleSidebar()
-        case "sidebar-enqueue":
+        case ENQUE_IN_SIDEBAR:
             console.log(request)
             const { text, eventType } = request.data;
             return sideBar.enqueue(text, eventType);
+        case RESET_ROOM_MESSAGE:
+            return resetRoom(curRoom);
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;

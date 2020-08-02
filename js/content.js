@@ -21,11 +21,11 @@ function getStoredInfo() {
         var { userId } = items;
     
         if (userId && !newUserEveryConnection) {
-            socket.emit("newSocket", { userId });
+            socket.emit(NEW_SOCKET_MESSAGE, { userId });
             useToken(userId);
         } else {
-            socket.emit("getNewUserId");
-            socket.on("userId", (userId) => {
+            socket.emit(GET_NEW_USER_ID_MESSAGE);
+            socket.on(USER_ID_MESSAGE, (userId) => {
                 chrome.storage.sync.set({userId}, function() {
                     useToken(userId);
                 });
@@ -49,13 +49,12 @@ function main(evt) {
         console.log("here", $("div[class=CodeMirror-code]").text());
         let code = $("div[class=\"CodeMirror-code\"]");
     });
-
 }
 
 // interaction with the popup
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => ContentScriptHandlers(request, sender, sendResponse, curRoom)
-  );
+);
 
 // socket listeners (data flowing from the server)
 SocketListen(socket, curRoom);

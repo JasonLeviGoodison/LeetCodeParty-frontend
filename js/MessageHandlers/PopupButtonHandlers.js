@@ -10,7 +10,7 @@ function PopupButtonHandlers(send, tabs) {
       });
     
     $('#create-session').click(function() {
-        send('createRoom', {
+        send(CREATE_ROOM_MESSAGE, {
             problemId: getProblemID(tabs)
         }, function(response) {
             console.log("got the response from create session", response)
@@ -24,11 +24,11 @@ function PopupButtonHandlers(send, tabs) {
     });
     
     $("#toggle-sidebar").click(() => {
-        send('sidebar-toggle');
+        send(TOGGLE_SIDEBAR_MESSAGE);
     });
     
     $('#leave-room').click(function() {
-        send('leaveRoom', {}, function(response) {
+        send(LEAVE_ROOM_MESSAGE, {}, function(response) {
             console.log("Showing disconnected!")
             showDisconnected();
             resetHTML();
@@ -36,10 +36,16 @@ function PopupButtonHandlers(send, tabs) {
     });
 
     $('#ready-up').click(function() {
-        send('readyUp', {}, function(response) {
+        send(READY_UP_MESSAGE, {}, function(response) {
             updateUsersInRoom(response.members);
             updateReadyUpButton(response.readyState);
             showStartRoomButton(response.allUsersReady && response.amHost);
+        });
+    });
+
+    $('#close-error').click(function() {
+        send(RESET_ROOM_MESSAGE, {}, function(response) {
+            unshowError();
         });
     });
 }

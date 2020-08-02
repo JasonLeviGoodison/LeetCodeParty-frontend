@@ -26,7 +26,7 @@ function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
 
             curRoom.roomReady = allUsersReady(curRoom);
 
-            SendMessageToPopup(NEW_MEMBER_MESSAGE, curRoom, function(response) {});
+            SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
         });
     }
 }
@@ -39,7 +39,7 @@ function handleUserLeftRoom(curRoom, userId) {
 
             curRoom.members.splice(i, 1);
 
-            SendMessageToPopup(USER_LEFT_MESSAGE, curRoom, function(response) {});
+            SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
             break;
         }
 
@@ -50,7 +50,7 @@ function handleUserReadyUp(curRoom, userId, readyState) {
     searchAndSetMemberReadyState(curRoom, userId, readyState, function() {
         curRoom.roomReady = allUsersReady(curRoom);
 
-        SendMessageToPopup(USER_READY_UP_MESSAGE, curRoom, function(response) {});
+        SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
     });
 }
 
@@ -58,11 +58,11 @@ function handleRoomReady(curRoom, roomReady) {
     console.log("Handling Room Ready: ", roomReady);
     curRoom.roomReady = roomReady;
 
-    SendMessageToPopup(ROOM_READY_MESSAGE, curRoom, function(response) {});
+    SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
 }
 
 function handleUserRoomClosing(curRoom) {
     handleRoomClosing(curRoom);
 
-    SendMessageToPopup(ROOM_READY_MESSAGE, curRoom, function(response) {});
+    SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
 }
