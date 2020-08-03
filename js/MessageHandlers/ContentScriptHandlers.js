@@ -127,6 +127,7 @@ function readyUp(sendResponse, curRoom) {
 
 function startRoom(sendResponse, curRoom) {
     socket.emit(START_ROOM_MESSAGE, {roomId: curRoom.roomId}, function(data) {
+        curRoom.roomStarted = true;
         sendResponse();
     });
 }
