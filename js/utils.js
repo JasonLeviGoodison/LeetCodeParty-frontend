@@ -33,13 +33,15 @@ function handleRoomClosing(curRoom) {
 }
 
 function resetCurRoom(curRoom) {
-	curRoom.user = "";
+	curRoom.tabId = "";
+	curRoom.userId = "";
 	curRoom.roomId = "";
 	curRoom.problemId = "";
 	curRoom.socket = "";
 	curRoom.members = [];
 	curRoom.amReady = false;
 	curRoom.roomReady = false;
+	curRoom.roomStarted = false;
 	curRoom.amHost = false;
 }
 
