@@ -1,14 +1,18 @@
 var sideBar = new SideBar();
 
-function getInitData(sendResponse, curRoom) {
-    sendResponse({
+function buildInitData(curRoom) {
+    return {
         roomId: curRoom.roomId,
         members: curRoom.members,
         sideBarOpen: sideBar.sidebarOpen,
         amReady: curRoom.amReady,
         roomReady: curRoom.roomReady,
         amHost: curRoom.amHost
-    });
+    };
+}
+
+function getInitData(sendResponse, curRoom) {
+    sendResponse(buildInitData(curRoom));
     return;
 }
 
@@ -21,10 +25,13 @@ function createRoom(request, sendResponse, curRoom) {
         curRoom.roomId = data.roomId;
         curRoom.problemId = data.problemId;
         curRoom.amHost = true;
-        curRoom.members.push(buildNewMemberInRoom(curRoom.members.length, curRoom.userId, true, data.nicknameInfo));
-        sendResponse({
-            roomId: curRoom.roomId,
-            members: curRoom.members,
+        addNewMembersToRoom(curRoom, [
+            buildNewMemberInRoom(curRoom.members.length, curRoom.userId, true, data.nicknameInfo)
+        ], function () {
+            sendResponse({
+                roomId: curRoom.roomId,
+                members: curRoom.members,
+            });
         });
     });
     return true;
@@ -56,7 +63,8 @@ function joinRoom(request, sendResponse, curRoom) {
         curRoom.roomId = request.data.roomId;
 
         // Since we are joining the room, this user is the first member of the room (to them)
-        curRoom.members.push(buildNewMemberInRoom(0, curRoom.userId, true, data.nicknameInfo))
+        var newMembers = [];
+        newMembers.push(buildNewMemberInRoom(0, curRoom.userId, true, data.nicknameInfo))
 
         for (var i = 0; i < data.members.length; i++) {
             var currMember = data.members[i]
@@ -73,12 +81,14 @@ function joinRoom(request, sendResponse, curRoom) {
             // Set if this user is ready or not
             setMemberReadyState(currMemberObj, currMember.ready);
 
-            curRoom.members.push(currMemberObj)
+            newMembers.push(currMemberObj)
         }
 
-        sendResponse({
-            roomId: curRoom.roomId,
-            members: curRoom.members
+        addNewMembersToRoom(curRoom, newMembers, function () {
+            sendResponse({
+                roomId: curRoom.roomId,
+                members: curRoom.members
+            });
         });
     });
     return true;
@@ -90,6 +100,10 @@ function leaveRoom(sendResponse, curRoom) {
         sendResponse({});
     });
     return true;
+}
+
+function resetRoom(curRoom) {
+    handleRoomClosing(curRoom);
 }
 
 function readyUp(sendResponse, curRoom) {
@@ -111,22 +125,28 @@ function readyUp(sendResponse, curRoom) {
 
 function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
     switch(request.type) {
-        case "getInitData":
+        case GET_INIT_DATA_MESSAGE:
+            if (request.data.tabId) {
+                curRoom.tabId = request.data.tabId;
+            }
+
             return getInitData(sendResponse, curRoom);
-        case "createRoom":
+        case CREATE_ROOM_MESSAGE:
             return createRoom(request, sendResponse, curRoom);
-        case "joinRoom":
+        case JOIN_ROOM_MESSAGE:
             return joinRoom(request, sendResponse, curRoom);
-        case "leaveRoom":
+        case LEAVE_ROOM_MESSAGE:
             return leaveRoom(sendResponse, curRoom);
-        case "readyUp":
+        case READY_UP_MESSAGE:
             return readyUp(sendResponse, curRoom);
-        case "sidebar-toggle":
+        case TOGGLE_SIDEBAR_MESSAGE:
             return sideBar.toggleSidebar()
-        case "sidebar-enqueue":
+        case ENQUE_IN_SIDEBAR:
             console.log(request)
             const { text, eventType } = request.data;
             return sideBar.enqueue(text, eventType);
+        case RESET_ROOM_MESSAGE:
+            return resetRoom(curRoom);
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;

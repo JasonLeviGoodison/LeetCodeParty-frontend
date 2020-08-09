@@ -5,6 +5,7 @@ window.addEventListener ("load", main, false);
 var socket = io(ENDPOINT);
 
 var curRoom = {
+    tabId: "",
     userId: "",
     roomId: "",
     problemId: "",
@@ -20,11 +21,11 @@ function getStoredInfo() {
         var { userId } = items;
     
         if (userId && !newUserEveryConnection) {
-            socket.emit("newSocket", { userId });
+            socket.emit(NEW_SOCKET_MESSAGE, { userId });
             useToken(userId);
         } else {
-            socket.emit("getNewUserId");
-            socket.on("userId", (userId) => {
+            socket.emit(GET_NEW_USER_ID_MESSAGE);
+            socket.on(USER_ID_MESSAGE, (userId) => {
                 chrome.storage.sync.set({userId}, function() {
                     useToken(userId);
                 });
