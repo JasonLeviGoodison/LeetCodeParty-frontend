@@ -70,6 +70,7 @@ class SideBar {
                 height:100%;\
                 background: #3a3939;\
                 overflow-y: scroll;\
+                padding: 10px;\
             ";
             $("body").append(sidebar);
             $("#app").css("width", "70%");

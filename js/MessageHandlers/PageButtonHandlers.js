@@ -26,23 +26,24 @@ function PageButtonHandlers() {
                     });
 
                     var submitMetaData = {
-                        "runTime": values[0],
-                        "fasterThanTime": values[1],
-                        "memoryUsage": values[2],
-                        "lessThanMemory": values[3],
-                        lang
+                        runTime: values[0],
+                        fasterThanTime: values[1],
+                        memoryUsage: values[2],
+                        lessThanMemory: values[3],
+                        lang,
+                        newState: true,
                     }
 
                     console.log(submitMetaData)
                     let payload = {
                         roomId: curRoom.roomId,
                         userId: curRoom.userId,
-                        newState: true
+                        meta: submitMetaData
                     }
-                    socket.emit("userSubmitted", payload, (data) => {
+                    socket.emit(USER_SUBMITTED, payload, (data) => {
                         displayUserFinished(data.userId, submitMetaData);
                     });
-                    let code = $("div[class=\"CodeMirror-code\"]");
+                    //let code = $("div[class=\"CodeMirror-code\"]");
                     clearInterval(waitForResult);
                 }
                 else if (status === "Wrong Answer" || status === "Runtime Error") {

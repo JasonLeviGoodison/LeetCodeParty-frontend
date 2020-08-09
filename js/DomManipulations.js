@@ -62,7 +62,8 @@ var displayUserFinished = function (userId, metaData) {
     for (var i = 0; i < curRoom.members.length; i++) {
         let curMem = curRoom.members[i];
         if (curMem.userUUID === userId) {
-            sideBar.enqueue(curMem.domName + " " + curMem.domIsMe + " finshed the problem!", 'submitted', metaData);
+            let text = createUserSubmittedText(curMem)
+            sideBar.enqueue(text, 'submitted', metaData);
             break;
         }
     }

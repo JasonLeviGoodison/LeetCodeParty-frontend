@@ -17,6 +17,7 @@ const NEW_MEMBER_MESSAGE = "newMember";
 const ROOM_CLOSING_MESSAGE = "roomClosing";
 const USER_LEFT_MESSAGE = "userLeftRoom";
 const USER_READY_UP_MESSAGE = "userReadyUp";
+const USER_SUBMITTED = "userSubmitted";
 const ROOM_READY_MESSAGE = "roomReady";
 
 // Messages from content.js to server socket
