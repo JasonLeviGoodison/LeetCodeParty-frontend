@@ -64,3 +64,7 @@ function removeURLParameter(url, parameter) {
 	}
 	return url;
 }
+
+function createUserSubmittedText(user, lang) {
+	
+}

@@ -18,7 +18,6 @@ var updateUsersInRoom = function(members) {
     }
 }
 
-// connected/disconnected state
 var showError = function(errorMessage) {
     $('.connected').addClass('hidden');
     $('.disconnected').addClass('hidden');
@@ -49,5 +48,15 @@ var showStartRoomButton = function(show) {
         $('#start-room').show();
     } else {
         $('#start-room').hide();
+    }
+}
+
+var displayUserFinished = function (userId, metaData) {
+    for (var i = 0; i < curRoom.members.length; i++) {
+        let curMem = curRoom.members[i];
+        if (curMem.userUUID === userId) {
+            sideBar.enqueue(curMem.domName + " " + curMem.domIsMe + " finshed the problem!", 'submitted', metaData);
+            break;
+        }
     }
 }

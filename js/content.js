@@ -36,25 +36,17 @@ function getStoredInfo() {
     });
 }
 
-function main(evt) {
-    getStoredInfo();
-
-    //TODO leaving here cause the css selectors are right
-    let submitButton = $("button[data-cy=\"run-code-btn\"]");
-    submitButton.click(function() {
-        console.log("Run Clicked")
-        let lang = $(".ant-select-selection-selected-value").attr("title");
-        console.log("Using lang", lang);
-        console.log("here", $("div[class=CodeMirror-code]").text());
-        let code = $("div[class=\"CodeMirror-code\"]");
-    });
-
-}
-
 // interaction with the popup
 chrome.runtime.onMessage.addListener(
     (request, sender, sendResponse) => ContentScriptHandlers(request, sender, sendResponse, curRoom)
-  );
+);
+
+function main(evt) {
+    getStoredInfo();
+    PageButtonHandlers();
+}
+
+
 
 // socket listeners (data flowing from the server)
 SocketListen(socket, curRoom);

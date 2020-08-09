@@ -14,6 +14,9 @@ function SocketListen(socket, curRoom) {
     socket.on("roomReady", (data) => {
         handleRoomReady(curRoom, data.allUsersReady);
     });
+    socket.on("userSubmitted", (data) => {
+        handleUserSubmitted(curRoom, data.userId, data.submittedState);
+    });
 }
 
 function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
@@ -46,4 +49,8 @@ function handleUserReadyUp(curRoom, userId, readyState) {
 function handleRoomReady(curRoom, roomReady) {
     console.log("Handling Room Ready: ", roomReady);
     curRoom.roomReady = roomReady;
+}
+
+function handleUserSubmitted(curRoom, userId, submittedState) {
+    displayUserFinished(userId);
 }

@@ -20,7 +20,6 @@ function PopupButtonHandlers(send, tabs) {
                 showConnected(response.roomId, tabs);
                 updateUsersInRoom(response.members);
                 updateHostLeaveButton();
-                send('sidebar-toggle');
             }
         });
     });
