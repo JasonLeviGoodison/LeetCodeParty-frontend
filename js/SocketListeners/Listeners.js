@@ -14,6 +14,9 @@ function SocketListen(socket, curRoom) {
     socket.on(ROOM_READY_MESSAGE, (data) => {
         handleRoomReady(curRoom, data.allUsersReady);
     });
+    socket.on(USER_SUBMITTED, (data) => {
+        handleUserSubmitted(curRoom, data.userId, data.meta);
+    });
 }
 
 function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
@@ -65,4 +68,8 @@ function handleUserRoomClosing(curRoom) {
     handleRoomClosing(curRoom);
 
     SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
+}
+
+function handleUserSubmitted(curRoom, userId, meta) {
+    displayUserFinished(userId, meta);
 }

@@ -1,14 +1,14 @@
 class SideBar {
     constructor() {
-        this.sidebarOpen = true;
-        this.created = false;
+        this.sidebarOpen = false;
         this.events = [];
     }
 
-    enqueue(text, eventType) {
+    enqueue(text, eventType, metaData) {
         let event = {
             text,
-            eventType
+            eventType,
+            metaData
         }
         this.events.push(event);
         console.log("events", this.events)
@@ -23,9 +23,20 @@ class SideBar {
             let color = 'white'
             let text = this.events[index].text;
             switch (this.events[index].eventType) {
+                case "submitted":
+                    let meta = this.events[index].metaData;
+                    text = text +
+                        "<br/>" +
+                        "<span style=\"padding-left: 20px;\"> Language: " + meta.lang + "</span>" +
+                        "<br/>" +
+                        "<span style=\"padding-left: 20px;\">Run Time: " + meta.runTime + "</span>" +
+                        "<br/>" +
+                        "<span style=\"padding-left: 20px;\"> Memory Usage: " + meta.memoryUsage + "</span>"
+                    break;
                 case "error":
                     color = 'red';
                     text = "Error: " + text;
+                    break;
                 default:
                     break;
             }
@@ -36,7 +47,7 @@ class SideBar {
     }
 
     toggleSidebar() {
-        if(this.created && this.sidebarOpen) {
+        if(this.sidebarOpen) {
             var el = document.getElementById('mySidebar');
             el.parentNode.removeChild(el);
             $("#app").css("width", "100%");
@@ -57,9 +68,9 @@ class SideBar {
                 right:0px;\
                 width:30%;\
                 height:100%;\
-                background:#222222;\
-                border-style: solid;\
+                background: #3a3939;\
                 overflow-y: scroll;\
+                padding: 10px;\
             ";
             $("body").append(sidebar);
             $("#app").css("width", "70%");

@@ -18,7 +18,6 @@ var updateUsersInRoom = function(members) {
     }
 }
 
-// connected/disconnected state
 var showError = function(errorMessage) {
     $('.connected').addClass('hidden');
     $('.disconnected').addClass('hidden');
@@ -59,6 +58,16 @@ var showStartRoomButton = function(show) {
     }
 }
 
+var displayUserFinished = function (userId, metaData) {
+    for (var i = 0; i < curRoom.members.length; i++) {
+        let curMem = curRoom.members[i];
+        if (curMem.userUUID === userId) {
+            let text = createUserSubmittedText(curMem)
+            sideBar.enqueue(text, 'submitted', metaData);
+            break;
+        }
+    }
+}
 // resets all html to its original state
 var resetHTML = function() {
     showStartRoomButton(false);
