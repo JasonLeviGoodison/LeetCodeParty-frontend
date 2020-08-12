@@ -11,8 +11,6 @@ class Room {
     // -------
 
     resetRoom() {
-
-
         this.room = {
             roomState: INIT_ROOM_STATE,
             tabId: this.room.tabId,
@@ -115,23 +113,7 @@ class Room {
             roomId: this.room.roomId,
             roomState: this.room.roomState,
             initRoomData: initRoomData,
-            preStartedData: preStartedData,
-
-            members: this.room.members,
-            sideBarOpen: this.sideBar.sidebarOpen,
-            amReady: this.room.amReady,
-            roomReady: this.room.roomReady,
-            roomStarted: this.room.roomStarted,
-            amHost: this.room.amHost
-        };
-    }
-
-    getReadyUpData() {
-        return {
-            members: this.room.members,
-            readyState: this.room.amReady,
-            allUsersReady: this.room.roomReady,
-            amHost: this.room.amHost
+            preStartedData: preStartedData
         };
     }
 

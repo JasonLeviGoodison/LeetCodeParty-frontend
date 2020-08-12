@@ -4,7 +4,6 @@ $(function() {
       console.log("Refreshing Init Room Dom: ", initRoomData);
 
       var problemId = getProblemID(tabs);
-
       if (!problemId) {
           showError("Please select a problem before starting the party");
           return;
@@ -20,7 +19,7 @@ $(function() {
                   problemId: problemId
               }, function(response) {
                   showConnected(response.roomId, tabs);
-                  updateUsersInRoom(response.members);
+                  updateUsersInRoom(response.preStartedData.members);
               });
           }
       }
@@ -54,6 +53,12 @@ $(function() {
 
       if (initData && initData.errorMessage) {
           showError(initData.errorMessage);
+          return;
+      }
+
+      var problemId = getProblemID(tabs);
+      if (!problemId) {
+          showError("Please select a problem before starting the party");
           return;
       }
 

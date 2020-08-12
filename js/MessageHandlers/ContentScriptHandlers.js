@@ -92,7 +92,7 @@ function readyUp(sendResponse, curRoom) {
         searchAndSetMemberReadyState(curRoom, curRoom.getUserID(), !curRoom.getUserReady(), function() {
             curRoom.toggleUserRoomReady();
             curRoom.checkIfRoomReady();
-            sendResponse(curRoom.getReadyUpData());
+            sendResponse(curRoom.getInitData());
         });
     });
     return true;

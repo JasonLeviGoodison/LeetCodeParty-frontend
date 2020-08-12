@@ -16,7 +16,7 @@ function PopupButtonHandlers(send, tabs) {
             console.log("got the response from create session", response)
             if (response.roomId) {
                 showConnected(response.roomId, tabs);
-                updateUsersInRoom(response.members);
+                updateUsersInRoom(response.preStartedData.members);
                 updateHostLeaveButton();
             }
         });
@@ -36,9 +36,9 @@ function PopupButtonHandlers(send, tabs) {
 
     $('#ready-up').click(function() {
         send(READY_UP_MESSAGE, {}, function(response) {
-            updateUsersInRoom(response.members);
-            updateReadyUpButton(response.readyState);
-            showStartRoomButton(response.allUsersReady && response.amHost);
+            updateUsersInRoom(response.preStartedData.members);
+            updateReadyUpButton(response.preStartedData.amReady);
+            showStartRoomButton(response.preStartedData.roomReady && response.preStartedData.amHost);
         });
     });
 
