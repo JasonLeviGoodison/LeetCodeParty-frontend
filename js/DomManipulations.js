@@ -59,8 +59,9 @@ var showStartRoomButton = function(show) {
 }
 
 var displayUserFinished = function (userId, metaData) {
-    for (var i = 0; i < curRoom.members.length; i++) {
-        let curMem = curRoom.members[i];
+    for (var i = 0; i < curRoomV2.getNumberOfMembers(); i++) {
+        let curMem = curRoomV2.getMemberAt(i);
+
         if (curMem.userUUID === userId) {
             let text = createUserSubmittedText(curMem)
             metaData = {... metaData, curMem}

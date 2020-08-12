@@ -3,19 +3,8 @@ const newUserEveryConnection = true;
 window.addEventListener ("load", main, false);
 
 var socket = io(ENDPOINT);
-
-var curRoom = {
-    tabId: "",
-    userId: "",
-    roomId: "",
-    problemId: "",
-    socket: "",
-    amReady: false,
-    roomReady: false,
-    roomStarted: false,
-    amHost: false,
-    members: []
-};
+var sideBar = new SideBar();
+var curRoomV2 = new Room(sideBar);
 
 function getStoredInfo() {
     chrome.storage.sync.get(INFO_STORE_KEY, function(items) {
@@ -33,14 +22,14 @@ function getStoredInfo() {
             });
         }
         function useToken(userid) {
-            curRoom.userId = userId;
+            curRoomV2.setUserID(userId);
         }
     });
 }
 
 // interaction with the popup
 chrome.runtime.onMessage.addListener(
-    (request, sender, sendResponse) => ContentScriptHandlers(request, sender, sendResponse, curRoom)
+    (request, sender, sendResponse) => ContentScriptHandlers(request, sender, sendResponse, curRoomV2)
 );
 
 function main(evt) {
@@ -48,7 +37,5 @@ function main(evt) {
     PageButtonHandlers();
 }
 
-
-
 // socket listeners (data flowing from the server)
-SocketListen(socket, curRoom);
+SocketListen(socket, curRoomV2);

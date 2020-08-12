@@ -28,3 +28,7 @@ const GET_NEW_USER_ID_MESSAGE = "getNewUserId";
 
 // Messages from content.js to popup.js
 const UPDATE_DOM_MESSAGE = "updateDom";
+
+// Room States
+const INIT_ROOM_STATE = "initState";
+const PRE_STARTED_ROOM_STATE = "roomBeingPreparedState"

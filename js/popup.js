@@ -1,33 +1,13 @@
 $(function() {
 
-  function refreshDom(send, tabs, initData) {
-      var problemId = getProblemID(tabs);
+  function initRoomRefreshDom(send, tabs, initData, initRoomData) {
+      console.log("Refreshing Init Room Dom: ", initRoomData);
 
+      var problemId = getProblemID(tabs);
       if (!problemId) {
           showError("Please select a problem before starting the party");
           return;
       }
-
-      $( "#slider-input" ).prop( "checked", initData.sideBarOpen );
-
-      if (initData && initData.errorMessage) {
-          showError(initData.errorMessage);
-          return;
-      }
-
-      if (initData.members) {
-          updateUsersInRoom(initData.members);
-      }
-
-      if (initData.amReady === true || initData.amReady === false) {
-          updateReadyUpButton(initData.amReady);
-      }
-
-      if (initData.amHost === true) {
-          updateHostLeaveButton();
-      }
-
-      showStartRoomButton(initData.roomReady && initData.amHost);
 
       if (!initData || initData.roomId === "") {
           var urlParams = getParams(tabs[0].url);
@@ -39,12 +19,59 @@ $(function() {
                   problemId: problemId
               }, function(response) {
                   showConnected(response.roomId, tabs);
-                  updateUsersInRoom(response.members);
+                  updateUsersInRoom(response.preStartedData.members);
               });
           }
-      } else {
+      }
+  }
+
+  function preStartedRoomRefreshDom(send, tabs, initData, preStartedData) {
+      console.log("Refreshing Pre Room Started Dom: ", preStartedData);
+
+      if (initData && initData.roomId !== "") {
           showConnected(initData.roomId, tabs);
       }
+
+      $( "#slider-input" ).prop( "checked", preStartedData.sideBarOpen );
+
+      if (preStartedData.members) {
+          updateUsersInRoom(preStartedData.members);
+      }
+
+      if (preStartedData.amReady === true || preStartedData.amReady === false) {
+          updateReadyUpButton(preStartedData.amReady);
+      }
+
+      if (preStartedData.amHost === true) {
+          updateHostLeaveButton();
+      }
+
+      showStartRoomButton(preStartedData.roomReady && preStartedData.amHost);
+  }
+
+  function refreshDom(send, tabs, initData) {
+
+      if (initData && initData.errorMessage) {
+          showError(initData.errorMessage);
+          return;
+      }
+
+      var problemId = getProblemID(tabs);
+      if (!problemId) {
+          showError("Please select a problem before starting the party");
+          return;
+      }
+
+      switch (initData.roomState) {
+          case INIT_ROOM_STATE:
+              initRoomRefreshDom(send, tabs, initData, initData.initRoomData);
+              break;
+          case PRE_STARTED_ROOM_STATE:
+              preStartedRoomRefreshDom(send, tabs, initData, initData.preStartedData);
+              break;
+          default:
+              console.log("Unknown Room State: ", initData.roomState);
+      };
   }
 
   chrome.tabs.query({

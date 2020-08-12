@@ -31,6 +31,7 @@
       "js/MessageHandlers/PopupMessageHandlers.js",
       "js/SocketListeners/Listeners.js",
       "js/Classes/members.js",
+      "js/Classes/room.js",
       "js/Classes/popup_messages.js",
       "js/socket.io.js",
       "js/content.js"
@@ -46,6 +47,7 @@
        "js/MessageHandlers/PageButtonHandlers.js",
        "js/MessageHandlers/PopupMessageHandlers.js",
        "js/Classes/members.js",
+       "js/Classes/room.js",
        "js/Classes/popup_messages.js",
        "js/SocketListeners/Listeners.js",
        "js/constants.js"

@@ -39,8 +39,8 @@ function PageButtonHandlers() {
 
                     console.log(submitMetaData)
                     let payload = {
-                        roomId: curRoom.roomId,
-                        userId: curRoom.userId,
+                        roomId: curRoomV2.getRoomID(),
+                        userId: curRoomV2.getUserID(),
                         meta: submitMetaData
                     }
                     socket.emit(USER_SUBMITTED, payload, (data) => {
