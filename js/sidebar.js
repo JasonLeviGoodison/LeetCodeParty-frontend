@@ -38,7 +38,6 @@ class SideBar {
                         "<span style=\"padding-left: 40px;\"> Memory Usage: " + meta.memoryUsage + "</span>"
 
                         $("#list").on("click", "." + buttonId , function() {
-                            console.log("got clicked")
                             modal.openModal(meta.code, name);
                         });
                     break;

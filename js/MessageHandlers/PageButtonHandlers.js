@@ -2,7 +2,6 @@ function PageButtonHandlers() {
     setTimeout(() => {
         let submitButton = $("button[data-cy=\"submit-code-btn\"]");
         console.log("THIS THING NEEDS TO BE CLICKED", submitButton)
-
         submitButton.click(function() {
             console.log("THIS THING WAS CLICKED")
             let lang = $(".ant-select-selection-selected-value").attr("title");
