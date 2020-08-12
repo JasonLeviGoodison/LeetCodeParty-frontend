@@ -1,39 +1,21 @@
-var sideBar = new SideBar();
 var modal = new Modal();
 
-function buildInitData(curRoom) {
-    return {
-        roomId: curRoom.roomId,
-        members: curRoom.members,
-        sideBarOpen: sideBar.sidebarOpen,
-        amReady: curRoom.amReady,
-        roomReady: curRoom.roomReady,
-        roomStarted: curRoom.roomStarted,
-        amHost: curRoom.amHost
-    };
-}
-
 function getInitData(sendResponse, curRoom) {
-    sendResponse(buildInitData(curRoom));
+    sendResponse(curRoom.getInitData());
     return;
 }
 
 function createRoom(request, sendResponse, curRoom) {
     let payload = {
         problemId: request.data.problemId,
-        userId: curRoom.userId
+        userId: curRoom.getUserID()
     };
     socket.emit(CREATE_ROOM_MESSAGE, payload, function(data) {
-        curRoom.roomId = data.roomId;
-        curRoom.problemId = data.problemId;
-        curRoom.amHost = true;
+        curRoom.setUserCreatedRoom(data.roomId, data.problemId);
         addNewMembersToRoom(curRoom, [
-            buildNewMemberInRoom(curRoom.members.length, curRoom.userId, true, data.nicknameInfo)
+            buildNewMemberInRoom(curRoom.getNumberOfMembers(), curRoom.getUserID(), true, data.nicknameInfo)
         ], function () {
-            sendResponse({
-                roomId: curRoom.roomId,
-                members: curRoom.members,
-            });
+            sendResponse(curRoom.getInitData());
         });
     });
     return true;
@@ -42,7 +24,7 @@ function createRoom(request, sendResponse, curRoom) {
 function joinRoom(request, sendResponse, curRoom) {
     let payload = {
         roomId: request.data.roomId,
-        userId: curRoom.userId
+        userId: curRoom.getUserID()
     };
 
     socket.emit(JOIN_ROOM_MESSAGE, payload, function(data) {
@@ -62,16 +44,16 @@ function joinRoom(request, sendResponse, curRoom) {
         }
 
         // Set the current room ID
-        curRoom.roomId = request.data.roomId;
+        curRoom.setRoomID(request.data.roomId);
 
         // Since we are joining the room, this user is the first member of the room (to them)
         var newMembers = [];
-        newMembers.push(buildNewMemberInRoom(0, curRoom.userId, true, data.nicknameInfo))
+        newMembers.push(buildNewMemberInRoom(0, curRoom.getUserID(), true, data.nicknameInfo))
 
         for (var i = 0; i < data.members.length; i++) {
             var currMember = data.members[i]
             var currMemberObj = buildNewMemberInRoom(
-                curRoom.members.length,
+                curRoom.getNumberOfMembers(),
                 currMember.participant_user_uuid,
                 false,
                 {
@@ -87,17 +69,14 @@ function joinRoom(request, sendResponse, curRoom) {
         }
 
         addNewMembersToRoom(curRoom, newMembers, function () {
-            sendResponse({
-                roomId: curRoom.roomId,
-                members: curRoom.members
-            });
+            sendResponse(curRoom.getInitData());
         });
     });
     return true;
 }
 
 function leaveRoom(sendResponse, curRoom) {
-    socket.emit(LEAVE_ROOM_MESSAGE, { userId: curRoom.userId, roomId: curRoom.roomId }, function(_) {
+    socket.emit(LEAVE_ROOM_MESSAGE, { userId: curRoom.getUserID(), roomId: curRoom.getRoomID() }, function(_) {
         handleRoomClosing(curRoom);
         sendResponse({});
     });
@@ -109,25 +88,19 @@ function resetRoom(curRoom) {
 }
 
 function readyUp(sendResponse, curRoom) {
-    socket.emit(READY_UP_MESSAGE, { userId: curRoom.userId, roomId: curRoom.roomId, newState: !curRoom.amReady }, function(data) {
-        searchAndSetMemberReadyState(curRoom, curRoom.userId, !curRoom.amReady, function() {
-            curRoom.amReady = !curRoom.amReady;
-            curRoom.roomReady = allUsersReady(curRoom);
-            var obj = {
-                members: curRoom.members,
-                readyState: curRoom.amReady,
-                allUsersReady: curRoom.roomReady,
-                amHost: curRoom.amHost
-            };
-            sendResponse(obj);
+    socket.emit(READY_UP_MESSAGE, { userId: curRoom.getUserID(), roomId: curRoom.getRoomID(), newState: !curRoom.getUserReady() }, function(data) {
+        searchAndSetMemberReadyState(curRoom, curRoom.getUserID(), !curRoom.getUserReady(), function() {
+            curRoom.toggleUserRoomReady();
+            curRoom.checkIfRoomReady();
+            sendResponse(curRoom.getReadyUpData());
         });
     });
     return true;
 }
 
 function startRoom(sendResponse, curRoom) {
-    socket.emit(START_ROOM_MESSAGE, {roomId: curRoom.roomId}, function(data) {
-        curRoom.roomStarted = true;
+    socket.emit(START_ROOM_MESSAGE, {roomId: curRoom.getRoomID()}, function(data) {
+        curRoom.startRoom();
         sendResponse();
     });
 }
@@ -136,7 +109,7 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
     switch(request.type) {
         case GET_INIT_DATA_MESSAGE:
             if (request.data.tabId) {
-                curRoom.tabId = request.data.tabId;
+                curRoom.setTabID(request.data.tabId);
             }
 
             return getInitData(sendResponse, curRoom);

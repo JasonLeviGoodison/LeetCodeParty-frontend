@@ -28,21 +28,8 @@ var getProblemID = function(tabs) {
 }
 
 function handleRoomClosing(curRoom) {
-	resetCurRoom(curRoom);
+	curRoom.resetRoom();
 	window.history.replaceState({}, null, removeURLParameter(window.location.toString(), "roomId"));
-}
-
-function resetCurRoom(curRoom) {
-	curRoom.tabId = "";
-	curRoom.userId = "";
-	curRoom.roomId = "";
-	curRoom.problemId = "";
-	curRoom.socket = "";
-	curRoom.members = [];
-	curRoom.amReady = false;
-	curRoom.roomReady = false;
-	curRoom.roomStarted = false;
-	curRoom.amHost = false;
 }
 
 // https://stackoverflow.com/questions/1634748/how-can-i-delete-a-query-string-parameter-in-javascript

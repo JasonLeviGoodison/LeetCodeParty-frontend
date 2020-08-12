@@ -1,6 +1,8 @@
 function userAlreadyInRoom(curRoom, userUUID) {
-    for (var i = 0; i < curRoom.members.length; i++) {
-        if (curRoom.members[i].userUUID === userUUID) {
+    for (var i = 0; i < curRoom.getNumberOfMembers(); i++) {
+        var currMember = curRoom.getMemberAt(i);
+
+        if (currMember.userUUID === userUUID) {
             return true;
         }
     }
@@ -10,15 +12,10 @@ function userAlreadyInRoom(curRoom, userUUID) {
 
 function addNewMembersToRoom(curRoom, newMembers, cb) {
     for (var i = 0; i < newMembers.length; i++) {
-        curRoom.members.push(newMembers[i]);
+        curRoom.addMember(newMembers[i]);
     }
 
-    function compare(a, b) {
-        return a.nicknameInfo.nickname.localeCompare(b.nicknameInfo.nickname);
-    }
-
-    curRoom.members.sort(compare);
-
+    curRoom.sortMembers();
     return cb();
 }
 
@@ -41,11 +38,13 @@ function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
 }
 
 function searchAndSetMemberReadyState(curRoom, memberUUID, readyState, callback) {
-    for (var i = 0; i < curRoom.members.length; i++) {
-        if (curRoom.members[i].userUUID === memberUUID) {
+    for (var i = 0; i < curRoom.getNumberOfMembers(); i++) {
+        var currMember = curRoom.getMemberAt(i);
+
+        if (currMember.userUUID === memberUUID) {
             let readyStateName = readyState === true ? "ready" : "not ready";
-            sideBar.enqueue(curRoom.members[i].domName + " is " + readyStateName, 'info');
-            setMemberReadyState(curRoom.members[i], readyState);
+            sideBar.enqueue(currMember.domName + " is " + readyStateName, 'info');
+            setMemberReadyState(currMember, readyState);
             break;
         }
     }
@@ -62,14 +61,4 @@ function setMemberReadyState(member, readyState) {
     member.domReady = readyStateVal;
     member.isReady = readyState;
     return;
-}
-
-function allUsersReady(curRoom) {
-    for (var i = 0; i < curRoom.members.length; i++){
-        if (!curRoom.members[i].isReady) {
-            return false;
-        }
-    }
-
-    return true;
 }
