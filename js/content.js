@@ -12,6 +12,7 @@ var curRoom = {
     socket: "",
     amReady: false,
     roomReady: false,
+    roomStarted: false,
     amHost: false,
     members: []
 };

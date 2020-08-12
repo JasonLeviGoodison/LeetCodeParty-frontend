@@ -8,6 +8,7 @@ function buildInitData(curRoom) {
         sideBarOpen: sideBar.sidebarOpen,
         amReady: curRoom.amReady,
         roomReady: curRoom.roomReady,
+        roomStarted: curRoom.roomStarted,
         amHost: curRoom.amHost
     };
 }
@@ -22,7 +23,7 @@ function createRoom(request, sendResponse, curRoom) {
         problemId: request.data.problemId,
         userId: curRoom.userId
     };
-    socket.emit('createRoom', payload, function(data) {
+    socket.emit(CREATE_ROOM_MESSAGE, payload, function(data) {
         curRoom.roomId = data.roomId;
         curRoom.problemId = data.problemId;
         curRoom.amHost = true;
@@ -44,7 +45,7 @@ function joinRoom(request, sendResponse, curRoom) {
         userId: curRoom.userId
     };
 
-    socket.emit("joinRoom", payload, function(data) {
+    socket.emit(JOIN_ROOM_MESSAGE, payload, function(data) {
         
         if (data.errorMessage) {
             sendResponse({ errorMessage: data.errorMessage });
@@ -52,7 +53,7 @@ function joinRoom(request, sendResponse, curRoom) {
         }
 
         if (data.problemId !== request.data.problemId) {
-            socket.emit('leaveRoom', null, function(data) {
+            socket.emit(LEAVE_ROOM_MESSAGE, null, function(data) {
                 sendResponse({
                     errorMessage: 'That session is for a different video.'
                 });
@@ -96,7 +97,7 @@ function joinRoom(request, sendResponse, curRoom) {
 }
 
 function leaveRoom(sendResponse, curRoom) {
-    socket.emit('leaveRoom', { userId: curRoom.userId, roomId: curRoom.roomId }, function(_) {
+    socket.emit(LEAVE_ROOM_MESSAGE, { userId: curRoom.userId, roomId: curRoom.roomId }, function(_) {
         handleRoomClosing(curRoom);
         sendResponse({});
     });
@@ -108,7 +109,7 @@ function resetRoom(curRoom) {
 }
 
 function readyUp(sendResponse, curRoom) {
-    socket.emit('readyUp', { userId: curRoom.userId, roomId: curRoom.roomId, newState: !curRoom.amReady }, function(data) {
+    socket.emit(READY_UP_MESSAGE, { userId: curRoom.userId, roomId: curRoom.roomId, newState: !curRoom.amReady }, function(data) {
         searchAndSetMemberReadyState(curRoom, curRoom.userId, !curRoom.amReady, function() {
             curRoom.amReady = !curRoom.amReady;
             curRoom.roomReady = allUsersReady(curRoom);
@@ -122,6 +123,13 @@ function readyUp(sendResponse, curRoom) {
         });
     });
     return true;
+}
+
+function startRoom(sendResponse, curRoom) {
+    socket.emit(START_ROOM_MESSAGE, {roomId: curRoom.roomId}, function(data) {
+        curRoom.roomStarted = true;
+        sendResponse();
+    });
 }
 
 function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
@@ -148,6 +156,8 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
             return sideBar.enqueue(text, eventType);
         case RESET_ROOM_MESSAGE:
             return resetRoom(curRoom);
+        case START_ROOM_MESSAGE:
+            return startRoom(sendResponse, curRoom);
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;

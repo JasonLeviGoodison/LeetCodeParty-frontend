@@ -47,4 +47,10 @@ function PopupButtonHandlers(send, tabs) {
             unshowError();
         });
     });
+
+    $('#start-room').click(function() {
+        send(START_ROOM_MESSAGE, {}, function(response) {
+            console.log("Room Started!");
+        });
+    });
 }

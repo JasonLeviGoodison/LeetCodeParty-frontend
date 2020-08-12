@@ -10,6 +10,7 @@ const LEAVE_ROOM_MESSAGE = "leaveRoom";
 const READY_UP_MESSAGE = "readyUp";
 const ENQUE_IN_SIDEBAR = "sidebarEnqueue";
 const RESET_ROOM_MESSAGE = "resetRoom";
+const START_ROOM_MESSAGE = "startRoom";
 
 // Messages from server to socket listener
 const USER_ID_MESSAGE = "userId";
@@ -19,6 +20,7 @@ const USER_LEFT_MESSAGE = "userLeftRoom";
 const USER_READY_UP_MESSAGE = "userReadyUp";
 const USER_SUBMITTED = "userSubmitted";
 const ROOM_READY_MESSAGE = "roomReady";
+const ROOM_STARTED_MESSAGE = "roomStarted";
 
 // Messages from content.js to server socket
 const NEW_SOCKET_MESSAGE = "newSocket";

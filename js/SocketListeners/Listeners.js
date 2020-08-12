@@ -14,6 +14,9 @@ function SocketListen(socket, curRoom) {
     socket.on(ROOM_READY_MESSAGE, (data) => {
         handleRoomReady(curRoom, data.allUsersReady);
     });
+    socket.on(ROOM_STARTED_MESSAGE, (data) => {
+       handleRoomStarted(curRoom);
+    });
     socket.on(USER_SUBMITTED, (data) => {
         handleUserSubmitted(curRoom, data.userId, data.meta);
     });
@@ -72,4 +75,11 @@ function handleUserRoomClosing(curRoom) {
 
 function handleUserSubmitted(curRoom, userId, meta) {
     displayUserFinished(userId, meta);
+}
+
+function handleRoomStarted(curRoom) {
+    console.log("Room marked as started!");
+    curRoom.roomStarted = true;
+
+    SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
 }
