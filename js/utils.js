@@ -66,5 +66,5 @@ function removeURLParameter(url, parameter) {
 }
 
 function createUserSubmittedText(curMem) {
-	return curMem.domName + " " + curMem.domIsMe + " finshed the problem!";
+	return curMem.domName + curMem.domIsMe;
 }

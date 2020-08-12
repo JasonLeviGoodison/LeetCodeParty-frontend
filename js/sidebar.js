@@ -23,15 +23,24 @@ class SideBar {
             let color = 'white'
             let text = this.events[index].text;
             switch (this.events[index].eventType) {
-                case "submitted":
+                case USER_SUBMITTED:
                     let meta = this.events[index].metaData;
-                    text = text +
+                    let buttonId = meta.curMem.userUUID + "ViewCode";
+                    let name = text;
+                    text = name + " submitted a" + "<a class=\"" + buttonId + "\" > solution! </a>" +
                         "<br/>" +
-                        "<span style=\"padding-left: 20px;\"> Language: " + meta.lang + "</span>" +
+                        "<span style=\"padding-left: 20px;\"> Submission details: </span>" +
                         "<br/>" +
-                        "<span style=\"padding-left: 20px;\">Run Time: " + meta.runTime + "</span>" +
+                        "<span style=\"padding-left: 40px;\"> Language: " + meta.lang + "</span>" +
                         "<br/>" +
-                        "<span style=\"padding-left: 20px;\"> Memory Usage: " + meta.memoryUsage + "</span>"
+                        "<span style=\"padding-left: 40px;\">Run Time: " + meta.runTime + "</span>" +
+                        "<br/>" +
+                        "<span style=\"padding-left: 40px;\"> Memory Usage: " + meta.memoryUsage + "</span>"
+
+                        $("#list").on("click", "." + buttonId , function() {
+                            console.log("got clicked")
+                            modal.openModal(meta.code, name);
+                        });
                     break;
                 case "error":
                     color = 'red';
@@ -40,7 +49,7 @@ class SideBar {
                 default:
                     break;
             }
-
+            list += "<hr class=\"solid listElem\">"
             list += "<div class=\"listElem\" style=\"color:" + color +"\">" + text + "</div>";
         }
         $("#list").append(list);
@@ -79,5 +88,4 @@ class SideBar {
             this.created = true;
         }
     }
-
 };

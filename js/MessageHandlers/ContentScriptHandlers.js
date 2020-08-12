@@ -1,4 +1,5 @@
 var sideBar = new SideBar();
+var modal = new Modal();
 
 function buildInitData(curRoom) {
     return {
