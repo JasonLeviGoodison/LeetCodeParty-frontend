@@ -63,7 +63,8 @@ var displayUserFinished = function (userId, metaData) {
         let curMem = curRoom.members[i];
         if (curMem.userUUID === userId) {
             let text = createUserSubmittedText(curMem)
-            sideBar.enqueue(text, 'submitted', metaData);
+            metaData = {... metaData, curMem}
+            sideBar.enqueue(text, USER_SUBMITTED, metaData);
             break;
         }
     }

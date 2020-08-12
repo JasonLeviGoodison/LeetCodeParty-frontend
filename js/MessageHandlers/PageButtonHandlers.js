@@ -25,6 +25,8 @@ function PageButtonHandlers() {
                         return obj.innerText;
                     });
 
+                    let code = $("div[class*=\"react-codemirror2\"]").html();
+
                     var submitMetaData = {
                         runTime: values[0],
                         fasterThanTime: values[1],
@@ -32,6 +34,7 @@ function PageButtonHandlers() {
                         lessThanMemory: values[3],
                         lang,
                         newState: true,
+                        code,
                     }
 
                     console.log(submitMetaData)
@@ -43,7 +46,6 @@ function PageButtonHandlers() {
                     socket.emit(USER_SUBMITTED, payload, (data) => {
                         displayUserFinished(data.userId, submitMetaData);
                     });
-                    //let code = $("div[class=\"CodeMirror-code\"]");
                     clearInterval(waitForResult);
                 }
                 else if (status === "Wrong Answer" || status === "Runtime Error") {
