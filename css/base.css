@@ -253,3 +253,9 @@ hr.solid {
   border-top: 3px solid black;
   border-color: black;
 }
+
+.disableCode {
+  pointer-events: none;
+  opacity: 0.5;
+  background: #CCC;
+}
