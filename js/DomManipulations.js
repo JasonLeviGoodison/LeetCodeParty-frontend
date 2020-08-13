@@ -70,6 +70,15 @@ var displayUserFinished = function (userId, metaData) {
         }
     }
 }
+
+var disableCodeArea = function() {
+    $("div[class*=\"react-codemirror2\"]").addClass("disableCode")
+}
+
+var enableCodeArea = function() {
+    $("div[class*=\"react-codemirror2\"]").removeClass("disableCode")
+}
+
 // resets all html to its original state
 var resetHTML = function() {
     showStartRoomButton(false);

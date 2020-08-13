@@ -36,6 +36,7 @@ class Room {
 
     setRoomInPreStartState() {
         this.room.roomState = PRE_STARTED_ROOM_STATE;
+        disableCodeArea();
     }
 
     setRoomID(roomID) {
@@ -84,6 +85,7 @@ class Room {
 
     startRoom() {
         this.room.roomStarted = true;
+        enableCodeArea();
     }
 
     removeMemberAtIndex(index) {
