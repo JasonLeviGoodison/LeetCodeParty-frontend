@@ -84,3 +84,8 @@ var resetHTML = function() {
     showStartRoomButton(false);
     updateReadyUpButton(false);
 }
+
+var showRoomStartedContent = function() {
+    $(".active-game").show();
+    $(".connected").hide();
+}

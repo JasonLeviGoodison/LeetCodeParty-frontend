@@ -31,4 +31,5 @@ const UPDATE_DOM_MESSAGE = "updateDom";
 
 // Room States
 const INIT_ROOM_STATE = "initState";
-const PRE_STARTED_ROOM_STATE = "roomBeingPreparedState"
+const PRE_STARTED_ROOM_STATE = "roomBeingPreparedState";
+const STARTED_ROOM_STATE = "roomStartedState";

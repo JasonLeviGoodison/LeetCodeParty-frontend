@@ -51,6 +51,7 @@ function PopupButtonHandlers(send, tabs) {
     $('#start-room').click(function() {
         send(START_ROOM_MESSAGE, {}, function(response) {
             console.log("Room Started!");
+            showRoomStartedContent();
         });
     });
 }

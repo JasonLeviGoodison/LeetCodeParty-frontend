@@ -85,6 +85,7 @@ class Room {
 
     startRoom() {
         this.room.roomStarted = true;
+        this.room.roomState = STARTED_ROOM_STATE;
         enableCodeArea();
     }
 
@@ -96,10 +97,11 @@ class Room {
     // -------
 
     getInitData() {
-        var initRoomData, preStartedData;
+        var initRoomData, preStartedData, roomStartedData;
         switch (this.room.roomState) {
             case INIT_ROOM_STATE:
                 initRoomData = {};
+                break;
             case PRE_STARTED_ROOM_STATE:
                 preStartedData = {
                     members: this.room.members,
@@ -109,13 +111,20 @@ class Room {
                     roomStarted: this.room.roomStarted,
                     amHost: this.room.amHost
                 };
+                break;
+            case STARTED_ROOM_STATE:
+                roomStartedData = {
+                    members: this.room.members,
+                    sideBarOpen: this.sideBar.sidebarOpen,
+                };
         }
 
         return {
             roomId: this.room.roomId,
             roomState: this.room.roomState,
             initRoomData: initRoomData,
-            preStartedData: preStartedData
+            preStartedData: preStartedData,
+            roomStartedData: roomStartedData
         };
     }
 
