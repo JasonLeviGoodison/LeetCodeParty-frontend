@@ -25,7 +25,7 @@ class SideBar {
             switch (this.events[index].eventType) {
                 case USER_SUBMITTED:
                     let meta = this.events[index].metaData;
-                    let buttonId = meta.curMem.userUUID + "ViewCode";
+                    let buttonId = meta.curMem.userUUID + (Math.ceil(Math.random()*1000));
                     let name = text;
                     text = name + " submitted a" + "<a class=\"" + buttonId + "\" > solution! </a>" +
                         "<br/>" +
@@ -36,6 +36,7 @@ class SideBar {
                         "<span style=\"padding-left: 40px;\">Run Time: " + meta.runTime + "</span>" +
                         "<br/>" +
                         "<span style=\"padding-left: 40px;\"> Memory Usage: " + meta.memoryUsage + "</span>"
+
 
                         $("#list").on("click", "." + buttonId , function() {
                             modal.openModal(meta.code, name);
