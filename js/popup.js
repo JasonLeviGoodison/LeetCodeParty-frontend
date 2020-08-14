@@ -52,7 +52,7 @@ $(function() {
   function roomStartedRefreshDom(send, tabs, initData, roomStartedData) {
       console.log("Refresh Room Started Dom: ", roomStartedData);
 
-      showRoomStartedContent();
+      showRoomStartedContent(new Date(Date.parse(roomStartedData.roomStartedTS)));
   }
 
   function refreshDom(send, tabs, initData) {
