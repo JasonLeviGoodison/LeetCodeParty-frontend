@@ -22,7 +22,8 @@ class Room {
             roomReady: false,
             roomStarted: false,
             amHost: false,
-            members: []
+            members: [],
+            roomStartedTS: null
         };
     }
 
@@ -93,6 +94,10 @@ class Room {
         this.room.members.splice(index, 1);
     }
 
+    setRoomStartedTimestamp(ts) {
+        this.room.roomStartedTS = ts;
+    }
+
     // Getters
     // -------
 
@@ -116,6 +121,7 @@ class Room {
                 roomStartedData = {
                     members: this.room.members,
                     sideBarOpen: this.sideBar.sidebarOpen,
+                    roomStartedTS: this.room.roomStartedTS
                 };
         }
 

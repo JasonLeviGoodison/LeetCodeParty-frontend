@@ -85,7 +85,20 @@ var resetHTML = function() {
     updateReadyUpButton(false);
 }
 
-var showRoomStartedContent = function() {
+var showRoomStartedContent = function(roomStartedTS) {
     $(".active-game").show();
     $(".connected").hide();
+    $(".disconnected").hide();
+
+    var currTS = new Date();
+    var totalSecondsSoFar = Math.abs((currTS.getTime() - roomStartedTS.getTime()) / 1000);
+
+    function setElapsedTime() {
+        ++totalSecondsSoFar;
+        $("#elapsed-minutes").text(padToTwoChar(Math.round(totalSecondsSoFar / 60)));
+        $("#elapsed-seconds").text(padToTwoChar(Math.round(totalSecondsSoFar % 60)));
+    }
+
+    setElapsedTime();
+    setInterval(setElapsedTime, 1000);
 }
