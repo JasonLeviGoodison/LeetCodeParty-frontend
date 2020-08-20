@@ -85,25 +85,37 @@ var resetHTML = function() {
     updateReadyUpButton(false);
 }
 
+var totalSecondsBetween = function(time1, time2) {
+    return Math.abs((time1 - time2) / 1000);
+}
+
+var secondsToMinsAndSeconds = function(secondsString) {
+    return [
+        padToTwoChar(Math.round(secondsString / 60)),
+        padToTwoChar(Math.round(secondsString % 60))
+    ];
+}
+
 var showRoomStartedContent = function(roomStartedTS) {
     $(".active-game").show();
     $(".connected").hide();
     $(".disconnected").hide();
 
     var currTS = new Date();
-    var totalSecondsSoFar = Math.abs((currTS.getTime() - roomStartedTS.getTime()) / 1000);
+    var totalSecondsSoFar = totalSecondsBetween(currTS.getTime(), roomStartedTS.getTime());
 
     function setElapsedTime() {
         ++totalSecondsSoFar;
-        $("#elapsed-minutes").text(padToTwoChar(Math.round(totalSecondsSoFar / 60)));
-        $("#elapsed-seconds").text(padToTwoChar(Math.round(totalSecondsSoFar % 60)));
+        let [ minsString, secondsString ] = secondsToMinsAndSeconds(totalSecondsSoFar);
+        $("#elapsed-minutes").text(minsString);
+        $("#elapsed-seconds").text(secondsString);
     }
 
     setElapsedTime();
     setInterval(setElapsedTime, 1000);
 }
 
-var showUserSubmittedContent = function(roomStartedData) {
+var showUserSubmittedContent = function(roomStartedData, roomStartedTS) {
     const { members } = roomStartedData;
 
     for (var i = 0; i < members.length; i++) {
@@ -111,7 +123,11 @@ var showUserSubmittedContent = function(roomStartedData) {
 
         if (currMem.submissionData != null) {
             $('.loader').remove();
-            var domElement = "<p style='font-weight:bold;'> " + currMem.domName + " " + currMem.domIsMe;
+
+            var finishTimeSeconds = totalSecondsBetween(currMem.submissionData.time, roomStartedTS.getTime());
+            let [ minsString, secondsString ] = secondsToMinsAndSeconds(finishTimeSeconds);
+
+            var domElement = "<p style='font-weight:bold;'> " + currMem.domName + " " + currMem.domIsMe + " (" + minsString + ":" + secondsString + ")";
             $('#users-that-submitted').append(domElement);
         }
     }
