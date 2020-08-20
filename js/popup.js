@@ -53,6 +53,7 @@ $(function() {
       console.log("Refresh Room Started Dom: ", roomStartedData);
 
       showRoomStartedContent(new Date(Date.parse(roomStartedData.roomStartedTS)));
+      showUserSubmittedContent(roomStartedData);
   }
 
   function refreshDom(send, tabs, initData) {
@@ -70,16 +71,16 @@ $(function() {
 
       switch (initData.roomState) {
           case INIT_ROOM_STATE:
-              initRoomRefreshDom(send, tabs, initData, initData.initRoomData);
-              break;
+            initRoomRefreshDom(send, tabs, initData, initData.initRoomData);
+            break;
           case PRE_STARTED_ROOM_STATE:
-              preStartedRoomRefreshDom(send, tabs, initData, initData.preStartedData);
-              break;
+            preStartedRoomRefreshDom(send, tabs, initData, initData.preStartedData);
+            break;
           case STARTED_ROOM_STATE:
-              roomStartedRefreshDom(send, tabs, initData, initData.roomStartedData);
-              break;
+            roomStartedRefreshDom(send, tabs, initData, initData.roomStartedData);
+            break;
           default:
-              console.log("Unknown Room State: ", initData.roomState);
+            console.log("Unknown Room State: ", initData.roomState);
       };
   }
 

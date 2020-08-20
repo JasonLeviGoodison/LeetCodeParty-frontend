@@ -128,7 +128,6 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
         case TOGGLE_SIDEBAR_MESSAGE:
             return sideBar.toggleSidebar()
         case ENQUE_IN_SIDEBAR:
-            console.log(request)
             const { text, eventType } = request.data;
             return sideBar.enqueue(text, eventType);
         case RESET_ROOM_MESSAGE:

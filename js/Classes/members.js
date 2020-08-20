@@ -30,12 +30,17 @@ function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
         nicknameInfo: nicknameInfo,
         isMe: isMe,
         isReady: false,
-
+        submissionData: null,
         domName: "<span class='letter-spacing-2px' style='color:" + nicknameInfo.nickname_color + ";'>" + nicknameInfo.nickname + "</span>",
         domIsMe: domIsMe,
         domReady: ""
     };
 }
+
+////
+// Structure of the members field should be refactored into an object indexed on uuid
+// Then remove the code here to search
+////
 
 function searchAndSetMemberReadyState(curRoom, memberUUID, readyState, callback) {
     for (var i = 0; i < curRoom.getNumberOfMembers(); i++) {
@@ -45,6 +50,19 @@ function searchAndSetMemberReadyState(curRoom, memberUUID, readyState, callback)
             let readyStateName = readyState === true ? "ready" : "not ready";
             sideBar.enqueue(currMember.domName + " is " + readyStateName, 'info');
             setMemberReadyState(currMember, readyState);
+            break;
+        }
+    }
+
+    return callback();
+}
+
+function searchAndSetMemberSubmissionData(curRoom, memberUUID, submissionData, callback) {
+    for (var i = 0; i < curRoom.getNumberOfMembers(); i++) {
+        var currMember = curRoom.getMemberAt(i);
+
+        if (currMember.userUUID === memberUUID) {
+            currMember.submissionData = submissionData;
             break;
         }
     }

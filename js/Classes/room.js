@@ -121,7 +121,8 @@ class Room {
                 roomStartedData = {
                     members: this.room.members,
                     sideBarOpen: this.sideBar.sidebarOpen,
-                    roomStartedTS: this.room.roomStartedTS
+                    roomStartedTS: this.room.roomStartedTS,
+                    submission: this.room.submission
                 };
         }
 

@@ -102,3 +102,17 @@ var showRoomStartedContent = function(roomStartedTS) {
     setElapsedTime();
     setInterval(setElapsedTime, 1000);
 }
+
+var showUserSubmittedContent = function(roomStartedData) {
+    const { members } = roomStartedData;
+
+    for (var i = 0; i < members.length; i++) {
+        var currMem = members[i];
+
+        if (currMem.submissionData != null) {
+            $('.loader').remove();
+            var domElement = "<p style='font-weight:bold;'> " + currMem.domName + " " + currMem.domIsMe;
+            $('#users-that-submitted').append(domElement);
+        }
+    }
+}

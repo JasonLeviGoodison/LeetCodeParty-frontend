@@ -45,6 +45,7 @@ function PageButtonHandlers() {
                     }
                     socket.emit(USER_SUBMITTED, payload, (data) => {
                         displayUserFinished(data.userId, submitMetaData);
+                        searchAndSetMemberSubmissionData(curRoomV2, curRoomV2.getUserID(), submitMetaData, () => {});
                     });
                     clearInterval(waitForResult);
                 }

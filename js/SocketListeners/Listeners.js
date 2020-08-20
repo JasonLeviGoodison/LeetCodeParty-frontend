@@ -68,6 +68,10 @@ function handleUserRoomClosing(curRoom) {
 
 function handleUserSubmitted(curRoom, userId, meta) {
     displayUserFinished(userId, meta);
+
+    searchAndSetMemberSubmissionData(curRoom, userId, meta, function() {
+        SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
+    });
 }
 
 function handleRoomStarted(curRoom) {
