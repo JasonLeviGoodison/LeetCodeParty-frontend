@@ -117,6 +117,8 @@ var showRoomStartedContent = function(roomStartedTS) {
 
 var showUserSubmittedContent = function(roomStartedData, roomStartedTS) {
     const { members } = roomStartedData;
+    let userSubmittedList = $('#users-that-submitted');
+    userSubmittedList.empty();
 
     for (var i = 0; i < members.length; i++) {
         var currMem = members[i];
@@ -128,7 +130,7 @@ var showUserSubmittedContent = function(roomStartedData, roomStartedTS) {
             let [ minsString, secondsString ] = secondsToMinsAndSeconds(finishTimeSeconds);
 
             var domElement = "<p style='font-weight:bold;'> " + currMem.domName + " " + currMem.domIsMe + " (" + minsString + ":" + secondsString + ")";
-            $('#users-that-submitted').append(domElement);
+            userSubmittedList.append(domElement);
         }
     }
 }
