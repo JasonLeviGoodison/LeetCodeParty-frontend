@@ -119,6 +119,7 @@ class Room {
                 break;
             case STARTED_ROOM_STATE:
                 roomStartedData = {
+                    amHost: this.room.amHost,
                     members: this.room.members,
                     sideBarOpen: this.sideBar.sidebarOpen,
                     roomStartedTS: this.room.roomStartedTS
