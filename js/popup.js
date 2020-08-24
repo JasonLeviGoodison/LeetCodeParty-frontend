@@ -49,6 +49,18 @@ $(function() {
       showStartRoomButton(preStartedData.roomReady && preStartedData.amHost);
   }
 
+  function roomStartedRefreshDom(send, tabs, initData, roomStartedData) {
+      console.log("Refresh Room Started Dom: ", roomStartedData);
+
+      if (roomStartedData.amSubmitted === undefined) {
+          showRoomStartedNotSubmittedContent(new Date(Date.parse(roomStartedData.roomStartedTS)));
+      } else {
+          showRoomStartedSubmittedContent(roomStartedData.amSubmitted);
+      }
+
+      showFinishedMembersContent(send, roomStartedData.finishedMembers);
+  }
+
   function refreshDom(send, tabs, initData) {
 
       if (initData && initData.errorMessage) {
@@ -68,6 +80,9 @@ $(function() {
               break;
           case PRE_STARTED_ROOM_STATE:
               preStartedRoomRefreshDom(send, tabs, initData, initData.preStartedData);
+              break;
+          case STARTED_ROOM_STATE:
+              roomStartedRefreshDom(send, tabs, initData, initData.roomStartedData);
               break;
           default:
               console.log("Unknown Room State: ", initData.roomState);

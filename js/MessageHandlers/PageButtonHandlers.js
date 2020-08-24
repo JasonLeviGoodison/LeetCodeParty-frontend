@@ -28,6 +28,8 @@ function PageButtonHandlers() {
                     let code = $("div[class*=\"react-codemirror2\"]").html();
 
                     var submitMetaData = {
+                        startTime: curRoomV2.getRoomStartedTimestamp(),
+                        finishTime: new Date(),
                         runTime: values[0],
                         fasterThanTime: values[1],
                         memoryUsage: values[2],
@@ -46,6 +48,11 @@ function PageButtonHandlers() {
                     socket.emit(USER_SUBMITTED, payload, (data) => {
                         displayUserFinished(data.userId, submitMetaData);
                     });
+
+                    // Update the room marking that you are done
+                    curRoomV2.userSubmittedAnswer(submitMetaData);
+                    SendMessageToPopup(USER_SUBMITTED, curRoomV2, function(response) {});
+
                     clearInterval(waitForResult);
                 }
                 else if (status === "Wrong Answer" || status === "Runtime Error") {

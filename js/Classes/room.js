@@ -22,7 +22,10 @@ class Room {
             roomReady: false,
             roomStarted: false,
             amHost: false,
-            members: []
+            members: [],
+            roomStartedTS: null,
+            finishedMembers: [],
+            amSubmitted: undefined
         };
     }
 
@@ -85,6 +88,8 @@ class Room {
 
     startRoom() {
         this.room.roomStarted = true;
+        this.room.roomState = STARTED_ROOM_STATE;
+        this.setRoomStartedTimestamp(new Date());
         enableCodeArea();
     }
 
@@ -92,14 +97,35 @@ class Room {
         this.room.members.splice(index, 1);
     }
 
+    setRoomStartedTimestamp(ts) {
+        this.room.roomStartedTS = ts;
+    }
+
+    setUserSubmitted(metaData) {
+        if (metaData.curMem.isMe === true) return;
+
+        for (var i = 0; i < this.room.finishedMembers.length; i++) {
+            if (this.room.finishedMembers[i].curMem.userUUID == metaData.curMem.userUUID) {
+                return;
+            }
+        }
+
+        this.room.finishedMembers.push(metaData);
+    }
+
+    userSubmittedAnswer(submitMetaData) {
+        this.room.amSubmitted = submitMetaData;
+    }
+
     // Getters
     // -------
 
     getInitData() {
-        var initRoomData, preStartedData;
+        var initRoomData, preStartedData, roomStartedData;
         switch (this.room.roomState) {
             case INIT_ROOM_STATE:
                 initRoomData = {};
+                break;
             case PRE_STARTED_ROOM_STATE:
                 preStartedData = {
                     members: this.room.members,
@@ -109,13 +135,25 @@ class Room {
                     roomStarted: this.room.roomStarted,
                     amHost: this.room.amHost
                 };
+                break;
+            case STARTED_ROOM_STATE:
+                roomStartedData = {
+                    amHost: this.room.amHost,
+                    members: this.room.members,
+                    sideBarOpen: this.sideBar.sidebarOpen,
+                    roomStartedTS: this.room.roomStartedTS,
+                    finishedMembers: this.room.finishedMembers,
+                    amSubmitted: this.room.amSubmitted
+                };
+                break;
         }
 
         return {
             roomId: this.room.roomId,
             roomState: this.room.roomState,
             initRoomData: initRoomData,
-            preStartedData: preStartedData
+            preStartedData: preStartedData,
+            roomStartedData: roomStartedData
         };
     }
 
@@ -148,6 +186,10 @@ class Room {
 
     getMemberAt(index) {
         return this.room.members[index];
+    }
+
+    getRoomStartedTimestamp() {
+        return this.room.roomStartedTS;
     }
 }
 

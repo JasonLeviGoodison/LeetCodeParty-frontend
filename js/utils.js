@@ -57,3 +57,12 @@ function removeURLParameter(url, parameter) {
 function createUserSubmittedText(curMem) {
 	return curMem.domName + curMem.domIsMe;
 }
+
+function padToTwoChar(val) {
+	var valString = val + "";
+	if (valString.length < 2) {
+		return "0" + valString;
+	} else {
+		return valString;
+	}
+}

@@ -11,6 +11,8 @@ const READY_UP_MESSAGE = "readyUp";
 const ENQUE_IN_SIDEBAR = "sidebarEnqueue";
 const RESET_ROOM_MESSAGE = "resetRoom";
 const START_ROOM_MESSAGE = "startRoom";
+const START_ROOM_TIMER_MESSAGE = "startRoomTimer";
+const DISPLAY_CODE_MESSAGE = "displaySubmittedCode";
 
 // Messages from server to socket listener
 const USER_ID_MESSAGE = "userId";
@@ -31,4 +33,5 @@ const UPDATE_DOM_MESSAGE = "updateDom";
 
 // Room States
 const INIT_ROOM_STATE = "initState";
-const PRE_STARTED_ROOM_STATE = "roomBeingPreparedState"
+const PRE_STARTED_ROOM_STATE = "roomBeingPreparedState";
+const STARTED_ROOM_STATE = "roomStartedState";

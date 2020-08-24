@@ -21,6 +21,14 @@ function createRoom(request, sendResponse, curRoom) {
     return true;
 }
 
+function startRoomTimer(request, curRoom) {
+    curRoom.setRoomStartedTimestamp(request.data.ts);
+}
+
+function displayCode(request) {
+    modal.openModal(request.data.code, request.data.domName);
+}
+
 function joinRoom(request, sendResponse, curRoom) {
     let payload = {
         roomId: request.data.roomId,
@@ -101,7 +109,7 @@ function readyUp(sendResponse, curRoom) {
 function startRoom(sendResponse, curRoom) {
     socket.emit(START_ROOM_MESSAGE, {roomId: curRoom.getRoomID()}, function(data) {
         curRoom.startRoom();
-        sendResponse();
+        sendResponse(curRoom.getInitData());
     });
 }
 
@@ -131,6 +139,10 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
             return resetRoom(curRoom);
         case START_ROOM_MESSAGE:
             return startRoom(sendResponse, curRoom);
+        case START_ROOM_TIMER_MESSAGE:
+            return startRoomTimer(request, curRoom);
+        case DISPLAY_CODE_MESSAGE:
+            return displayCode(request);
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;

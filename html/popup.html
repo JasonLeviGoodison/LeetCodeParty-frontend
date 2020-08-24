@@ -55,9 +55,40 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="active-game hidden">
-      Game Started
+      <div class="active-game hidden">
+        <div class="active-game-not-submitted">
+          <span style="font-size: 20px; color: #33a532;">Begin Coding!</span>
+          </br>
+          <label id="elapsed-minutes">00</label>:<label id="elapsed-seconds">00</label> sec
+          </br>
+        </div>
+        <div class="active-game-submitted hidden">
+          <span style="font-size: 20px; color: #33a532;">
+            Good Stuff!
+            <br>
+            Take a seat, wait for the others.
+            <br>
+            <div class="submitted-info">
+              <label id="submitted-info-runtime" class="submitted-info-metric"></label>
+              <br>
+              <label id="submitted-info-memory" class="submitted-info-metric"></label>
+              <br>
+              <span class="submitted-info-metric">
+                Writing Time: <label id="submitted-info-time-to-write-min">00</label>:<label id="submitted-info-time-to-write-sec">00</label> sec
+              </span>
+            </div>
+          </span>
+        </div>
+        <div class="active-game-users-submitted">
+          Users who have submitted the answer:
+          <div class="users-submitted-list">
+            <div class="no-users-submitted-yet-loader">
+              <div class="loader">Loading...</div>
+            </div>
+          </div>
+          <button id="close-room-active-game" class="hidden" type="button">Close Room</button>
+        </div>
+      </div>
     </div>
     <div class="some-error hidden">
       <p id="error-msg" class="error"></p>

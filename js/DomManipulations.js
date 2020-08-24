@@ -66,6 +66,7 @@ var displayUserFinished = function (userId, metaData) {
             let text = createUserSubmittedText(curMem)
             metaData = {... metaData, curMem}
             sideBar.enqueue(text, USER_SUBMITTED, metaData);
+            curRoomV2.setUserSubmitted(metaData);
             break;
         }
     }
@@ -83,4 +84,79 @@ var enableCodeArea = function() {
 var resetHTML = function() {
     showStartRoomButton(false);
     updateReadyUpButton(false);
+}
+
+var showRoomStartedNotSubmittedContent = function(roomStartedTS) {
+    $(".active-game").show();
+    $(".connected").hide();
+    $(".disconnected").hide();
+    $(".active-game-not-submitted").show();
+    $(".active-game-submitted").hide();
+
+    var currTS = new Date();
+    var totalSecondsSoFar = secondsBetweenDates(currTS, roomStartedTS);
+
+    function setElapsedTime() {
+        ++totalSecondsSoFar;
+        $("#elapsed-minutes").text(padToTwoChar(Math.round(totalSecondsSoFar / 60)));
+        $("#elapsed-seconds").text(padToTwoChar(Math.round(totalSecondsSoFar % 60)));
+    }
+
+    setElapsedTime();
+    setInterval(setElapsedTime, 1000);
+}
+
+var secondsBetweenDates = function(dateA, dateB) {
+    return Math.abs((dateA.getTime() - dateB.getTime()) / 1000);
+}
+
+var showRoomStartedSubmittedContent = function(metadata) {
+    $(".active-game").show();
+    $(".connected").hide();
+    $(".disconnected").hide();
+    $(".active-game-not-submitted").hide();
+    $(".active-game-submitted").show();
+
+    $("#submitted-info-runtime").text("Runtime: " + metadata.runTime);
+    $("#submitted-info-memory").text("Memory: " + metadata.memoryUsage);
+
+    var secDiff = secondsBetweenDates(new Date(metadata.finishTime), new Date(metadata.startTime));
+    $("#submitted-info-time-to-write-min").text(padToTwoChar(Math.round(secDiff / 60)))
+    $("#submitted-info-time-to-write-sec").text(padToTwoChar(Math.round(secDiff % 60)));
+}
+
+var showFinishedMembersContent = function(send, finishedMembers) {
+    if (!finishedMembers || finishedMembers.length == 0) return;
+    $('.users-submitted-list').empty();
+    $('.no-users-submitted-yet-loader').hide();
+
+    for (var i = 0; i < finishedMembers.length; i++) {
+        var info = buildFinishedMemberDom(finishedMembers[i]);
+        let dom = info[0];
+        let buttonID = info[1];
+        let code = finishedMembers[i].code;
+        let domName = finishedMembers[i].curMem.domName;
+        let sendCopy = send;
+
+        $('.users-submitted-list').append(dom);
+        $('#' + buttonID).click(function() {
+            sendCopy(DISPLAY_CODE_MESSAGE, {
+                code: code,
+                domName: domName
+            }, function(response) {});
+        });
+    }
+}
+
+var buildFinishedMemberDom = function(memberMetaData) {
+    let buttonId = memberMetaData.curMem.userUUID + (Math.ceil(Math.random()*1000));
+
+    var finishedMemberDom = "<a id='" + buttonId + "' class='finished-member-entry'>" + memberMetaData.curMem.domName;
+
+    finishedMemberDom += " (" + memberMetaData.runTime + ")";
+    finishedMemberDom += " (" + memberMetaData.memoryUsage + ")";
+
+    var dom = finishedMemberDom + "</a>";
+
+    return [dom, buttonId];
 }
