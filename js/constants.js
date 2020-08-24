@@ -12,6 +12,7 @@ const ENQUE_IN_SIDEBAR = "sidebarEnqueue";
 const RESET_ROOM_MESSAGE = "resetRoom";
 const START_ROOM_MESSAGE = "startRoom";
 const START_ROOM_TIMER_MESSAGE = "startRoomTimer";
+const DISPLAY_CODE_MESSAGE = "displaySubmittedCode";
 
 // Messages from server to socket listener
 const USER_ID_MESSAGE = "userId";

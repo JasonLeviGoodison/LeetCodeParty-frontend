@@ -261,7 +261,7 @@ hr.solid {
 }
 
 .active-game-users-submitted {
-  margin: 25px;
+  margin: 10px;
   position: relative;
   border-top: 1px solid white;
   padding-top: 5px;
@@ -326,3 +326,22 @@ hr.solid {
   }
 }
 
+.finished-member-entry {
+  display: inline-block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: help;
+}
+
+.submitted-info {
+  font-size: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: inline-block;
+  color: white;
+}
+
+.submitted-info-metric {
+  padding: 5px;
+  display: inline-block;
+}

@@ -23,7 +23,9 @@ class Room {
             roomStarted: false,
             amHost: false,
             members: [],
-            roomStartedTS: null
+            roomStartedTS: null,
+            finishedMembers: [],
+            amSubmitted: undefined
         };
     }
 
@@ -87,6 +89,7 @@ class Room {
     startRoom() {
         this.room.roomStarted = true;
         this.room.roomState = STARTED_ROOM_STATE;
+        this.setRoomStartedTimestamp(new Date());
         enableCodeArea();
     }
 
@@ -96,6 +99,22 @@ class Room {
 
     setRoomStartedTimestamp(ts) {
         this.room.roomStartedTS = ts;
+    }
+
+    setUserSubmitted(metaData) {
+        if (metaData.curMem.isMe === true) return;
+
+        for (var i = 0; i < this.room.finishedMembers.length; i++) {
+            if (this.room.finishedMembers[i].curMem.userUUID == metaData.curMem.userUUID) {
+                return;
+            }
+        }
+
+        this.room.finishedMembers.push(metaData);
+    }
+
+    userSubmittedAnswer(submitMetaData) {
+        this.room.amSubmitted = submitMetaData;
     }
 
     // Getters
@@ -122,7 +141,9 @@ class Room {
                     amHost: this.room.amHost,
                     members: this.room.members,
                     sideBarOpen: this.sideBar.sidebarOpen,
-                    roomStartedTS: this.room.roomStartedTS
+                    roomStartedTS: this.room.roomStartedTS,
+                    finishedMembers: this.room.finishedMembers,
+                    amSubmitted: this.room.amSubmitted
                 };
         }
 
@@ -164,6 +185,10 @@ class Room {
 
     getMemberAt(index) {
         return this.room.members[index];
+    }
+
+    getRoomStartedTimestamp() {
+        return this.room.roomStartedTS;
     }
 }
 

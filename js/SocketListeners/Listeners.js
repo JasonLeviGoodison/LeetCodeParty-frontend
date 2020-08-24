@@ -68,6 +68,7 @@ function handleUserRoomClosing(curRoom) {
 
 function handleUserSubmitted(curRoom, userId, meta) {
     displayUserFinished(userId, meta);
+    SendMessageToPopup(USER_SUBMITTED, curRoom, function (response) {});
 }
 
 function handleRoomStarted(curRoom) {

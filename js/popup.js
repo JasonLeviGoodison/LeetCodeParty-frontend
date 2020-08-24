@@ -52,7 +52,13 @@ $(function() {
   function roomStartedRefreshDom(send, tabs, initData, roomStartedData) {
       console.log("Refresh Room Started Dom: ", roomStartedData);
 
-      showRoomStartedContent(new Date(Date.parse(roomStartedData.roomStartedTS)));
+      if (roomStartedData.amSubmitted === undefined) {
+          showRoomStartedNotSubmittedContent(new Date(Date.parse(roomStartedData.roomStartedTS)));
+      } else {
+          showRoomStartedSubmittedContent(roomStartedData.amSubmitted);
+      }
+
+      showFinishedMembersContent(send, roomStartedData.finishedMembers);
   }
 
   function refreshDom(send, tabs, initData) {
