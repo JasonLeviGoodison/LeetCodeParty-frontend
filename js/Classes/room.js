@@ -145,6 +145,7 @@ class Room {
                     finishedMembers: this.room.finishedMembers,
                     amSubmitted: this.room.amSubmitted
                 };
+                break;
         }
 
         return {
