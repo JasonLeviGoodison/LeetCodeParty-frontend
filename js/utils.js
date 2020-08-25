@@ -58,6 +58,10 @@ function createUserSubmittedText(curMem) {
 	return curMem.domName + curMem.domIsMe;
 }
 
+function rankMembersSubmissions(members) {
+	return members.sort((a, b) => (a.meta.points > b.meta.points) ? 1 : -1)
+}
+
 function padToTwoChar(val) {
 	var valString = val + "";
 	if (valString.length < 2) {

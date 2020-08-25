@@ -52,6 +52,17 @@ function searchAndSetMemberReadyState(curRoom, memberUUID, readyState, callback)
     return callback();
 }
 
+function searchAndSetMemberSubmissionDataState(curRoom, memberUUID, meta, callback) {
+    for (var i = 0; i < curRoom.getNumberOfMembers(); i++) {
+        var currMember = curRoom.getMemberAt(i);
+        if (currMember.userUUID === memberUUID) {
+            currMember.meta = meta;
+            break;
+        }
+    }
+    return callback();
+}
+
 function setMemberReadyState(member, readyState) {
     var readyStateVal = "(<img class='inline-img' src='../../images/ready-button.png' alt='ready' width='16px' height='16px'>)";
     if (!readyState) {

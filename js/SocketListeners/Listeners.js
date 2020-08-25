@@ -20,6 +20,9 @@ function SocketListen(socket, curRoom) {
     socket.on(USER_SUBMITTED, (data) => {
         handleUserSubmitted(curRoom, data.userId, data.meta);
     });
+    socket.on(GAME_OVER_MESSAGE, (data) => {
+        handleGameOver(curRoom);
+    });
 }
 
 function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
@@ -38,7 +41,6 @@ function handleUserLeftRoom(curRoom, userId) {
     for (var i = 0; i < curRoom.getNumberOfMembers(); i++ ) {
         var currMember = curRoom.getMemberAt(i);
 
-        console.log("Comparing: " + currMember.userUUID + " and " + userId);
         if (currMember.userUUID === userId) {
             sideBar.enqueue(currMember.domName + " left the room" , 'info');
             curRoom.removeMemberAtIndex(i);
@@ -67,11 +69,19 @@ function handleUserRoomClosing(curRoom) {
 }
 
 function handleUserSubmitted(curRoom, userId, meta) {
-    displayUserFinished(userId, meta);
-    SendMessageToPopup(USER_SUBMITTED, curRoom, function (response) {});
+    searchAndSetMemberSubmissionDataState(curRoom, userId, meta, () => {
+        displayUserFinished(userId, meta);
+        SendMessageToPopup(USER_SUBMITTED, curRoom, function (response) {});
+    });
 }
 
 function handleRoomStarted(curRoom) {
     curRoom.startRoom();
+    SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
+}
+
+function handleGameOver(curRoom) {
+    curRoom.gameOver();
+    sideBar.enqueue("Game Over! Everyone has submitted. This game finished in INSERT TIMER", "info");
     SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
 }

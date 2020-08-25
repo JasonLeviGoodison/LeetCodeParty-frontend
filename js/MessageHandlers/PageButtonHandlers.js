@@ -18,7 +18,6 @@ function PageButtonHandlers() {
                 }
                 catch {}
                 
-                console.log(status)
                 if (status === "Success") {
                     var elems = document.querySelectorAll("span[class*=\"data\"");
                     var values = Array.prototype.map.call(elems, function(obj) {
@@ -45,9 +44,7 @@ function PageButtonHandlers() {
                         userId: curRoomV2.getUserID(),
                         meta: submitMetaData
                     }
-                    socket.emit(USER_SUBMITTED, payload, (data) => {
-                        displayUserFinished(data.userId, submitMetaData);
-                    });
+                    socket.emit(USER_SUBMITTED, payload, (data) => {});
 
                     // Update the room marking that you are done
                     curRoomV2.userSubmittedAnswer(submitMetaData);

@@ -160,3 +160,22 @@ var buildFinishedMemberDom = function(memberMetaData) {
 
     return [dom, buttonId];
 }
+
+var showGameOver = function(members) {
+
+    // lock in the last time
+    $(".connected").hide();
+    $(".disconnected").hide();
+    $(".active-game-not-submitted").hide();
+
+    $("#endgame").removeClass("hidden");
+
+    members = rankMembersSubmissions(members);
+    
+    for (var i = 0; i < members.length; i++) {
+        var currMem = members[i];
+
+        var domElement = "<p style='font-weight:bold;'> " + (i+1) + ". " + currMem.domName + " " + currMem.domIsMe;
+        $('.rankings').append(domElement);
+    }
+}
