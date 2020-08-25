@@ -33,8 +33,8 @@ var unshowError = function() {
 }
 
 var showDisconnected = function() {
-    $('.disconnected').removeClass('hidden');
-    $('.connected').addClass('hidden');
+    $('.disconnected').show();
+    $('.connected').hide();
     $('#control-lock').prop('checked', false);
 };
 
@@ -162,11 +162,11 @@ var buildFinishedMemberDom = function(memberMetaData) {
 }
 
 var showGameOver = function(members) {
-
-    // lock in the last time
     $(".connected").hide();
     $(".disconnected").hide();
     $(".active-game-not-submitted").hide();
+    $(".active-game").hide();
+    $(".active-game-users-submitted").hide();
 
     $("#endgame").removeClass("hidden");
 
@@ -178,4 +178,9 @@ var showGameOver = function(members) {
         var domElement = "<p style='font-weight:bold;'> " + (i+1) + ". " + currMem.domName + " " + currMem.domIsMe;
         $('.rankings').append(domElement);
     }
+}
+
+var removeGameOver = function(members) {
+    $("#endgame").addClass("hidden");
+    $('.rankings').empty();
 }

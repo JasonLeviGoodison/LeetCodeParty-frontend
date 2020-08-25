@@ -28,7 +28,7 @@ var getProblemID = function(tabs) {
 }
 
 function handleRoomClosing(curRoom) {
-	curRoom.resetRoom();
+	curRoom.resetRoom(curRoom.userId);
 	window.history.replaceState({}, null, removeURLParameter(window.location.toString(), "roomId"));
 }
 

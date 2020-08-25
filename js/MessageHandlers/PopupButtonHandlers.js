@@ -57,4 +57,12 @@ function PopupButtonHandlers(send, tabs) {
             }, function(response) {});
         });
     });
+
+    $('#endgame-button').click(function() {
+        send(RESET_ROOM_MESSAGE, {}, function(response) {
+            showDisconnected();
+            removeGameOver();
+            resetHTML();
+        });
+    });
 }

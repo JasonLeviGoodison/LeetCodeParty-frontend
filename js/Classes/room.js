@@ -10,11 +10,11 @@ class Room {
     // Setters
     // -------
 
-    resetRoom() {
+    resetRoom(userId = "") {
         this.room = {
             roomState: INIT_ROOM_STATE,
             tabId: this.room.tabId,
-            userId: "",
+            userId: userId,
             roomId: "",
             problemId: "",
             socket: "",
