@@ -83,11 +83,20 @@
           Users who have submitted the answer:
           <div class="users-submitted-list">
             <div class="no-users-submitted-yet-loader">
-              <div class="loader">Loading...</div>
+              <div class="loader">Waiting...</div>
             </div>
           </div>
-          <button id="close-room-active-game" class="hidden" type="button">Close Room</button>
         </div>
+      </div>
+      <div id="endgame" class="game-over hidden">
+          <span style="font-size: 20px; color: #33a532;">
+            Game over!
+          <br/>
+          Here are the rankings:
+          </span>
+          <div class="rankings">
+          </div>
+          <button id="endgame-button" type="button">Leave</button>
       </div>
     </div>
     <div class="some-error hidden">

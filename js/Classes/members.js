@@ -49,7 +49,18 @@ function searchAndSetMemberReadyState(curRoom, memberUUID, readyState, callback)
         }
     }
 
-    return callback();
+    callback();
+}
+
+function searchAndSetMemberSubmissionDataState(curRoom, memberUUID, meta, callback) {
+    for (var i = 0; i < curRoom.getNumberOfMembers(); i++) {
+        var currMember = curRoom.getMemberAt(i);
+        if (currMember.userUUID === memberUUID) {
+            currMember.meta = meta;
+            break;
+        }
+    }
+    callback();
 }
 
 function setMemberReadyState(member, readyState) {

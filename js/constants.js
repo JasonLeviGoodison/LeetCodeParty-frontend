@@ -21,6 +21,7 @@ const ROOM_CLOSING_MESSAGE = "roomClosing";
 const USER_LEFT_MESSAGE = "userLeftRoom";
 const USER_READY_UP_MESSAGE = "userReadyUp";
 const USER_SUBMITTED = "userSubmitted";
+const GAME_OVER_MESSAGE = "gameOver";
 const ROOM_READY_MESSAGE = "roomReady";
 const ROOM_STARTED_MESSAGE = "roomStarted";
 
@@ -35,3 +36,4 @@ const UPDATE_DOM_MESSAGE = "updateDom";
 const INIT_ROOM_STATE = "initState";
 const PRE_STARTED_ROOM_STATE = "roomBeingPreparedState";
 const STARTED_ROOM_STATE = "roomStartedState";
+const GAME_OVER_STATE = "gameOverState";

@@ -10,11 +10,11 @@ class Room {
     // Setters
     // -------
 
-    resetRoom() {
+    resetRoom(userId = "") {
         this.room = {
             roomState: INIT_ROOM_STATE,
             tabId: this.room.tabId,
-            userId: "",
+            userId: userId,
             roomId: "",
             problemId: "",
             socket: "",
@@ -93,6 +93,10 @@ class Room {
         enableCodeArea();
     }
 
+    gameOver() {
+        this.room.roomState = GAME_OVER_STATE;
+    }
+
     removeMemberAtIndex(index) {
         this.room.members.splice(index, 1);
     }
@@ -121,7 +125,7 @@ class Room {
     // -------
 
     getInitData() {
-        var initRoomData, preStartedData, roomStartedData;
+        var initRoomData, preStartedData, roomStartedData, gameOverData;
         switch (this.room.roomState) {
             case INIT_ROOM_STATE:
                 initRoomData = {};
@@ -146,14 +150,25 @@ class Room {
                     amSubmitted: this.room.amSubmitted
                 };
                 break;
+            case GAME_OVER_STATE:
+                gameOverData = {
+                    amHost: this.room.amHost,
+                    members: this.room.members,
+                    sideBarOpen: this.sideBar.sidebarOpen,
+                    roomStartedTS: this.room.roomStartedTS,
+                    finishedMembers: this.room.finishedMembers,
+                    amSubmitted: this.room.amSubmitted
+                };
+                break;
         }
 
         return {
             roomId: this.room.roomId,
             roomState: this.room.roomState,
-            initRoomData: initRoomData,
-            preStartedData: preStartedData,
-            roomStartedData: roomStartedData
+            initRoomData,
+            preStartedData,
+            roomStartedData,
+            gameOverData
         };
     }
 

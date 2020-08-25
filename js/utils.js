@@ -28,7 +28,7 @@ var getProblemID = function(tabs) {
 }
 
 function handleRoomClosing(curRoom) {
-	curRoom.resetRoom();
+	curRoom.resetRoom(curRoom.userId);
 	window.history.replaceState({}, null, removeURLParameter(window.location.toString(), "roomId"));
 }
 
@@ -56,6 +56,10 @@ function removeURLParameter(url, parameter) {
 
 function createUserSubmittedText(curMem) {
 	return curMem.domName + curMem.domIsMe;
+}
+
+function rankMembersSubmissions(members) {
+	return members.sort((a, b) => (a.meta.points > b.meta.points) ? 1 : -1)
 }
 
 function padToTwoChar(val) {

@@ -61,6 +61,12 @@ $(function() {
       showFinishedMembersContent(send, roomStartedData.finishedMembers);
   }
 
+  function gameOverRefreshDom(send, tabs, initData, gameOverData) {
+      const { members } = gameOverData;
+
+      showGameOver(members);
+  }
+
   function refreshDom(send, tabs, initData) {
 
       if (initData && initData.errorMessage) {
@@ -83,6 +89,9 @@ $(function() {
               break;
           case STARTED_ROOM_STATE:
               roomStartedRefreshDom(send, tabs, initData, initData.roomStartedData);
+              break;
+          case GAME_OVER_STATE:
+              gameOverRefreshDom(send, tabs, initData, initData.gameOverData);
               break;
           default:
               console.log("Unknown Room State: ", initData.roomState);

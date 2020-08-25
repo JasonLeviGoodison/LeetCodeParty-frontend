@@ -11,7 +11,6 @@ class SideBar {
             metaData
         }
         this.events.push(event);
-        console.log("events", this.events)
         this.showList();
     }
 
