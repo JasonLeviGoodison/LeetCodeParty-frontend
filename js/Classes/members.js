@@ -49,7 +49,7 @@ function searchAndSetMemberReadyState(curRoom, memberUUID, readyState, callback)
         }
     }
 
-    return callback();
+    callback();
 }
 
 function searchAndSetMemberSubmissionDataState(curRoom, memberUUID, meta, callback) {
@@ -60,7 +60,7 @@ function searchAndSetMemberSubmissionDataState(curRoom, memberUUID, meta, callba
             break;
         }
     }
-    return callback();
+    callback();
 }
 
 function setMemberReadyState(member, readyState) {

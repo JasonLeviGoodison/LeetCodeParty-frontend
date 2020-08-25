@@ -71,7 +71,7 @@ function handleUserRoomClosing(curRoom) {
 function handleUserSubmitted(curRoom, userId, meta) {
     searchAndSetMemberSubmissionDataState(curRoom, userId, meta, () => {
         displayUserFinished(userId, meta);
-        SendMessageToPopup(USER_SUBMITTED, curRoom, function (response) {});
+        SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function (response) {});
     });
 }
 
