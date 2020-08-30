@@ -23,7 +23,7 @@ function SocketListen(socket, curRoom) {
     socket.on(GAME_OVER_MESSAGE, (data) => {
         handleGameOver(curRoom);
     });
-    socket.on(USER_VIEWED_SUBMISSION_MESSAGE, (data) => {
+    socket.on(USER_VIEWED_CODE_MESSAGE, (data) => {
         handleUserViewedSubmission(data, curRoom);
     });
     socket.on()

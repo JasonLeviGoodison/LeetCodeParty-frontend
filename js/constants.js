@@ -14,7 +14,6 @@ const START_ROOM_MESSAGE = "startRoom";
 const START_ROOM_TIMER_MESSAGE = "startRoomTimer";
 const DISPLAY_CODE_MESSAGE = "displaySubmittedCode";
 const USER_VIEWED_CODE_MESSAGE = "userViewedCode";
-const USER_VIEWED_SUBMISSION_MESSAGE = "userViewedSubmission";
 
 // Messages from server to socket listener
 const USER_ID_MESSAGE = "userId";
