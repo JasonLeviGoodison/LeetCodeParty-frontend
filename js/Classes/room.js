@@ -35,6 +35,7 @@ class Room {
 
     setUserID(userID) {
         this.room.userId = userID;
+        this.sideBar.setHost(userID);
     }
 
     setRoomInPreStartState() {

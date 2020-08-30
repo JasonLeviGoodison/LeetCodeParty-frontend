@@ -1,5 +1,3 @@
-var modal = new Modal();
-
 function getInitData(sendResponse, curRoom) {
     sendResponse(curRoom.getInitData());
     return;
@@ -25,8 +23,14 @@ function startRoomTimer(request, curRoom) {
     curRoom.setRoomStartedTimestamp(request.data.ts);
 }
 
-function displayCode(request) {
-    modal.openModal(request.data.code, request.data.domName);
+function displayCode(request, curRoom) {
+    modal.openModal(
+        request.data.code,
+        request.data.domName,
+        curRoom.getRoomID(),
+        curRoom.getUserID(),
+        request.data.viewedUserUUID,
+    );
 }
 
 function joinRoom(request, sendResponse, curRoom) {
@@ -142,7 +146,7 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
         case START_ROOM_TIMER_MESSAGE:
             return startRoomTimer(request, curRoom);
         case DISPLAY_CODE_MESSAGE:
-            return displayCode(request);
+            return displayCode(request, curRoom);
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;

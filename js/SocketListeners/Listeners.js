@@ -23,6 +23,10 @@ function SocketListen(socket, curRoom) {
     socket.on(GAME_OVER_MESSAGE, (data) => {
         handleGameOver(curRoom);
     });
+    socket.on(USER_VIEWED_SUBMISSION_MESSAGE, (data) => {
+        handleUserViewedSubmission(data, curRoom);
+    });
+    socket.on()
 }
 
 function handleNewMemberMsg(curRoom, memberId, nicknameInfo) {
@@ -84,4 +88,24 @@ function handleGameOver(curRoom) {
     curRoom.gameOver();
     sideBar.enqueue("Game Over! Everyone has submitted. This game finished in INSERT TIMER", "info");
     SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
+}
+
+function handleUserViewedSubmission(data, curRoom) {
+    var viewerMember = null;
+    var viewedMember = null;
+    for (var i = 0; i < curRoom.getNumberOfMembers(); i++) {
+        let mem = curRoom.getMemberAt(i);
+
+        if (mem.userUUID == data.viewerUserUUID) {
+            viewerMember = mem;
+        } else if (mem.userUUID == data.viewedUserUUID) {
+            viewedMember = mem;
+        }
+
+        if (viewerMember != null && viewedMember != null) {
+            break;
+        }
+    }
+
+    sideBar.enqueue(viewerMember.domName + " viewed a submission from " + viewedMember.domName + "!", "info");
 }

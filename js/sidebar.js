@@ -2,6 +2,11 @@ class SideBar {
     constructor() {
         this.sidebarOpen = false;
         this.events = [];
+        this.host_uuid = null;
+    }
+
+    setHost(host) {
+        this.host_uuid = host;
     }
 
     enqueue(text, eventType, metaData) {
@@ -36,9 +41,15 @@ class SideBar {
                         "<br/>" +
                         "<span style=\"padding-left: 40px;\"> Memory Usage: " + meta.memoryUsage + "</span>"
 
-
+                        let self = this;
                         $("#list").on("click", "." + buttonId , function() {
-                            modal.openModal(meta.code, name);
+                            modal.openModal(
+                                meta.code,
+                                name,
+                                curRoomV2.getRoomID(),
+                                self.host_uuid,
+                                meta.curMem.userUUID,
+                            );
                         });
                     break;
                 case "error":

@@ -5,6 +5,7 @@ window.addEventListener ("load", main, false);
 var socket = io(ENDPOINT);
 var sideBar = new SideBar();
 var curRoomV2 = new Room(sideBar);
+var modal = new Modal(socket);
 
 function getStoredInfo() {
     chrome.storage.sync.get(INFO_STORE_KEY, function(items) {

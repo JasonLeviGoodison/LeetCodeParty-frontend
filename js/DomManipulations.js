@@ -136,13 +136,15 @@ var showFinishedMembersContent = function(send, finishedMembers) {
         let buttonID = info[1];
         let code = finishedMembers[i].code;
         let domName = finishedMembers[i].curMem.domName;
+        let viewedUserUUID = finishedMembers[i].curMem.userUUID;
         let sendCopy = send;
 
         $('.users-submitted-list').append(dom);
         $('#' + buttonID).click(function() {
             sendCopy(DISPLAY_CODE_MESSAGE, {
                 code: code,
-                domName: domName
+                domName: domName,
+                viewedUserUUID: viewedUserUUID
             }, function(response) {});
         });
     }

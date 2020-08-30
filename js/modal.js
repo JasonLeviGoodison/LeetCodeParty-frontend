@@ -1,8 +1,9 @@
 class Modal {
-    constructor() {
+    constructor(socket) {
+        this.socket = socket;
     }
 
-    openModal(code, user) {
+    openModal(code, user, roomUUID, viewerUserUUID, viewedUserUUID) {
         user = user + "'s code"
         var modal = document.createElement('div');
 
@@ -39,6 +40,14 @@ class Modal {
                 modal.remove();
             }
         }
-    }
 
+        // Emit this message to the server so we can track this read receipt
+        if (viewerUserUUID != viewedUserUUID) {
+            this.socket.emit(USER_VIEWED_CODE_MESSAGE, {
+                viewer: viewerUserUUID,
+                viewed: viewedUserUUID,
+                roomUUID: roomUUID
+            }, function(data) {});
+        }
+    }
 };
