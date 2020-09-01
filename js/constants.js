@@ -13,6 +13,7 @@ const RESET_ROOM_MESSAGE = "resetRoom";
 const START_ROOM_MESSAGE = "startRoom";
 const START_ROOM_TIMER_MESSAGE = "startRoomTimer";
 const DISPLAY_CODE_MESSAGE = "displaySubmittedCode";
+const USER_VIEWED_CODE_MESSAGE = "userViewedCode";
 
 // Messages from server to socket listener
 const USER_ID_MESSAGE = "userId";
