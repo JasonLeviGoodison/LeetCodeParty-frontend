@@ -1,5 +1,5 @@
 {
-  "name": "CodingDual",
+  "name": "Leet Party",
   "version": "1.0",
   "description": "Challenge your friends and improve your interview skills at the same time",
   "permissions": ["activeTab", "declarativeContent", "storage"],

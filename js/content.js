@@ -2,7 +2,7 @@ const newUserEveryConnection = true;
 
 window.addEventListener ("load", main, false);
 
-var socket = io(ENDPOINT);
+var socket = io(ENDPOINT, { secure: true });
 var sideBar = new SideBar();
 var curRoomV2 = new Room(sideBar);
 
