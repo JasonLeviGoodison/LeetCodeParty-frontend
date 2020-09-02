@@ -45,15 +45,6 @@
             </div>
           </div>
         </div>
-        <div style="display: flex;justify-content: center;flex-direction: column;padding-top:45px;">
-          <div>Toggle Sidebar</div>
-          <div style="padding: 10px;">
-            <label style="" class="switch">
-              <input id="slider-input" type="checkbox">
-              <span id="toggle-sidebar" class="slider round"></span>
-            </label>
-          </div>
-        </div>
       </div>
       <div class="active-game hidden">
         <div class="active-game-not-submitted">
@@ -97,6 +88,15 @@
           <div class="rankings">
           </div>
           <button id="endgame-button" type="button">Leave</button>
+      </div>
+      <div id="toggle" class="hidden" style="display: flex;justify-content: center;flex-direction: column;padding-top:45px;">
+        <div>Toggle Sidebar</div>
+        <div style="padding: 10px;">
+          <label style="" class="switch">
+            <input id="slider-input" checked="true" type="checkbox">
+            <span id="toggle-sidebar" class="slider round"></span>
+          </label>
+        </div>
       </div>
     </div>
     <div class="some-error hidden">

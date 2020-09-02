@@ -10,11 +10,12 @@ function PopupButtonHandlers(send, tabs) {
       });
     
     $('#create-session').click(function() {
+
         send(CREATE_ROOM_MESSAGE, {
             problemId: getProblemID(tabs)
         }, function(response) {
-            console.log("got the response from create session", response)
             if (response.roomId) {
+                send(TOGGLE_SIDEBAR_MESSAGE);
                 showConnected(response.roomId, tabs);
                 updateUsersInRoom(response.preStartedData.members);
                 updateHostLeaveButton();

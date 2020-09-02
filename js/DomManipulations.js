@@ -4,6 +4,7 @@ var showConnected = function(roomId, tabs) {
     $('.disconnected').addClass('hidden');
     $('.connected').removeClass('hidden');
     $('#share-url').val(urlWithSessionId).focus().select();
+    $("#toggle").removeClass("hidden");
 };
 
 // updates users in room list
@@ -36,6 +37,7 @@ var showDisconnected = function() {
     $('.disconnected').show();
     $('.connected').hide();
     $('#control-lock').prop('checked', false);
+    $("#toggle").addClass("hidden");
 };
 
 var updateHostLeaveButton = function() {
