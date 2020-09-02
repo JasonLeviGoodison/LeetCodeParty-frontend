@@ -1,4 +1,3 @@
-const ENDPOINT = "leetparty.techinturn.com";
 const INFO_STORE_KEY = "userId";
 
 // Messages from popup.js to content.js
