@@ -117,6 +117,10 @@ function startRoom(sendResponse, curRoom) {
     });
 }
 
+function openHowToModal() {
+    modal.openHowToModal();
+}
+
 function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
     switch(request.type) {
         case GET_INIT_DATA_MESSAGE:
@@ -147,6 +151,8 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
             return startRoomTimer(request, curRoom);
         case DISPLAY_CODE_MESSAGE:
             return displayCode(request, curRoom);
+        case OPEN_HOW_TO_MODAL:
+            return openHowToModal();
         default:
             console.log("Content script didnt know how to deal with ", request.type);
             return false;
