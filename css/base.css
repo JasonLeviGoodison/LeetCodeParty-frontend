@@ -18,6 +18,27 @@ html {
   border-width: 5px;
 }
 
+.disconnected {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+#how-to-button {
+  margin-top: 15px;
+  width: fit-content;
+  size: 9px;
+  padding: 6px;
+  font-size: 11px;
+  border-color: black;
+  color: black;
+  border: 0px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 label {
   -moz-user-select: none;
   -webkit-user-select: none;

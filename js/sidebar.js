@@ -80,6 +80,7 @@ class SideBar {
                 <h2 style=\"color:white;text-align: center;\">LeetCode Party</h2>\
                 <h5 style=\"color:white;margin: 10px;\">Here you can see information about how your competitors are doing</h5>\
                 <div id=\"list\"></div>\
+                <div style=\"position:fixed; text-align:center; width: 30%; bottom: 0px;\"><a id=\"howto\">How to play</a></div>\
             ";
             sidebar.style.cssText = "\
                 position:fixed;\
@@ -91,8 +92,13 @@ class SideBar {
                 overflow-y: scroll;\
                 padding: 10px;\
             ";
+
             $("body").append(sidebar);
             $("#app").css("width", "70%");
+            $('#howto').click(function() {
+                modal.openHowToModal();
+            });
+
             this.showList();
             this.sidebarOpen = true;
             this.created = true;
