@@ -18,6 +18,14 @@ html {
   border-width: 5px;
 }
 
+.disconnected {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
 label {
   -moz-user-select: none;
   -webkit-user-select: none;
