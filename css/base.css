@@ -57,7 +57,7 @@ h3 {
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
   
 button {
@@ -344,4 +344,22 @@ hr.solid {
 .submitted-info-metric {
   padding: 5px;
   display: inline-block;
+}
+
+.toggle-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top:45px;
+}
+
+.toggle-left {
+  width: 50%;
+  padding-top:45px;
+}
+
+.active-game-close-room {
+  width: 50%;
+  padding-top: 60px;
+  float: right;
 }

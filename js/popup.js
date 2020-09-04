@@ -52,8 +52,6 @@ $(function() {
   function roomStartedRefreshDom(send, tabs, initData, roomStartedData) {
       console.log("Refresh Room Started Dom: ", roomStartedData);
 
-      $( "#slider-input" ).prop( "checked", roomStartedData.sideBarOpen );
-
       if (roomStartedData.amSubmitted === undefined) {
           showRoomStartedNotSubmittedContent(new Date(Date.parse(roomStartedData.roomStartedTS)));
       } else {
@@ -61,7 +59,9 @@ $(function() {
       }
 
       if (roomStartedData.amHost === true) {
-          updateCloseActiveRoomButton();
+          updateCloseActiveRoomButton(roomStartedData.sideBarOpen);
+      } else {
+          forceSidebarDOM(roomStartedData.sideBarOpen);
       }
 
       showFinishedMembersContent(send, roomStartedData.finishedMembers);
@@ -70,7 +70,7 @@ $(function() {
   function gameOverRefreshDom(send, tabs, initData, gameOverData) {
       const { members } = gameOverData;
 
-      $( "#slider-input" ).prop( "checked", gameOverData.sideBarOpen );
+      forceSidebarDOM(gameOverData.sideBarOpen);
 
       showGameOver(members);
   }

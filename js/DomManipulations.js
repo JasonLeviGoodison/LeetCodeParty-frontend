@@ -4,6 +4,7 @@ var showConnected = function(roomId, tabs) {
     $('.disconnected').addClass('hidden');
     $('.connected').removeClass('hidden');
     $('#share-url').val(urlWithSessionId).focus().select();
+    $("#toggle").addClass("toggle-center");
     $("#toggle").removeClass("hidden");
 };
 
@@ -37,6 +38,7 @@ var showDisconnected = function() {
     $('.disconnected').show();
     $('.connected').hide();
     $('#control-lock').prop('checked', false);
+    $("#toggle").removeClass("toggle-center");
     $("#toggle").addClass("hidden");
 };
 
@@ -44,8 +46,17 @@ var updateHostLeaveButton = function() {
     $('#leave-room').text('Close Room');
 }
 
-var updateCloseActiveRoomButton = function() {
+var updateCloseActiveRoomButton = function(openV) {
     $('.active-game-close-room').show();
+    $( "#slider-input" ).prop( "checked", openV );
+    $("#toggle").addClass("toggle-left");
+    $("#toggle").removeClass("hidden");
+}
+
+var forceSidebarDOM = function(openV) {
+    $( "#slider-input" ).prop( "checked", openV );
+    $("#toggle").addClass("toggle-center");
+    $("#toggle").removeClass("hidden");
 }
 
 var updateReadyUpButton = function(state) {
