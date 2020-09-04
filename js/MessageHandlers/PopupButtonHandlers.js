@@ -22,6 +22,10 @@ function PopupButtonHandlers(send, tabs) {
             }
         });
     });
+
+    $('#how-to-button').click(function() {
+        send(OPEN_HOW_TO_MODAL);
+    });
     
     $("#toggle-sidebar").click(() => {
         send(TOGGLE_SIDEBAR_MESSAGE);
