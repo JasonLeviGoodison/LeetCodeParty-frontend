@@ -44,6 +44,10 @@ var updateHostLeaveButton = function() {
     $('#leave-room').text('Close Room');
 }
 
+var updateCloseActiveRoomButton = function() {
+    $('.active-game-close-room').show();
+}
+
 var updateReadyUpButton = function(state) {
     if (state) {
         $('#ready-up').text('Un Ready');

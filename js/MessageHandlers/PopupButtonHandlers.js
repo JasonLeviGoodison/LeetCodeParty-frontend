@@ -59,6 +59,13 @@ function PopupButtonHandlers(send, tabs) {
         });
     });
 
+    $('#close-active-room-button').click(function() {
+        send(LEAVE_ROOM_MESSAGE, {}, function(response) {
+            showDisconnected();
+            resetHTML();
+        });
+    });
+
     $('#endgame-button').click(function() {
         send(RESET_ROOM_MESSAGE, {}, function(response) {
             showDisconnected();

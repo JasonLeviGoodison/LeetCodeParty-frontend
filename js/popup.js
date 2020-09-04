@@ -60,6 +60,10 @@ $(function() {
           showRoomStartedSubmittedContent(roomStartedData.amSubmitted);
       }
 
+      if (roomStartedData.amHost === true) {
+          updateCloseActiveRoomButton();
+      }
+
       showFinishedMembersContent(send, roomStartedData.finishedMembers);
   }
 

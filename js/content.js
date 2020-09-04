@@ -1,8 +1,8 @@
-const newUserEveryConnection = true;
+const newUserEveryConnection = TESTING;
 
 window.addEventListener ("load", main, false);
 
-var socket = io(ENDPOINT, { secure: true });
+var socket = io(ENDPOINT);
 var sideBar = new SideBar();
 var curRoomV2 = new Room(sideBar);
 var modal = new Modal(socket);
