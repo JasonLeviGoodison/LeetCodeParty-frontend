@@ -65,7 +65,7 @@ h3 {
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
   
 button {
@@ -363,4 +363,22 @@ hr.solid {
 
 #random-problem {
   margin-top: 15px;
+}
+
+.toggle-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-top:45px;
+}
+
+.toggle-left {
+  width: 50%;
+  padding-top:45px;
+}
+
+.active-game-close-room {
+  width: 50%;
+  padding-top: 60px;
+  float: right;
 }

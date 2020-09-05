@@ -111,9 +111,9 @@ function readyUp(sendResponse, curRoom) {
 }
 
 function startRoom(sendResponse, curRoom) {
+    sendResponse(curRoom.getInitData());
     socket.emit(START_ROOM_MESSAGE, {roomId: curRoom.getRoomID()}, function(data) {
         curRoom.startRoom();
-        sendResponse(curRoom.getInitData());
     });
 }
 
