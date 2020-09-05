@@ -354,6 +354,17 @@ hr.solid {
   display: inline-block;
 }
 
+.not-on-leetcode-text {
+  display: block;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#random-problem {
+  margin-top: 15px;
+}
+
 .toggle-center {
   display: flex;
   justify-content: center;

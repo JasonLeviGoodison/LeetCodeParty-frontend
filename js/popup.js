@@ -5,7 +5,7 @@ $(function() {
 
       var problemId = getProblemID(tabs);
       if (!problemId) {
-          showError("Please select a problem before starting the party");
+          showNotOnProblemScreen(true);
           return;
       }
 
@@ -82,9 +82,14 @@ $(function() {
           return;
       }
 
+      if (!onLeetcode(tabs)) {
+          showNotOnProblemScreen();
+          return;
+      }
+
       var problemId = getProblemID(tabs);
       if (!problemId) {
-          showError("Please select a problem before starting the party");
+          showNotOnProblemScreen(true);
           return;
       }
 
