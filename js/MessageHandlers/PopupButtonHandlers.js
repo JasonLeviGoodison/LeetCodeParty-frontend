@@ -55,11 +55,30 @@ function PopupButtonHandlers(send, tabs) {
 
     $('#start-room').click(function() {
         send(START_ROOM_MESSAGE, {}, function(response) {
+
             var roomStartedTS = new Date();
             showRoomStartedNotSubmittedContent(roomStartedTS);
+
+            if (response.preStartedData.amHost === true) {
+                updateCloseActiveRoomButton(response.preStartedData.sideBarOpen);
+            }
+
             send(START_ROOM_TIMER_MESSAGE, {
                 ts: roomStartedTS
             }, function(response) {});
+        });
+    });
+
+    $('#close-active-room-button').click(function() {
+        send(TOGGLE_SIDEBAR_MESSAGE, {}, function() {});
+        send(LEAVE_ROOM_MESSAGE, {}, function(response) {
+            showDisconnected();
+            resetHTML();
+
+            $(".active-game-not-submitted").hide();
+            $(".active-game").hide();
+            $(".active-game-users-submitted").hide();
+            $(".active-game-close-room").hide();
         });
     });
 
