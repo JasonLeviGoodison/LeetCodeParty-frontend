@@ -27,6 +27,14 @@ var getProblemID = function(tabs) {
 	return problemSplit[0];
 }
 
+var onLeetcode = function(tabs) {
+	if (tabs.length <= 0) {
+		return true;
+	}
+	var ind = tabs[0].url.indexOf("https://leetcode.com/");
+	return ind >= 0;
+}
+
 function handleRoomClosing(curRoom) {
 	curRoom.resetRoom(curRoom.getUserID());
 	window.history.replaceState({}, null, removeURLParameter(window.location.toString(), "roomId"));

@@ -188,3 +188,16 @@ var removeGameOver = function(members) {
     $("#endgame").addClass("hidden");
     $('.rankings').empty();
 }
+
+var showNotOnProblemScreen = function(onLeetcode = false) {
+    $('.connected').addClass('hidden');
+    $('.disconnected').addClass('hidden');
+
+    var text = "Sorry, this is only available on Leetcode. Please navigate there, or click the button below.";
+    if (onLeetcode) {
+        text = "Sorry, you need to have a problem chosen. Choose a random one with the button below.";
+    }
+
+    $('.not-on-leetcode-text').text(text);
+    $('.not-on-leetcode').removeClass('hidden');
+}

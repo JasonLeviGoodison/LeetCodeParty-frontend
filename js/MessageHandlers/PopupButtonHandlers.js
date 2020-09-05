@@ -8,7 +8,12 @@ function PopupButtonHandlers(send, tabs) {
         var tooltip = document.getElementById("tool-tip");
         tooltip.innerHTML = "Copied link!"
       });
-    
+
+    $("#random-problem").click(function() {
+        console.log("Sending random problem key");
+        chrome.tabs.update(tabs[0].id, {url: "https://leetcode.com/problems/random-one-question/all"})
+    });
+
     $('#create-session').click(function() {
 
         send(CREATE_ROOM_MESSAGE, {
