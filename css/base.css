@@ -382,3 +382,11 @@ hr.solid {
   padding-top: 60px;
   float: right;
 }
+
+.leave-room-btn {
+  width: 40%;
+  float: right;
+  margin-top: 60px;
+  margin-left: 5%;
+  margin-right: 5%;
+}

@@ -101,6 +101,7 @@ var enableCodeArea = function() {
 var resetHTML = function() {
     showStartRoomButton(false);
     updateReadyUpButton(false);
+    updateLeaveRoomButton();
 }
 
 var showRoomStartedNotSubmittedContent = function(roomStartedTS) {
@@ -186,8 +187,12 @@ var showGameOver = function(members) {
     $(".active-game-not-submitted").hide();
     $(".active-game").hide();
     $(".active-game-users-submitted").hide();
+    $("#toggle").addClass("toggle-left");
+    $("#toggle").removeClass("hidden");
 
     $("#endgame").removeClass("hidden");
+    $("#endgame-button").removeClass("hidden");
+    $("#endgame-button").addClass("leave-room-btn");
 
     members = rankMembersSubmissions(members);
     
@@ -197,6 +202,11 @@ var showGameOver = function(members) {
         var domElement = "<p style='font-weight:bold;'> " + (i+1) + ". " + currMem.domName + " " + currMem.domIsMe;
         $('.rankings').append(domElement);
     }
+}
+
+var updateLeaveRoomButton = function() {
+    $("#endgame-button").removeClass("leave-room-btn");
+    $("#endgame-button").addClass("hidden");
 }
 
 var removeGameOver = function(members) {
