@@ -1,8 +1,8 @@
 {
-  "name": "Leet Party",
+  "name": "LeetParty",
   "version": "1.0",
   "description": "Challenge your friends and improve your interview skills at the same time",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "permissions": ["activeTab", "storage"],
   "background": {
     "scripts": ["js/background.js", "js/socket.io.js"],
     "persistent": false
@@ -10,14 +10,14 @@
   "browser_action": {
     "default_popup": "html/popup.html",
     "default_icon": {
-      "16": "images/leetcodeparty-16.png",
-      "32": "images/leetcodeparty-32.png",
-      "48": "images/leetcodeparty-48.png",
-      "128": "images/leetcodeparty-128.png"
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
     }
   },
   "content_scripts": [{
-    "matches": [ "*://leetcode.com/*" ],
+    "matches": [ "https://leetcode.com/*" ],
     "js": [
       "js/jquery-3.5.1.min.js",
       "env.js",
@@ -59,10 +59,10 @@
     "run_at": "document_idle"
   }],
   "icons": {
-    "16": "images/leetcodeparty-16.png",
-    "32": "images/leetcodeparty-32.png",
-    "48": "images/leetcodeparty-48.png",
-    "128": "images/leetcodeparty-128.png"
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
   "manifest_version": 2
 }

@@ -1,4 +1,4 @@
-# Leetcode Party Frontend
+# Leet Party Frontend
 
 ## E2E Diagram
 [LucidChart](https://app.lucidchart.com/documents/edit/47d5da20-8b85-43c2-bd5b-e01e243f7af1/0_0?beaconFlowId=4B78530DB65484E3#?folder_id=home&browser=icon)
