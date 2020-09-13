@@ -15,7 +15,11 @@ function getStoredInfo() {
             socket.emit(NEW_SOCKET_MESSAGE, { userId });
             useToken(userId);
         } else {
-            socket.emit(GET_NEW_USER_ID_MESSAGE);
+            socket.emit(GET_NEW_USER_ID_MESSAGE, {}, function(data) {
+                chrome.storage.sync.set({userId: data.userUUID}, function() {
+                    useToken(data.userUUID);
+                });
+            });
             socket.on(USER_ID_MESSAGE, (userId) => {
                 chrome.storage.sync.set({userId}, function() {
                     useToken(userId);
@@ -23,7 +27,7 @@ function getStoredInfo() {
             });
         }
         function useToken(userid) {
-            curRoomV2.setUserID(userId);
+            curRoomV2.setUserID(userid);
         }
     });
 }

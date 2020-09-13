@@ -19,10 +19,22 @@ function addNewMembersToRoom(curRoom, newMembers, cb) {
     return cb();
 }
 
+function fallbackNicknameInfo() {
+    return {
+        nickname_color: "#ff0000",
+        nickname: "Jumping Jackrabbit"
+    }
+}
+
 function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
     var domIsMe = "";
     if (isMe) {
         domIsMe = "(Me)"
+    }
+
+    // Handle the edge case where nicknameInfo is undefined
+    if (!nicknameInfo) {
+        nicknameInfo = fallbackNicknameInfo();
     }
 
     return {
