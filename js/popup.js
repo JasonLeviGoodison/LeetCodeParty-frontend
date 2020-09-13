@@ -1,7 +1,6 @@
 $(function() {
 
   function initRoomRefreshDom(send, tabs, initData, initRoomData) {
-      console.log("Refreshing Init Room Dom: ", initRoomData);
 
       var problemId = getProblemID(tabs);
       if (!problemId) {
@@ -26,7 +25,6 @@ $(function() {
   }
 
   function preStartedRoomRefreshDom(send, tabs, initData, preStartedData) {
-      console.log("Refreshing Pre Room Started Dom: ", preStartedData);
 
       if (initData && initData.roomId !== "") {
           showConnected(initData.roomId, tabs);
@@ -50,7 +48,6 @@ $(function() {
   }
 
   function roomStartedRefreshDom(send, tabs, initData, roomStartedData) {
-      console.log("Refresh Room Started Dom: ", roomStartedData);
 
       if (roomStartedData.amSubmitted === undefined) {
           showRoomStartedNotSubmittedContent(new Date(Date.parse(roomStartedData.roomStartedTS)));
@@ -136,7 +133,6 @@ $(function() {
     chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         PopupMessageHandlers(message, sendResponse, function(initData) {
             if (message.forTabId != tabID) {
-                console.log("Caught message for different tabID");
                 return;
             }
 
