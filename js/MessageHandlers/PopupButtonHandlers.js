@@ -10,7 +10,6 @@ function PopupButtonHandlers(send, tabs) {
       });
 
     $("#random-problem").click(function() {
-        console.log("Sending random problem key");
         chrome.tabs.update(tabs[0].id, {url: "https://leetcode.com/problems/random-one-question/all"})
     });
 
@@ -38,7 +37,6 @@ function PopupButtonHandlers(send, tabs) {
     
     $('#leave-room').click(function() {
         send(LEAVE_ROOM_MESSAGE, {}, function(response) {
-            console.log("Showing disconnected!")
             showDisconnected();
             resetHTML();
         });
