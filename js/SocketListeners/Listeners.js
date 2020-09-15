@@ -86,7 +86,7 @@ function handleRoomStarted(curRoom) {
 
 function handleGameOver(curRoom) {
     curRoom.gameOver();
-    sideBar.enqueue("Game Over! Everyone has submitted. This game finished in INSERT TIMER", "info");
+    sideBar.enqueue("Game Over! Everyone has submitted", "info");
     SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
 }
 
