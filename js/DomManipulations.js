@@ -181,6 +181,76 @@ var buildFinishedMemberDom = function(memberMetaData) {
     return [dom, buttonId];
 }
 
+var sanitizePointID = function(id) {
+    switch (id) {
+        case RUNTIME_POINTS_ID:
+            return "Runtime";
+        case MEM_POINTS_ID:
+            return "Memory";
+        case WRITING_TIME_POINTS_ID:
+            return "Coding Time";
+        case READ_RECEIPT_POINTS_ID:
+            return "Viewed Code";
+    }
+
+    // Should never happen... but just in case
+    return "Extra";
+}
+
+var buildPointsReasonDOM = function(explanation) {
+    if (
+        explanation.identifier == READ_RECEIPT_POINTS_ID ||
+        (explanation.range == null && explanation.exponent == null)
+    ) {
+        return explanation.points;
+    }
+    if ((explanation.exponent !== null) || (explanation.exponent !== null && explanation.range !== null)) {
+        return explanation.exponentOriginal + "<sup>" + explanation.exponent + "</sup>";
+    }
+    if (explanation.range !== null) {
+        return explanation.range[0] + " - " + explanation.range[1];
+    }
+}
+
+var buildPointsDescriptionsDOM = function(idExplanationName, points) {
+
+    var dom =
+        "<div id='" + idExplanationName + "' class='hidden'>" +
+        "<table style='width: 100%;'>" +
+        "<tbody>" +
+        "<tr>" +
+        "<td style='border: white 1px solid;'>&nbsp;<strong>Point Source</strong></td>" +
+        "<td style='border: white 1px solid;'>&nbsp;<strong>Points</strong></td>" +
+        "<td style='border: white 1px solid;'><strong>&nbsp;Reason</strong></td>" +
+        "</tr>";
+
+    for (var i = 0; i < points.explanation.length; i++) {
+        let currExpl = points.explanation[i];
+        var pointSrc = sanitizePointID(currExpl.identifier);
+
+        dom += "<tr>";
+        dom += "<td style='border: white 1px solid;'>&nbsp;" + pointSrc + "</td>";
+        dom += "<td style='border: white 1px solid;'>&nbsp;" + currExpl.points + "</td>";
+        dom += "<td style='border: white 1px solid;'>&nbsp;" + buildPointsReasonDOM(currExpl) + "</td>";
+        dom += "</tr>";
+    }
+
+    // Add the Total
+    dom += "<tr>";
+    dom += "<td style='border: white 1px solid;'>&nbsp;<strong>Total</strong></td>";
+    dom += "<td style='border: white 1px solid;'>&nbsp;" + points.total_points + "</td>";
+    dom += "<td style='border: white 1px solid;'></td>";
+    dom += "</tr>";
+
+    dom +=
+        "</tbody>" +
+        "</table>" +
+        "<span style='font-style: italic;'>The lower your points, the better!</span>" +
+        "</div>";
+
+    return dom;
+}
+
 var showGameOver = function(members) {
     $(".connected").hide();
     $(".disconnected").hide();
@@ -199,8 +269,16 @@ var showGameOver = function(members) {
     for (var i = 0; i < members.length; i++) {
         var currMem = members[i];
 
-        var domElement = "<p style='font-weight:bold;'> " + (i+1) + ". " + currMem.domName + " " + currMem.domIsMe;
+        let idName = "game-over-name-" + currMem.userUUID;
+        let idExplanationName = "game-over-description-" + currMem.userUUID;
+
+        var domElement = "<p id='" + idName + "' style='font-weight:bold;'> " + (i+1) + ". " + currMem.domName + " " + currMem.domIsMe + "</p>";
+        domElement += buildPointsDescriptionsDOM(idExplanationName, currMem.meta.points);
         $('.rankings').append(domElement);
+
+        $('#' + idName).click(function() {
+            $("#" + idExplanationName).toggle('fast');
+        });
     }
 }
 

@@ -67,7 +67,7 @@ function createUserSubmittedText(curMem) {
 }
 
 function rankMembersSubmissions(members) {
-	return members.sort((a, b) => (a.meta.points > b.meta.points) ? 1 : -1)
+	return members.sort((a, b) => (a.meta.points.total_points > b.meta.points.total_points) ? 1 : -1)
 }
 
 function padToTwoChar(val) {
