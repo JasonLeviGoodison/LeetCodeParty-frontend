@@ -37,6 +37,7 @@ var onLeetcode = function(tabs) {
 
 function handleRoomClosing(curRoom) {
 	curRoom.resetRoom(curRoom.getUserID());
+	sideBar.clearSidebar();
 	window.history.replaceState({}, null, removeURLParameter(window.location.toString(), "roomId"));
 }
 

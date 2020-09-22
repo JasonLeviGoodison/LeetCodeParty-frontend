@@ -1,8 +1,17 @@
 class SideBar {
     constructor() {
         this.sidebarOpen = false;
-        this.events = [];
         this.host_uuid = null;
+        this.resetSidebarEvents();
+    }
+
+    clearSidebar() {
+        this.resetSidebarEvents();
+        this.showList();
+    }
+
+    resetSidebarEvents() {
+        this.events = [];
     }
 
     setHost(host) {
