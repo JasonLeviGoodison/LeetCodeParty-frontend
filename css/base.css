@@ -341,6 +341,10 @@ hr.solid {
   cursor: help;
 }
 
+.game-over-name-explain-points {
+  cursor: help;
+}
+
 .submitted-info {
   font-size: 15px;
   padding-top: 20px;

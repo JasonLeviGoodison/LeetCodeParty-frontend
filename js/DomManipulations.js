@@ -272,7 +272,7 @@ var showGameOver = function(members) {
         let idName = "game-over-name-" + currMem.userUUID;
         let idExplanationName = "game-over-description-" + currMem.userUUID;
 
-        var domElement = "<p id='" + idName + "' style='font-weight:bold;'> " + (i+1) + ". " + currMem.domName + " " + currMem.domIsMe + "</p>";
+        var domElement = "<p id='" + idName + "' style='font-weight:bold;' class='game-over-name-explain-points'> " + (i+1) + ". " + currMem.domName + " " + currMem.domIsMe + "</p>";
         domElement += buildPointsDescriptionsDOM(idExplanationName, currMem.meta.points);
         $('.rankings').append(domElement);
 
