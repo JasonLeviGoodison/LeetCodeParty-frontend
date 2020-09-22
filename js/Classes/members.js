@@ -22,7 +22,8 @@ function addNewMembersToRoom(curRoom, newMembers, cb) {
 function fallbackNicknameInfo() {
     return {
         nickname_color: "#ff0000",
-        nickname: "Jumping Jackrabbit"
+        nickname: "Jumping Jackrabbit",
+        add_black_border: false
     }
 }
 
@@ -37,13 +38,19 @@ function buildNewMemberInRoom(memNumber, userUUID, isMe, nicknameInfo) {
         nicknameInfo = fallbackNicknameInfo();
     }
 
+    // If we need to add a black border to this name do it
+    var blackBorder = "";
+    if (nicknameInfo.add_black_border === true) {
+        blackBorder = "text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;";
+    }
+
     return {
         userUUID: userUUID,
         nicknameInfo: nicknameInfo,
         isMe: isMe,
         isReady: false,
 
-        domName: "<span class='letter-spacing-2px' style='color:" + nicknameInfo.nickname_color + ";'>" + nicknameInfo.nickname + "</span>",
+        domName: "<span class='letter-spacing-2px' style='color:" + nicknameInfo.nickname_color + "; " + blackBorder + "'>" + nicknameInfo.nickname + "</span>",
         domIsMe: domIsMe,
         domReady: ""
     };
