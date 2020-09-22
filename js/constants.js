@@ -38,3 +38,9 @@ const INIT_ROOM_STATE = "initState";
 const PRE_STARTED_ROOM_STATE = "roomBeingPreparedState";
 const STARTED_ROOM_STATE = "roomStartedState";
 const GAME_OVER_STATE = "gameOverState";
+
+// Point IDs
+const RUNTIME_POINTS_ID = "runtimePointsID";
+const MEM_POINTS_ID = "memoryPointsID";
+const WRITING_TIME_POINTS_ID = "writingTimePointsID";
+const READ_RECEIPT_POINTS_ID = "readReceiptPointsID";
