@@ -80,10 +80,10 @@ function PopupButtonHandlers(send, tabs) {
             showDisconnected();
             resetHTML();
 
-            $(".active-game-not-submitted").hide();
-            $(".active-game").hide();
-            $(".active-game-users-submitted").hide();
-            $(".active-game-close-room").hide();
+            $(".active-game-not-submitted").addClass("hidden");
+            $(".active-game").addClass("hidden");
+            $(".active-game-users-submitted").addClass("hidden");
+            $(".active-game-close-room").addClass("hidden");
         });
     });
 
