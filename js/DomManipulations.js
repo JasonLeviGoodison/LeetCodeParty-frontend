@@ -259,6 +259,7 @@ var showGameOver = function(members) {
     $(".active-game-users-submitted").addClass("hidden");
     $("#toggle").addClass("toggle-left");
     $("#toggle").removeClass("hidden");
+    $(".active-game-close-room").addClass("hidden");
 
     $("#endgame").removeClass("hidden");
     $("#endgame-button").removeClass("hidden");
