@@ -35,8 +35,8 @@ var unshowError = function() {
 }
 
 var showDisconnected = function() {
-    $('.disconnected').show();
-    $('.connected').hide();
+    $('.disconnected').removeClass("hidden");
+    $('.connected').addClass("hidden");
     $('#control-lock').prop('checked', false);
     $("#toggle").removeClass("toggle-center");
     $("#toggle").addClass("hidden");
@@ -47,7 +47,7 @@ var updateHostLeaveButton = function() {
 }
 
 var updateCloseActiveRoomButton = function(openV) {
-    $('.active-game-close-room').show();
+    $('.active-game-close-room').removeClass("hidden");
     $( "#slider-input" ).prop( "checked", openV );
     $("#toggle").addClass("toggle-left");
     $("#toggle").removeClass("hidden");
@@ -69,9 +69,9 @@ var updateReadyUpButton = function(state) {
 
 var showStartRoomButton = function(show) {
     if (show) {
-        $('#start-room').show();
+        $('#start-room').removeClass("hidden");
     } else {
-        $('#start-room').hide();
+        $('#start-room').addClass("hidden");
     }
 }
 
@@ -105,11 +105,11 @@ var resetHTML = function() {
 }
 
 var showRoomStartedNotSubmittedContent = function(roomStartedTS) {
-    $(".active-game").show();
-    $(".connected").hide();
-    $(".disconnected").hide();
-    $(".active-game-not-submitted").show();
-    $(".active-game-submitted").hide();
+    $(".active-game").removeClass("hidden");
+    $(".connected").addClass("hidden");
+    $(".disconnected").addClass("hidden");
+    $(".active-game-not-submitted").removeClass("hidden");
+    $(".active-game-submitted").addClass("hidden");
 
     var currTS = new Date();
     var totalSecondsSoFar = secondsBetweenDates(currTS, roomStartedTS);
@@ -129,11 +129,11 @@ var secondsBetweenDates = function(dateA, dateB) {
 }
 
 var showRoomStartedSubmittedContent = function(metadata) {
-    $(".active-game").show();
-    $(".connected").hide();
-    $(".disconnected").hide();
-    $(".active-game-not-submitted").hide();
-    $(".active-game-submitted").show();
+    $(".active-game").removeClass("hidden");
+    $(".connected").addClass("hidden");
+    $(".disconnected").addClass("hidden");
+    $(".active-game-not-submitted").addClass("hidden");
+    $(".active-game-submitted").removeClass("hidden");
 
     $("#submitted-info-runtime").text("Runtime: " + metadata.runTime);
     $("#submitted-info-memory").text("Memory: " + metadata.memoryUsage);
@@ -146,7 +146,7 @@ var showRoomStartedSubmittedContent = function(metadata) {
 var showFinishedMembersContent = function(send, finishedMembers) {
     if (!finishedMembers || finishedMembers.length == 0) return;
     $('.users-submitted-list').empty();
-    $('.no-users-submitted-yet-loader').hide();
+    $('.no-users-submitted-yet-loader').addClass("hidden");
 
     for (var i = 0; i < finishedMembers.length; i++) {
         var info = buildFinishedMemberDom(finishedMembers[i]);
@@ -252,13 +252,14 @@ var buildPointsDescriptionsDOM = function(idExplanationName, points) {
 }
 
 var showGameOver = function(members) {
-    $(".connected").hide();
-    $(".disconnected").hide();
-    $(".active-game-not-submitted").hide();
-    $(".active-game").hide();
-    $(".active-game-users-submitted").hide();
+    $(".connected").addClass("hidden");
+    $(".disconnected").addClass("hidden");
+    $(".active-game-not-submitted").addClass("hidden");
+    $(".active-game").addClass("hidden");
+    $(".active-game-users-submitted").addClass("hidden");
     $("#toggle").addClass("toggle-left");
     $("#toggle").removeClass("hidden");
+    $(".active-game-close-room").addClass("hidden");
 
     $("#endgame").removeClass("hidden");
     $("#endgame-button").removeClass("hidden");
