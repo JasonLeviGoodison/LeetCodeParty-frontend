@@ -207,6 +207,10 @@ class Room {
     getRoomStartedTimestamp() {
         return this.room.roomStartedTS;
     }
+
+    inRoom() {
+        return this.getRoomID() === "" || this.room.roomState == INIT_ROOM_STATE;
+    }
 }
 
 
