@@ -208,7 +208,7 @@ class Room {
         return this.room.roomStartedTS;
     }
 
-    inRoom() {
+    notInRoom() {
         return this.getRoomID() === "" || this.room.roomState == INIT_ROOM_STATE;
     }
 }
