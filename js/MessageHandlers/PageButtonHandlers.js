@@ -5,7 +5,7 @@ function PageButtonHandlers() {
         submitButton.click(function() {
 
             // If the user isn't in a room, don't attempt to get the answer
-            if (!curRoomV2.notInRoom()) {
+            if (curRoomV2.notInRoom()) {
                 return;
             }
 
