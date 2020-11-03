@@ -3,6 +3,12 @@ function PageButtonHandlers() {
         let submitButton = $("button[data-cy=\"submit-code-btn\"]");
         console.log("THIS THING NEEDS TO BE CLICKED", submitButton)
         submitButton.click(function() {
+
+            // If the user isn't in a room, don't attempt to get the answer
+            if (curRoomV2.notInRoom()) {
+                return;
+            }
+
             console.log("THIS THING WAS CLICKED")
             let lang = $(".ant-select-selection-selected-value").attr("title");
             
