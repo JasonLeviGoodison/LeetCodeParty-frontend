@@ -2,13 +2,15 @@
 
 ## Set up
 
+Clone the repo using the ```git clone``` command
+
 Create a file called env.js in the root folder.
 paste this into it:
 
+```
 const ENDPOINT = "http://localhost:4001";
-
 const TESTING = true;
-
+```
 These values are overwritten for our production release so thats why they are not part of the git repo.
 
 Make sure that you have a local version of the server running (LeetParty-backend).
@@ -25,9 +27,9 @@ If its not running on port 4001 (it will be unless you changed it), change the a
  6. You may want to pin LeetParty to the extension bar for easy access
 
 ## Validating
-    Make sure you are on a leetcode problem and refresh the page
-    Check the LeetParty-Backend output, it should say a user connected.
-    You can validate there are no errors in the console output too
+   Make sure you are on a leetcode problem and refresh the page
+   Check the LeetParty-Backend output, it should say a user connected.
+   You can validate there are no errors in the console output too
 
 ## Making Changes to the Extension
 
