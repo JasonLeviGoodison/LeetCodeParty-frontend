@@ -81,6 +81,7 @@ function handleUserSubmitted(curRoom, userId, meta) {
 
 function handleRoomStarted(curRoom) {
     curRoom.startRoom();
+    sideBar.enqueue("hey youtube, the room started", "info");
     SendMessageToPopup(UPDATE_DOM_MESSAGE, curRoom, function(response) {});
 }
 
