@@ -6,6 +6,7 @@ Create a file called env.js in the root folder.
 paste this into it:
 
 const ENDPOINT = "http://localhost:4001";
+
 const TESTING = true;
 
 These values are overwritten for our production release so thats why they are not part of the git repo.
