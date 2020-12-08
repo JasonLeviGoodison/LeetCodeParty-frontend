@@ -6,6 +6,7 @@ var socket = io(ENDPOINT, { secure: true });
 var sideBar = new SideBar();
 var curRoomV2 = new Room(sideBar);
 var modal = new Modal(socket);
+var reminder = new Reminder();
 
 function getStoredInfo() {
     chrome.storage.sync.get(INFO_STORE_KEY, function(items) {
@@ -39,6 +40,7 @@ chrome.runtime.onMessage.addListener(
 
 function main(evt) {
     getStoredInfo();
+    reminder.open();
     PageButtonHandlers();
 }
 
