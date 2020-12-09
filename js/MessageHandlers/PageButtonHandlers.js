@@ -1,7 +1,6 @@
 function PageButtonHandlers() {
     setTimeout(() => {
         let submitButton = $("button[data-cy=\"submit-code-btn\"]");
-        console.log("THIS THING NEEDS TO BE CLICKED", submitButton)
         submitButton.click(function() {
 
             // If the user isn't in a room, don't attempt to get the answer

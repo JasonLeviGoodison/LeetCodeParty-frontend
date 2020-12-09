@@ -127,7 +127,6 @@ function ContentScriptHandlers(request, sender, sendResponse, curRoom) {
             if (request.data.tabId) {
                 curRoom.setTabID(request.data.tabId);
             }
-
             return getInitData(sendResponse, curRoom);
         case CREATE_ROOM_MESSAGE:
             return createRoom(request, sendResponse, curRoom);

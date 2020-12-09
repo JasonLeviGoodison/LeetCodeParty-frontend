@@ -17,13 +17,14 @@
     }
   },
   "content_scripts": [{
-    "matches": [ "https://leetcode.com/*" ],
+    "matches": [ "https://leetcode.com/problems/*" ],
     "js": [
       "js/jquery-3.5.1.min.js",
       "env.js",
       "js/constants.js",
       "js/sidebar.js",
       "js/modal.js",
+      "js/reminder.js",
       "js/utils.js",
       "js/DomManipulations.js",
       "js/MessageHandlers/ContentScriptHandlers.js",
@@ -45,6 +46,7 @@
        "js/DomManipulations.js",
        "js/sidebar.js",
        "js/modal.js",
+       "js/reminder.js",
        "js/MessageHandlers/ContentScriptHandlers.js",
        "js/MessageHandlers/PopupButtonHandlers.js",
        "js/MessageHandlers/PageButtonHandlers.js",
