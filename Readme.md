@@ -1,5 +1,7 @@
 # LEETPARTY RESOURCES HAVE BEEN DEPROVISIONED
 This code base still works but it no longer has a home.
+
+# DEMO
 You can see exactly how it worked in this video: https://www.youtube.com/watch?v=FWsNEeuXSiA
 
 # Leet Party Frontend
